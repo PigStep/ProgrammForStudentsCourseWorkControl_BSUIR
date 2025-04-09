@@ -2,9 +2,14 @@
 #include <string>
 #include <Windows.h>
 #include <iomanip>
-#include <limits>
+#include <cstdlib>
+
 
 using namespace std;
+
+#define BORDERS_WIDTH 100
+#define HEADER_NAME_WIDTH 50
+#define OPTIONS_WIDTH 50
 
 void InitializeMenu();
 
@@ -12,7 +17,26 @@ void PrintMenu();
 
 void ShowLoginForm(bool);
 
-void ClearCin();
+void ClearTerminal() {
+    system("cls");
+}
+
+ostream& headerBorder(ostream& stream) {
+    stream << "+" << setfill('=') << setw(BORDERS_WIDTH) << "+" << setfill(' ') << endl;
+    return stream;
+}
+
+ostream& header(ostream& stream){
+    string header = "СИСТЕМА ВХОДА";
+
+    int total_width = BORDERS_WIDTH - 2; // -2 для границ
+    int padding = (total_width - header.length()) / 2;
+
+    stream << "|" << setw(padding + header.length()) << right << header
+        << setw(total_width - padding - header.length() +2) << "|" << endl;
+
+    return stream;
+}
 
 int main()
 {
@@ -22,10 +46,6 @@ int main()
     InitializeMenu();
 }
 
-void ClearCin() {
-    cin.clear();
-}
-
 void InitializeMenu() {
     int choice;
 
@@ -33,13 +53,14 @@ void InitializeMenu() {
         PrintMenu();
 
         cin >> choice;
-        ClearCin();
 
         switch (choice) {
         case 1:
+            ClearTerminal();
             ShowLoginForm(false);
             break;
         case 2:
+            ClearTerminal();
             ShowLoginForm(true);
             break;
         case 0:
@@ -49,39 +70,43 @@ void InitializeMenu() {
             cout << "Неверный выбор! Попробуйте снова.\n";
         }
 
+
+
     } while (choice != 0);
 }
 
 void PrintMenu() {
-    const int BORDERS_WIDTH = 100;
-    const int HEADER_NAME_WIDTH = 50;
+    // Верхняя граница
+    cout << headerBorder;
+    // Заголовок
+    cout << header;
+    // Разделитель
+    cout << headerBorder;
 
-    const int OPTIONS_WIDTH = 50;
-    //заголовок
+    // Опции выбора
+    cout << "|" << left << setw(BORDERS_WIDTH - 1) << " 1. Вход как пользователь (в разработке)" << "|" << endl;
+    cout << "+" << setfill('-') << setw(BORDERS_WIDTH) << "+" << setfill(' ') << endl;
 
-    cout << setfill('=') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
-    cout << setw(HEADER_NAME_WIDTH) << "СИСТЕМА ВХОДА" << endl;
-    cout << setfill('=') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
+    cout << "|" << setw(BORDERS_WIDTH - 1) << " 2. Вход как администратор" << "|" << endl;
+    cout << "+" << setfill('-') << setw(BORDERS_WIDTH) << "+" << setfill(' ') << endl;
 
-    //опции выбора
-    cout << left << setw(OPTIONS_WIDTH) << "1. Вход как пользователь (в разработке)" << endl;
-    cout << setfill('-') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
+    cout << "|" << setw(BORDERS_WIDTH - 1) << " 0. Выход" << "|" << endl;
 
-    cout << setw(OPTIONS_WIDTH) << "2. Вход как администратор" << endl;
-    cout << setfill('-') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
-
-    cout << setw(OPTIONS_WIDTH) << "0. Выход" << endl;
-
-    cout << setfill('=') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
+    // Нижняя граница
+    cout << "+" << setfill('=') << setw(BORDERS_WIDTH) << "+" << setfill(' ') << endl;
     cout << "Ваш выбор: ";
 }
 
 void ShowLoginForm(bool isAdmin) {
     string login, password;
 
-    cout << setfill('-') << setw(40) << "" << setfill(' ') << "\n"
-        << "  " << (isAdmin ? "АДМИНИСТРАТОР" : "ПОЛЬЗОВАТЕЛЬ") << "\n"
-        << setfill('-') << setw(40) << "" << setfill(' ') << "\n";
+    // Верхняя граница
+    cout << headerBorder;
+
+    cout << "|" << " ВХОД " << (isAdmin ? "АДМИНИСТРАТОР" : "ПОЛЬЗОВАТЕЛЬ")
+        << setw(BORDERS_WIDTH - 8 - (isAdmin ? 12 : 10)) << " " << "|" << endl;
+
+    cout << headerBorder;
 
     cout << left << setw(10) << "Логин: ";
     cin.get();
@@ -90,7 +115,7 @@ void ShowLoginForm(bool isAdmin) {
     cout << left << setw(10) << "Пароль: ";
     getline(cin, password);
 
-    cout << "\n" << setfill('*') << setw(40) << "" << setfill(' ') << "\n"
+    cout << "\n" << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << "\n"
         << "  Вход выполнен как " << (isAdmin ? "администратор" : "пользователь") << "!\n"
-        << setfill('*') << setw(40) << "" << setfill(' ') << "\n\n";
+        << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << "\n"<<endl;
 }
