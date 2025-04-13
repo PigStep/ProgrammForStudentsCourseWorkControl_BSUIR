@@ -10,7 +10,9 @@ using namespace std;
 //Fuctions prototypes 
 //EnteringMenu.cpp
 void InitializeMenuLoginEntering();
-void ShowLoginForm(bool);
+bool UserAuthorizationMenu(bool);
 
 //AdministratorMenu
 extern void AdminFunctionsMenu();
+void RegistrateStudents();
+void StudentsListOperations();

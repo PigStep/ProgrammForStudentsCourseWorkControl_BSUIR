@@ -12,20 +12,20 @@ int main()
 void InitializeMenuLoginEntering() {
     int choice;
 
-    //do {
+    do {
         const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь (в разработке)","Вход как администратор"};
-        PrintMenuWithOptionsHeaderCentralized(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
+        MenuWithOptionsHeaderCentralized(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
 
         cin >> choice;
 
+        ClearTerminal();
+
         switch (choice) {
-        case 1:
-            ClearTerminal();
-            ShowLoginForm(false);
+        case 1: 
+            UserAuthorizationMenu(false); //log as user
             break;
         case 2:
-            ClearTerminal();
-            ShowLoginForm(true);
+            UserAuthorizationMenu(true); //log as admin
             AdminFunctionsMenu();
             break;
         case 0:
@@ -36,21 +36,13 @@ void InitializeMenuLoginEntering() {
         }
 
 
-    //} while (choice != 0);
+    } while (choice != 0);
 }
 
+bool UserAuthorizationMenu(bool isAdmin) {
+    LoginFormHeader(isAdmin); //show authorization menu
 
-
-void ShowLoginForm(bool isAdmin) {
     string login, password;
-
-    // Верхняя граница
-    cout << headerBorder;
-
-    cout << "|" << " ВХОД " << (isAdmin ? "АДМИНИСТРАТОР" : "ПОЛЬЗОВАТЕЛЬ")
-        << setw(BORDERS_WIDTH - 8 - (isAdmin ? 12 : 10)) << " " << "|" << endl;
-
-    cout << headerBorder;
 
     cout << left << setw(10) << "Логин: ";
     cin.get();
@@ -59,13 +51,12 @@ void ShowLoginForm(bool isAdmin) {
     cout << left << setw(10) << "Пароль: ";
     getline(cin, password);
 
-    //CheckPaswordAdmin();
+    LoginAutorizationStatus(isAdmin);
 
-    cout << "\n" << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << "\n"
-        << "  Вход выполнен как " << (isAdmin ? "администратор" : "пользователь") << "!\n"
-        << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
 
-    cout << "Нажмите Enter для продолжения"<<endl;
+    cout << "Нажмите Enter для продолжения" << endl;
     cin.get();
     ClearTerminal();
+
+    return true;
 }

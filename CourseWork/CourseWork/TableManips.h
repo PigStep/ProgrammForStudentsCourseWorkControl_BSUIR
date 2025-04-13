@@ -1,12 +1,19 @@
 #pragma once
 #include "Header.h"
 
-// Макросы табличных данных
+// table macroses
 #define BORDERS_WIDTH 100
 #define OPTIONS_PADDING 5
 #define HEADER_PADDING 5
 
-// Объявления функций
+// functions prototypes
+
+//base tableFunctions
 void ClearTerminal();
-ostream& headerBorder(ostream& stream);
-void PrintMenuWithOptionsHeaderCentralized(int optionsCount, const string optionsArray[], string header);
+ostream& headerBorder(ostream&);
+void MenuWithOptionsHeaderCentralized(int, const string[], string);
+void SubHeader(const string);
+
+//loginTableFunctions
+void LoginFormHeader(bool);
+void LoginAutorizationStatus(bool);
