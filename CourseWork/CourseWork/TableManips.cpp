@@ -38,7 +38,7 @@ void MenuWithOptionsHeaderCentralized(int optionsCount, const string optionsArra
     cout << headerBorder;
     cout << "Ваш выбор: ";
 }
-void SubHeader(const string HEADER) { 
+void HeaderSecondLevel(const string HEADER) { 
     cout << headerBorder;
 
     cout << "|" << HEADER

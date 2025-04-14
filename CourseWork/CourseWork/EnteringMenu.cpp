@@ -1,9 +1,13 @@
 ﻿#include "TableManips.h"
 
+fstream studentsFileDB; //global file stream variable (link in header)
+
 int main()
 {
     SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
+
+    studentsFileDB.open(DB_FILE_NAME, ios::in | ios::out | ios::app);
 
     InitializeMenuLoginEntering();
 }
@@ -37,6 +41,8 @@ void InitializeMenuLoginEntering() {
 
 
     } while (choice != 0);
+
+    studentsFileDB.close();
 }
 
 bool UserAuthorizationMenu(bool isAdmin) {
@@ -44,11 +50,11 @@ bool UserAuthorizationMenu(bool isAdmin) {
 
     string login, password;
 
-    cout << left << setw(10) << "Логин: ";
+    cout << left << setw(ENTER_PADDING) << "Логин: ";
     cin.get();
     getline(cin, login);
 
-    cout << left << setw(10) << "Пароль: ";
+    cout << left << setw(ENTER_PADDING) << "Пароль: ";
     getline(cin, password);
 
     LoginAutorizationStatus(isAdmin);
