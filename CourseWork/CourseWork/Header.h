@@ -9,6 +9,7 @@
 using namespace std;
 
 extern fstream studentsFileDB; //to avoid multi linking (TManips.h & Header.h)
+
 #define DB_FILE_NAME "StudentsDB.txt"
 
 //Fuctions prototypes 
@@ -18,8 +19,7 @@ bool UserAuthorizationMenu(bool);
 
 //AdministratorMenu
 extern void AdminFunctionsMenu();
-void RegistrateStudents();
 
 void StudentsListOperations();
-void readStudentsFromFile(fstream&);
+void ReadStudentsFromFile();
 void AddStudent();

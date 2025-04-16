@@ -3,6 +3,11 @@
 void ClearTerminal() {
     system("cls");
 }
+void WaitEnter() {
+    cout << "Нажмите Enter для продолжения" << endl;
+    cin.get();
+    ClearTerminal();
+}
 
 ostream& headerBorder(ostream& stream) {
     stream << "+" << setfill('=') << setw(BORDERS_WIDTH) <<"" << "+" << setfill(' ') << endl;
@@ -60,4 +65,51 @@ void LoginAutorizationStatus(bool isAdmin) {
     cout << "\n" << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << "\n"
         << "  Вход выполнен как " << (isAdmin ? "администратор" : "пользователь") << "!\n"
         << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
+}
+
+
+void printBorder(char fill = '=') {
+    cout << "+" << string(BORDERS_WIDTH - 2, fill) << "+" << endl;
+}
+
+void printTableRow(const string& label, const string& value, char border = '|') {
+    cout << border << " " << left << setw(HEADER_PADDING * 4) << label
+        << border << " " << setw(BORDERS_WIDTH - HEADER_PADDING * 4 - OPTIONS_PADDING-1) << value
+        << " " << border << endl;
+}
+
+void RegistratedStudentTable(StudentCourseWork student) {
+    // Верхняя граница
+    printBorder('-');
+
+    printTableRow("ID:", to_string(student.getId()));
+
+    bool isAdmin = student.isUserAdmin();
+    printTableRow("УРОВЕНЬ ДОСТУПА:", ( isAdmin ? "ПРЕПОДАВАТЕЛЬ": "СТУДЕНТ"));
+
+    printBorder('-');
+
+    // Секция логина и пароля
+    printTableRow("Логин:", student.getLogin());
+    printTableRow("Пароль:", student.getPassword());
+
+    // Разделитель
+    printBorder('-');
+
+    // Секция ФИО
+    printTableRow("Имя:", student.getName());
+    printTableRow("Фамилия:", student.getSecondName());
+    printTableRow("Отчество:", student.getSurname());
+
+    // Разделитель
+    printBorder('-');
+    if (isAdmin)
+        return;
+
+    // Секция учебной информации
+    printTableRow("Группа:", to_string(student.getGroup()));
+    printTableRow("Курс:", to_string(student.getCourse()));
+
+    // Нижняя граница
+    printBorder('-');
 }

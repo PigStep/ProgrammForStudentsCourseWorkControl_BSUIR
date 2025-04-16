@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="AdministratorMenu.cpp" />
     <ClCompile Include="EnteringMenu.cpp" />
+    <ClCompile Include="Student.cpp" />
     <ClCompile Include="TableManips.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,8 @@
 ﻿#include "TableManips.h"
+#include "Student.h"
 
 fstream studentsFileDB; //global file stream variable (link in header)
+//vector<StudentCourseWork> students_DB;
 
 int main()
 {
@@ -50,19 +52,17 @@ bool UserAuthorizationMenu(bool isAdmin) {
 
     string login, password;
 
-    cout << left << setw(ENTER_PADDING) << "Логин: ";
+    cout << left << setw(INPUT_PADDING) << "Логин: ";
     cin.get();
     getline(cin, login);
 
-    cout << left << setw(ENTER_PADDING) << "Пароль: ";
+    cout << left << setw(INPUT_PADDING) << "Пароль: ";
     getline(cin, password);
 
     LoginAutorizationStatus(isAdmin);
 
 
-    cout << "Нажмите Enter для продолжения" << endl;
-    cin.get();
-    ClearTerminal();
+    WaitEnter();
 
     return true;
 }

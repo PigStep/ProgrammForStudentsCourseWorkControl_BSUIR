@@ -26,17 +26,6 @@ extern void AdminFunctionsMenu() {
 
 }
 
-void RegistrateStudents() {
-	const string HEADER = "ДОБАВЛЕНИЕ УЧЕТНОЙ ЗАПИСИ СТУДЕНТА";
-
-	HeaderSecondLevel(HEADER);
-
-	cin.get();
-	cout << "Нажмите Enter для продолжения" << endl;
-	cin.get();
-	
-}
-
 void StudentsListOperations() {
 	const string OPTIONS_TO_CHOOSE[4] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Удалить учетную запись/записи", "Изменить учетную запись/записи" };
 	const string HEADER = { "МЕНЮ ОПЕРАЦИЙ С УЧЕТНЫМИ ЗАПИСЯМИ" };
@@ -51,7 +40,7 @@ void StudentsListOperations() {
 		switch (n)
 		{
 		case(1):
-			readStudentsFromFile(studentsFileDB);
+			ReadStudentsFromFile();
 			break;
 		case(2):
 			AddStudent();
@@ -64,60 +53,105 @@ void StudentsListOperations() {
 	} while (n != 0);
 
 }
-void readStudentsFromFile(fstream& file) {
-	// Перемещаем указатель чтения в начало файла
-	file.seekg(0, ios::beg);
 
-	string line;
-	while (getline(file, line)) {  // Читаем построчно до конца файла
-		cout << line << endl;      // Выводим прочитанную строку (можно парсить)
+void ReadStudentsFromFile() {
+	getStudentsFromFile(DB_FILE_NAME);
+
+	const string HEADER = "ТАБЛИЦА СТУДЕНТОВ";
+	HeaderSecondLevel(HEADER);
+
+	for (int i = 0; i < students_data.size(); i++) {
+		RegistratedStudentTable(students_data[i]);
 	}
 
-	// После чтения возвращаем указатель записи в конец файла (если нужно дописывать)
-	file.seekp(0, ios::end);
+	cin.get();
+	WaitEnter();
 }
 
 void AddStudent() {
 	const string HEADER = "РЕГИСТРАЦИЯ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
+	int userLevel;
 	string name;
 	string secondname;
 	string surname;
 	int group;
 	int course;
 
+	int currentStudentsNum = students_data.size() +1;
+
+	string login;
+	string password;
+
 	int n;
-	cout << left << setw(ENTER_PADDING) << "Введите количество добавляемых студентов: ";
+	cout << left << setw(INPUT_PADDING) << "Введите количество добавляемых записей: ";
 	cin >> n;
 	cin.ignore(); // Очистка буфера после cin >> 
 
 	for (int i = 0; i < n; i++) {
+
+		//Уровень доступа
+		cout << "Уровень доступа записи (0 - студент, 1 - администратор): ";
+		cin >> userLevel;
+		cin.ignore();
+
 		// Ввод имени
-		cout << "Студент " << i + 1<<":\n";
-		cout << left << setw(ENTER_PADDING) << "Имя: ";
+		cout << "Запись " << i + 1<<":\n\n";
+
+		// Ввод логина
+		cout << left << setw(INPUT_PADDING) << "Логин: ";
+		getline(cin, login);
+
+		// Ввод пароля
+		cout << left << setw(INPUT_PADDING) << "Пароль: ";
+		getline(cin, password);
+
+		cout << left << setw(INPUT_PADDING) << "Имя: ";
 		getline(cin, name);
 
 		// Ввод фамилии
-		cout << left << setw(ENTER_PADDING) << "Фамилия: ";
+		cout << left << setw(INPUT_PADDING) << "Фамилия: ";
 		getline(cin, secondname);
 
 		// Ввод отчества
-		cout << left << setw(ENTER_PADDING) << "Отчество: ";
+		cout << left << setw(INPUT_PADDING) << "Отчество: ";
 		getline(cin, surname);
 
+		if (userLevel == 1) {
+			StudentCourseWork StudentCourse(
+				currentStudentsNum + i,
+				userLevel,
+				password, 
+				login, 
+				name, 
+				secondname, 
+				surname);
+
+			studentsFileDB << StudentCourse;
+			return;
+		}
 		// Ввод группы (число)
-		cout << left << setw(ENTER_PADDING) << "Группа: ";
+		cout << left << setw(INPUT_PADDING) << "Группа: ";
 		cin >> group;
 		cin.ignore();  // Очистка буфера после cin >> 
 
 		// Ввод курса (число)
-		cout << left << setw(ENTER_PADDING) << "Курс: ";
+		cout << left << setw(INPUT_PADDING) << "Курс: ";
 		cin >> course;
 		cin.ignore();  // Очистка буфера после cin >>
 
 
-		StudentCourseWork StudentCourse(name, secondname, surname, group, course);
+		StudentCourseWork StudentCourse(
+			currentStudentsNum + i,
+			userLevel,
+			password,
+			login,
+			name, 
+			secondname, 
+			surname, 
+			group, 
+			course);
 
 		studentsFileDB << StudentCourse;
 	}
