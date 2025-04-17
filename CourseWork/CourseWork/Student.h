@@ -155,3 +155,4 @@ public:
 extern vector<StudentCourseWork> students_data;
 
 void getStudentsFromFile(const string&);
+void RegistrateStudentInFile(int padding);

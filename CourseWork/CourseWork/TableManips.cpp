@@ -85,7 +85,7 @@ void RegistratedStudentTable(StudentCourseWork student) {
     printTableRow("ID:", to_string(student.getId()));
 
     bool isAdmin = student.isUserAdmin();
-    printTableRow("спнбемэ днярсою:", ( isAdmin ? "опеондюбюрекэ": "ярсдемр"));
+    printTableRow("спнбемэ днярсою:", ( isAdmin ? "опеондюбюрекэ" : "ярсдемр"));
 
     printBorder('-');
 

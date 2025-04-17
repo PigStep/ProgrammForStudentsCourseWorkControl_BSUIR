@@ -21,5 +21,5 @@ bool UserAuthorizationMenu(bool);
 extern void AdminFunctionsMenu();
 
 void StudentsListOperations();
-void ReadStudentsFromFile();
+void PrintStudentsFromFile();
 void AddStudent();
