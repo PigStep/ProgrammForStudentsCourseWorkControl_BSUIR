@@ -25,6 +25,7 @@ protected:
 
 	int group;
 	int course;
+
 public:
 	Student() {
 		name = "NO_NAME";
@@ -50,6 +51,9 @@ public:
 		this->password = password;
 		this->login = login;
 	}
+
+
+	virtual void StudentEdit(const int bordersWidth, const int optionsPadding, const int inputPadding);
 };
 
 class StudentCourseWork : Student {
@@ -109,6 +113,10 @@ public:
 		return stream;
 	}
 
+	void StudentEdit(const int bordersWidth, const int optionsPadding, const int inputPadding) override{
+		Student::StudentEdit(bordersWidth, optionsPadding, inputPadding);
+	}
+
 	// Геттеры для всех полей
 	string getLogin() const {
 		return login;
@@ -155,4 +163,5 @@ public:
 extern vector<StudentCourseWork> students_data;
 
 void getStudentsFromFile(const string&);
-void RegistrateStudentInFile(int padding);
+void RegistrateStudentInFile();
+void EditStudents();

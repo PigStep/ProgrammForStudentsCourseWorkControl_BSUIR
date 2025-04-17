@@ -1,4 +1,9 @@
-﻿  Student.cpp
+﻿  AdministratorMenu.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(65,20): warning C4018: <: несоответствие типов со знаком и без знака
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(103,20): warning C4018: <: несоответствие типов со знаком и без знака
+  EnteringMenu.cpp
+  Student.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\Student.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
   TableManips.cpp
   Создание кода...
   CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\Debug\CourseWork.exe

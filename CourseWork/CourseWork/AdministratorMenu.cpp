@@ -46,6 +46,9 @@ void StudentsListOperations() {
 		case(2):
 			AddStudent();
 			break;
+		case(4):
+			EditStudent();
+			break;
 		default:
 			break;
 		}
@@ -71,5 +74,33 @@ void AddStudent() {
 	const string HEADER = "–≈√»—“–¿÷»ﬂ —“”ƒ≈Õ“¿";
 	HeaderSecondLevel(HEADER);
 
-	RegistrateStudentInFile(INPUT_PADDING);
+	RegistrateStudentInFile();
+}
+
+void EditStudent() {
+	const string HEADER = "–≈ƒ¿ “»–Œ¬¿Õ»≈ —“”ƒ≈Õ“¿";
+	HeaderSecondLevel(HEADER);
+
+	int choise;
+
+	do {
+		cout << "Õ‡ÔË¯ËÚÂ ID ËÁÏÂÌˇÂÏÓÈ Á‡ÔËÒË (‰Îˇ ‚˚ıÓ‰‡ Ì‡ÔË¯ËÚÂ -1): ";
+		cin >> choise;
+
+		if (choise == -1)
+			break;
+
+		students_data[choise - 1].StudentEdit(BORDERS_WIDTH, OPTIONS_PADDING, INPUT_PADDING);
+
+	}while (choise != -1);
+
+	StudentFileRewrite();
+}
+
+void StudentFileRewrite() {
+	fstream outFile(DB_FILE_NAME, ios::out | ios::trunc);
+
+	for (int i = 0; i < students_data.size(); i++) {
+		outFile << students_data[i];
+	}
 }

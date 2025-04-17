@@ -23,3 +23,5 @@ extern void AdminFunctionsMenu();
 void StudentsListOperations();
 void PrintStudentsFromFile();
 void AddStudent();
+void EditStudent();
+void StudentFileRewrite();

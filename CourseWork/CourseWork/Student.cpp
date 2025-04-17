@@ -1,6 +1,75 @@
 #include "Student.h"
+#include "TableManips.h";
 
 vector<StudentCourseWork> students_data;
+
+void Student::StudentEdit(const int bordersWidth, const int optionsPadding, const int inputPadding) {
+	int choice;
+	string newString;
+	int newInt;
+
+	do {
+		// Вывод меню выбора параметра
+		cout << setw(optionsPadding) << "" << "Выберите параметр для изменения:\n";
+		cout << setw(optionsPadding) << "" << "1. Имя\n";
+		cout << setw(optionsPadding) << "" << "2. Фамилия\n";
+		cout << setw(optionsPadding) << "" << "3. Отчество\n";
+		cout << setw(optionsPadding) << "" << "4. Группа\n";
+		cout << setw(optionsPadding) << "" << "5. Курс\n";
+		cout << setw(optionsPadding) << "" << "6. Логин\n";
+		cout << setw(optionsPadding) << "" << "7. Пароль\n\n";
+		cout << setw(optionsPadding) << "" << "0. Выход\n\n";
+
+		// Ввод выбора пользователя
+		cout << setw(inputPadding) << "" << "Ваш выбор: ";
+		cin >> choice;
+
+		// Обработка выбора
+		switch (choice) {
+		case 1:
+			cout << setw(inputPadding) << "" << "Введите новое имя: ";
+			cin >> newString;
+			name = newString;
+			break;
+		case 2:
+			cout << setw(inputPadding) << "" << "Введите новую фамилию: ";
+			cin >> newString;
+			secondname = newString;
+			break;
+		case 3:
+			cout << setw(inputPadding) << "" << "Введите новое отчество: ";
+			cin >> newString;
+			surname = newString;
+			break;
+		case 4:
+			cout << setw(inputPadding) << "" << "Введите новую группу: ";
+			cin >> newInt;
+			group = newInt;
+			break;
+		case 5:
+			cout << setw(inputPadding) << "" << "Введите новый курс: ";
+			cin >> newInt;
+			course = newInt;
+			break;
+		case 6:
+			cout << setw(inputPadding) << "" << "Введите новый логин: ";
+			cin >> newString;
+			login = newString;
+			break;
+		case 7:
+			cout << setw(inputPadding) << "" << "Введите новый пароль: ";
+			cin >> newString;
+			password = newString;
+			break;
+		case 0:
+			break;
+		default:
+			cout << setw(inputPadding) << "" << "Ошибка: неверный выбор!\n";
+			break;
+		}
+	} while (choice != 0);
+	
+}
 
 void getStudentsFromFile(const string& filename) {
 	students_data;
@@ -63,7 +132,7 @@ void getStudentsFromFile(const string& filename) {
 	}
 }
 
-void RegistrateStudentInFile(int padding) {
+void RegistrateStudentInFile() {
 
 	int userLevel;
 	string name;
@@ -77,7 +146,7 @@ void RegistrateStudentInFile(int padding) {
 	int currentStudentsNum = students_data.size() + 1;
 
 	int n;
-	cout << left << setw(padding) << "Введите количество добавляемых записей: ";
+	cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей: ";
 	cin >> n;
 	cin.ignore(); // Очистка буфера после cin >> 
 
@@ -93,22 +162,22 @@ void RegistrateStudentInFile(int padding) {
 		cout << "Запись " << i + 1 << ":\n\n";
 
 		// Ввод логина
-		cout << left << setw(padding) << "Логин: ";
+		cout << left << setw(OPTIONS_PADDING) << "Логин: ";
 		getline(cin, login);
 
 		// Ввод пароля
-		cout << left << setw(padding) << "Пароль: ";
+		cout << left << setw(OPTIONS_PADDING) << "Пароль: ";
 		getline(cin, password);
 
-		cout << left << setw(padding) << "Имя: ";
+		cout << left << setw(OPTIONS_PADDING) << "Имя: ";
 		getline(cin, name);
 
 		// Ввод фамилии
-		cout << left << setw(padding) << "Фамилия: ";
+		cout << left << setw(OPTIONS_PADDING) << "Фамилия: ";
 		getline(cin, secondname);
 
 		// Ввод отчества
-		cout << left << setw(padding) << "Отчество: ";
+		cout << left << setw(OPTIONS_PADDING) << "Отчество: ";
 		getline(cin, surname);
 
 		if (userLevel == 1) {
@@ -126,12 +195,12 @@ void RegistrateStudentInFile(int padding) {
 		}
 
 		// Ввод группы (число)
-		cout << left << setw(padding) << "Группа: ";
+		cout << left << setw(OPTIONS_PADDING) << "Группа: ";
 		cin >> group;
 		cin.ignore();  // Очистка буфера после cin >> 
 
 		// Ввод курса (число)
-		cout << left << setw(padding) << "Курс: ";
+		cout << left << setw(OPTIONS_PADDING) << "Курс: ";
 		cin >> course;
 		cin.ignore();  // Очистка буфера после cin >>
 
@@ -149,4 +218,8 @@ void RegistrateStudentInFile(int padding) {
 
 		studentsFileDB << StudentCourse;
 	}
+}
+
+void EditStudents() {
+
 }
