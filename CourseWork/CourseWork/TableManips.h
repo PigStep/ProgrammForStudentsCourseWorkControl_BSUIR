@@ -12,7 +12,7 @@
 
 //base tableFunctions
 void ClearTerminal();
-void WaitEnter();
+void WaitEnterInput();
 ostream& headerBorder(ostream&);
 void MenuWithOptionsHeaderCentralized(int, const string[], string);
 void HeaderSecondLevel(const string);
@@ -27,4 +27,4 @@ void LoginAutorizationStatus(bool);
 void printBorder(char);
 // Функция для вывода строки таблицы
 void printTableRow(const string&, const string&, char);
-void RegistratedStudentTable(StudentCourseWork);
+void RegistratedStudentTable(Student);

@@ -15,6 +15,11 @@ protected:
 
 	string login;
 	string password;
+public:
+
+	void setId(int newId) {
+		id = newId;
+	}
 };
 class Student : public User {
 protected:
@@ -52,11 +57,53 @@ public:
 		this->login = login;
 	}
 
+	void StudentEdit();
 
-	virtual void StudentEdit(const int bordersWidth, const int optionsPadding, const int inputPadding);
+	// Геттеры для всех полей
+	string getLogin() const {
+		return login;
+	}
+
+	string getPassword() const {
+		return password;
+	}
+
+	string getName() const {
+		return name;
+	}
+
+	string getSecondName() const {
+		return secondname;
+	}
+
+	string getSurname() const {
+		return surname;
+	}
+
+	int getGroup() const {
+		return group;
+	}
+
+	int getCourse() const {
+		return course;
+	}
+
+	bool isUserAdmin()const {
+		if (user_level == 1)
+			return true;
+		return false;
+	}
+	int getUserLevel() const {
+		return user_level;
+	}
+
+	int getId() const {
+		return id;
+	}
+
 };
 
-class StudentCourseWork : Student {
+class StudentCourseWork : public Student {
 	string courseWorkTheme;
 
 	static Date* corseDeadLines;
@@ -112,56 +159,14 @@ public:
 
 		return stream;
 	}
-
-	void StudentEdit(const int bordersWidth, const int optionsPadding, const int inputPadding) override{
-		Student::StudentEdit(bordersWidth, optionsPadding, inputPadding);
-	}
-
-	// Геттеры для всех полей
-	string getLogin() const {
-		return login;
-	}
-
-	string getPassword() const {
-		return password;
-	}
-
-	string getName() const {
-		return name;
-	}
-
-	string getSecondName() const {
-		return secondname;
-	}
-
-	string getSurname() const {
-		return surname;
-	}
-
-	int getGroup() const {
-		return group;
-	}
-
-	int getCourse() const {
-		return course;
-	}
-
-	bool isUserAdmin()const{
-		if (user_level == 1)
-			return true;
-		return false;
-	}
-	int getUserLevel() const {
-		return user_level;
-	}
-
-	int getId() const {
-		return id;
-	}
-
 };
-extern vector<StudentCourseWork> students_data;
 
-void getStudentsFromFile(const string&);
+extern vector<StudentCourseWork> studentsArray;
+
+void GetStudentsFromFile();
 void RegistrateStudentInFile();
 void EditStudents();
+void StudentFileRewrite();
+vector<int> FindStudentInFile();
+void DeleteStudentArray(int);
+void RefreshStudentsId();

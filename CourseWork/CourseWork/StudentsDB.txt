@@ -1,5 +1,1 @@
-1;1;tyy;y;AA;AAA;AAAA;-1;-1;-1;-1;
-2;0;normlogin;uioopasd;AAHAHAHAHHAHA;F[df;asd;0;5;0;5;
-3;1;asdasdasd;adasdasdsadasd;1;1;1;-1;-1;-1;-1;
-4;1;uiwqe;qweqwe;HFJDF;fsdfsdf;sdfsdfs;-1;-1;-1;-1;
-5;1;neNormLogin;123;123;123;1;-1;-1;NO_THEME;NO_STORAGE_LINK_HAS_PROVIDED;
+1;0;ui;asd;asd;;sad;1;1;1;1;

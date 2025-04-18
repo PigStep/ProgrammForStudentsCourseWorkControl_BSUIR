@@ -19,9 +19,10 @@ bool UserAuthorizationMenu(bool);
 
 //AdministratorMenu
 extern void AdminFunctionsMenu();
+void RefreshMenu(const string, int);
 
 void StudentsListOperations();
 void PrintStudentsFromFile();
-void AddStudent();
-void EditStudent();
-void StudentFileRewrite();
+void AddStudentFromArrayMenu();
+void EditStudentsFromArrayMenu();
+void DeleteStudentsFromArrayMenu();

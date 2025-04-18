@@ -1,84 +1,143 @@
 #include "Student.h"
 #include "TableManips.h";
 
-vector<StudentCourseWork> students_data;
+vector<StudentCourseWork> studentsArray;
 
-void Student::StudentEdit(const int bordersWidth, const int optionsPadding, const int inputPadding) {
+using namespace std;
+
+int StudentEditMenuChoice() {
 	int choice;
-	string newString;
-	int newInt;
 
-	do {
-		// Вывод меню выбора параметра
-		cout << setw(optionsPadding) << "" << "Выберите параметр для изменения:\n";
-		cout << setw(optionsPadding) << "" << "1. Имя\n";
-		cout << setw(optionsPadding) << "" << "2. Фамилия\n";
-		cout << setw(optionsPadding) << "" << "3. Отчество\n";
-		cout << setw(optionsPadding) << "" << "4. Группа\n";
-		cout << setw(optionsPadding) << "" << "5. Курс\n";
-		cout << setw(optionsPadding) << "" << "6. Логин\n";
-		cout << setw(optionsPadding) << "" << "7. Пароль\n\n";
-		cout << setw(optionsPadding) << "" << "0. Выход\n\n";
+	// Вывод меню выбора параметра
+	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для изменения:\n";
+	cout << setw(OPTIONS_PADDING) << "" << "1. Имя\n";
+	cout << setw(OPTIONS_PADDING) << "" << "2. Фамилия\n";
+	cout << setw(OPTIONS_PADDING) << "" << "3. Отчество\n";
+	cout << setw(OPTIONS_PADDING) << "" << "4. Группа\n";
+	cout << setw(OPTIONS_PADDING) << "" << "5. Курс\n";
+	cout << setw(OPTIONS_PADDING) << "" << "6. Логин\n";
+	cout << setw(OPTIONS_PADDING) << "" << "7. Пароль\n\n";
+	cout << setw(OPTIONS_PADDING) << "" << "0. Выход\n\n";
 
-		// Ввод выбора пользователя
-		cout << setw(inputPadding) << "" << "Ваш выбор: ";
-		cin >> choice;
+	// Ввод выбора пользователя
+	cout << setw(INPUT_PADDING) << "" << "Ваш выбор: ";
+	cin >> choice;
 
-		// Обработка выбора
-		switch (choice) {
-		case 1:
-			cout << setw(inputPadding) << "" << "Введите новое имя: ";
-			cin >> newString;
-			name = newString;
-			break;
-		case 2:
-			cout << setw(inputPadding) << "" << "Введите новую фамилию: ";
-			cin >> newString;
-			secondname = newString;
-			break;
-		case 3:
-			cout << setw(inputPadding) << "" << "Введите новое отчество: ";
-			cin >> newString;
-			surname = newString;
-			break;
-		case 4:
-			cout << setw(inputPadding) << "" << "Введите новую группу: ";
-			cin >> newInt;
-			group = newInt;
-			break;
-		case 5:
-			cout << setw(inputPadding) << "" << "Введите новый курс: ";
-			cin >> newInt;
-			course = newInt;
-			break;
-		case 6:
-			cout << setw(inputPadding) << "" << "Введите новый логин: ";
-			cin >> newString;
-			login = newString;
-			break;
-		case 7:
-			cout << setw(inputPadding) << "" << "Введите новый пароль: ";
-			cin >> newString;
-			password = newString;
-			break;
-		case 0:
-			break;
-		default:
-			cout << setw(inputPadding) << "" << "Ошибка: неверный выбор!\n";
-			break;
-		}
-	} while (choice != 0);
-	
+	return choice;
+
+} 
+
+void DeleteStudentArray(int index) {
+	studentsArray.erase(studentsArray.begin() + index);
 }
 
-void getStudentsFromFile(const string& filename) {
-	students_data;
-	ifstream file(filename);
+void RefreshStudentsId() {
+	for (int i = 0; i < studentsArray.size(); i++) {
+		studentsArray[i].setId(i + 1);
+	}
+}
 
-	students_data.clear();
+//Получить номер параметра поиска
+int FindStudentInFileMenu() {
+	int choice;
+
+	// Вывод меню выбора параметра
+	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для поиска:\n";
+
+	cout << setw(OPTIONS_PADDING) << "" << "1. ID пользователя\n";
+	cout << setw(OPTIONS_PADDING) << "" << "2. Имя\n";
+	cout << setw(OPTIONS_PADDING) << "" << "3. Фамилия\n";
+	cout << setw(OPTIONS_PADDING) << "" << "4. Отчество\n";
+	cout << setw(OPTIONS_PADDING) << "" << "5. Группа\n";
+	cout << setw(OPTIONS_PADDING) << "" << "6. Курс\n";
+	cout << setw(OPTIONS_PADDING) << "" << "7. Логин\n";
+	cout << setw(OPTIONS_PADDING) << "" << "8. Пароль\n\n";
+	cout << setw(OPTIONS_PADDING) << "" << "0. Выход\n\n";
+
+	// Ввод выбора пользователя
+	cout << setw(INPUT_PADDING) << "" << "Ваш выбор: ";
+	cin >> choice;
+
+	return choice;
+
+}
+
+//Получить вектор студентов из файла
+vector<int> FindStudentInFile() {
+	vector<int> studentsIndexes;
+	string searchValue;
+	int intSearchValue;
+
+	int choice = FindStudentInFileMenu();
+
+	if (choice == 0) return studentsIndexes; // Выход
+
+	// Запрос значения для поиска
+	cout << setw(INPUT_PADDING) << "" << "Введите значение для поиска: ";
+	if (choice == 1 || choice == 5 || choice == 6) {
+		cin >> intSearchValue;
+	}
+	else {
+		cin.ignore(); // Очищаем буфер перед чтением строки
+		getline(cin, searchValue);
+	}
+
+	// Поиск по выбранному параметру
+	for (int i = 0; i < studentsArray.size(); i++) {
+		
+		bool found = false;
+
+		switch (choice) {
+		case 1: // ID пользователя
+			found = (studentsArray[i].getId() == intSearchValue);
+			break;
+		case 2: // Имя
+			found = (studentsArray[i].getName() == searchValue);
+			break;
+		case 3: // Фамилия
+			found = (studentsArray[i].getSurname() == searchValue);
+			break;
+		case 4: // Отчество
+			found = (studentsArray[i].getSecondName() == searchValue);
+			break;
+		case 5: // Группа
+			found = (studentsArray[i].getGroup() == intSearchValue);
+			break;
+		case 6: // Курс
+			found = (studentsArray[i].getCourse() == intSearchValue);
+			break;
+		case 7: // Логин
+			found = (studentsArray[i].getLogin() == searchValue);
+			break;
+		case 8: // Пароль
+			found = (studentsArray[i].getPassword() == searchValue);
+			break;
+		default:
+			cout << setw(INPUT_PADDING) << "" << "Неверный выбор!\n";
+		}
+
+		if (found) {
+			studentsIndexes.push_back(i);
+		}
+	}
+
+	if (studentsIndexes.size() == 0) {
+		cout << setw(INPUT_PADDING) << "" << "Студент не найден!\n";
+		cin.ignore();
+		WaitEnterInput();
+	}
+
+	return studentsIndexes;
+}
+
+void GetStudentsFromFile() {
+	studentsArray;
+	ifstream file(DB_FILE_NAME);
+
+	studentsArray.clear();
 
 	if (!file.is_open()) {
-		throw runtime_error("Failed to open file: " + filename);
+		throw runtime_error("Failed to open file");
 	}
 
 	string line;
@@ -105,17 +164,17 @@ void getStudentsFromFile(const string& filename) {
 		int userLevel = stoi(tokens[1]);
 		int group, course = -1;
 
-		if(!tokens[7].empty())
-			 group = stoi(tokens[7]);
+		if (!tokens[7].empty())
+			group = stoi(tokens[7]);
 
 		if (!tokens[8].empty())
-			 course = stoi(tokens[8]);
+			course = stoi(tokens[8]);
 
 		StudentCourseWork student(
 			id,
-			userLevel, 
-			tokens[3], // password
-			tokens[2], // login
+			userLevel,
+			tokens[2], // password
+			tokens[3], // login
 			tokens[4], // name
 			tokens[5], // secondname
 			tokens[6], // surname
@@ -127,10 +186,70 @@ void getStudentsFromFile(const string& filename) {
 		student.SetCourseWorkTheme(tokens[7]);
 		student.SetCourseWorkStorageLink(tokens[8]);
 
-		students_data.push_back(student);
+		studentsArray.push_back(student);
 
 	}
 }
+
+void Student::StudentEdit() {
+	int choice;
+	string newString;
+	int newInt;
+
+	do {
+		choice = StudentEditMenuChoice();
+
+		// Обработка выбора
+		switch (choice) {
+		case 1:
+			cout << setw(INPUT_PADDING) << "" << "Введите новое имя: ";
+			cin >> newString;
+			name = newString;
+			break;
+		case 2:
+			cout << setw(INPUT_PADDING) << "" << "Введите новую фамилию: ";
+			cin >> newString;
+			secondname = newString;
+			break;
+		case 3:
+			cout << setw(INPUT_PADDING) << "" << "Введите новое отчество: ";
+			cin >> newString;
+			surname = newString;
+			break;
+		case 4:
+			cout << setw(INPUT_PADDING) << "" << "Введите новую группу: ";
+			cin >> newInt;
+			group = newInt;
+			break;
+		case 5:
+			cout << setw(INPUT_PADDING) << "" << "Введите новый курс: ";
+			cin >> newInt;
+			course = newInt;
+			break;
+		case 6:
+			cout << setw(INPUT_PADDING) << "" << "Введите новый логин: ";
+			cin >> newString;
+			login = newString;
+			break;
+		case 7:
+			cout << setw(INPUT_PADDING) << "" << "Введите новый пароль: ";
+			cin >> newString;
+			password = newString;
+			break;
+		case 0:
+			break;
+		default:
+			cout << setw(INPUT_PADDING) << "" << "Ошибка: неверный выбор!\n";
+			break;
+		}
+
+		ClearTerminal();
+		RegistratedStudentTable(*this);
+	} while (choice != 0);
+	
+}
+
+
 
 void RegistrateStudentInFile() {
 
@@ -143,7 +262,7 @@ void RegistrateStudentInFile() {
 
 	string login;
 	string password;
-	int currentStudentsNum = students_data.size() + 1;
+	int currentStudentsNum = studentsArray.size();
 
 	int n;
 	cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей: ";
@@ -151,7 +270,7 @@ void RegistrateStudentInFile() {
 	cin.ignore(); // Очистка буфера после cin >> 
 
 	for (int i = 0; i < n; i++) {
-		currentStudentsNum += i;
+		currentStudentsNum ++; //начинаем индексирование с 1
 
 		//Уровень доступа
 		cout << "Уровень доступа записи (0 - студент, 1 - администратор): ";
@@ -159,7 +278,7 @@ void RegistrateStudentInFile() {
 		cin.ignore();
 
 		// Ввод имени
-		cout << "Запись " << i + 1 << ":\n\n";
+		cout << "Запись " << currentStudentsNum << ":\n\n";
 
 		// Ввод логина
 		cout << left << setw(OPTIONS_PADDING) << "Логин: ";
@@ -182,7 +301,7 @@ void RegistrateStudentInFile() {
 
 		if (userLevel == 1) {
 			StudentCourseWork StudentCourse(
-				currentStudentsNum + i,
+				currentStudentsNum,
 				userLevel,
 				password,
 				login,
@@ -206,7 +325,7 @@ void RegistrateStudentInFile() {
 
 
 		StudentCourseWork StudentCourse(
-			currentStudentsNum + i,
+			currentStudentsNum,
 			userLevel,
 			password,
 			login,
@@ -220,6 +339,10 @@ void RegistrateStudentInFile() {
 	}
 }
 
-void EditStudents() {
+void StudentFileRewrite() {
+	fstream outFile(DB_FILE_NAME, ios::out | ios::trunc);
 
+	for (int i = 0; i < studentsArray.size(); i++) {
+		outFile << studentsArray[i];
+	}
 }

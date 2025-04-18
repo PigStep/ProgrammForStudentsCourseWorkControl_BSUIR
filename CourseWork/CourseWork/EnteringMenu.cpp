@@ -62,7 +62,7 @@ bool UserAuthorizationMenu(bool isAdmin) {
     LoginAutorizationStatus(isAdmin);
 
 
-    WaitEnter();
+    WaitEnterInput();
 
     return true;
 }

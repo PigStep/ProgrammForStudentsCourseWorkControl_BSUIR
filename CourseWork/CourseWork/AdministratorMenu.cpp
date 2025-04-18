@@ -27,27 +27,30 @@ extern void AdminFunctionsMenu() {
 }
 
 void StudentsListOperations() {
-	const string OPTIONS_TO_CHOOSE[4] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Удалить учетную запись/записи", "Изменить учетную запись/записи" };
+	const string OPTIONS_TO_CHOOSE[4] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Изменить учетную запись/записи", "Удалить учетную запись / записи"  };
 	const string HEADER = { "МЕНЮ ОПЕРАЦИЙ С УЧЕТНЫМИ ЗАПИСЯМИ" };
 	int n;
 
 	do {
 		MenuWithOptionsHeaderCentralized(4, OPTIONS_TO_CHOOSE, HEADER);
 		cin >> n;
-		getStudentsFromFile(DB_FILE_NAME);
+		GetStudentsFromFile();
 
 		ClearTerminal();
 
 		switch (n)
 		{
-		case(1):
+		case 1:
 			PrintStudentsFromFile();
 			break;
-		case(2):
-			AddStudent();
+		case 2:
+			AddStudentFromArrayMenu();
 			break;
-		case(4):
-			EditStudent();
+		case 3:
+			EditStudentsFromArrayMenu();
+			break;
+		case 4:
+			DeleteStudentsFromArrayMenu();
 			break;
 		default:
 			break;
@@ -62,45 +65,82 @@ void PrintStudentsFromFile() {
 	const string HEADER = "ТАБЛИЦА СТУДЕНТОВ";
 	HeaderSecondLevel(HEADER);
 
-	for (int i = 0; i < students_data.size(); i++) {
-		RegistratedStudentTable(students_data[i]);
+	for (int i = 0; i < studentsArray.size(); i++) {
+		RegistratedStudentTable(studentsArray[i]);
 	}
 
 	cin.get();
-	WaitEnter();
+	WaitEnterInput();
 }
 
-void AddStudent() {
+void AddStudentFromArrayMenu() {
 	const string HEADER = "РЕГИСТРАЦИЯ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
 	RegistrateStudentInFile();
 }
 
-void EditStudent() {
+void EditStudentsFromArrayMenu() {
 	const string HEADER = "РЕДАКТИРОВАНИЕ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
-	int choise;
+	vector<int> indexes;
 
 	do {
-		cout << "Напишите ID изменяемой записи (для выхода напишите -1): ";
-		cin >> choise;
+		indexes = FindStudentInFile();
 
-		if (choise == -1)
-			break;
+		for (int i = 0; i < indexes.size(); i++) {
+			int index = indexes[i];
 
-		students_data[choise - 1].StudentEdit(BORDERS_WIDTH, OPTIONS_PADDING, INPUT_PADDING);
+			RefreshMenu(HEADER,index);
 
-	}while (choise != -1);
+			studentsArray[index].StudentEdit();
 
-	StudentFileRewrite();
+			StudentFileRewrite();
+		}
+
+		ClearTerminal();
+		HeaderSecondLevel(HEADER);
+	}while (indexes.size() != 0);
 }
 
-void StudentFileRewrite() {
-	fstream outFile(DB_FILE_NAME, ios::out | ios::trunc);
-
-	for (int i = 0; i < students_data.size(); i++) {
-		outFile << students_data[i];
-	}
+void RefreshMenu(const string HEADER, int index) {
+	ClearTerminal();
+	HeaderSecondLevel(HEADER);
+	RegistratedStudentTable(studentsArray[index]);
 }
+
+void DeleteStudentsFromArrayMenu() {
+	const string HEADER = "УДАЛЕНИЕ СТУДЕНТА";
+	HeaderSecondLevel(HEADER);
+
+	vector<int> indexes;
+	int delChoice;
+
+	do {
+		indexes = FindStudentInFile();
+
+		for (int i = 0; i < indexes.size(); i++) {
+			int index = indexes[i];
+			
+			
+			cout << "Вы хотите удалить эту запись? (1 - да, 0 - нет)\n";
+
+			RegistratedStudentTable(studentsArray[index]);
+
+			cout <<"Подтвердите удаление" << setw(INPUT_PADDING) << ": ";
+			cin >> delChoice;
+
+
+			if (delChoice == 1) {
+				DeleteStudentArray(i);
+				RefreshStudentsId();
+				StudentFileRewrite();
+			}
+		}
+		ClearTerminal();
+		HeaderSecondLevel(HEADER);
+
+	} while (indexes.size() != 0);
+}
+

@@ -3,7 +3,7 @@
 void ClearTerminal() {
     system("cls");
 }
-void WaitEnter() {
+void WaitEnterInput() {
     cout << "Нажмите Enter для продолжения" << endl;
     cin.get();
     ClearTerminal();
@@ -78,7 +78,7 @@ void printTableRow(const string& label, const string& value, char border = '|') 
         << " " << border << endl;
 }
 
-void RegistratedStudentTable(StudentCourseWork student) {
+void RegistratedStudentTable(Student student) {
     // Верхняя граница
     printBorder('-');
 
