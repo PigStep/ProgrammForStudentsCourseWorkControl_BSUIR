@@ -4,7 +4,7 @@ void ClearTerminal() {
     system("cls");
 }
 void WaitEnterInput() {
-    cout << "Нажмите Enter для продолжения" << endl;
+    cout << ENTER_INP_WAIT << endl;
     cin.get();
     ClearTerminal();
 }
@@ -109,6 +109,44 @@ void RegistratedStudentTable(Student student) {
     // Секция учебной информации
     printTableRow("Группа:", to_string(student.getGroup()));
     printTableRow("Курс:", to_string(student.getCourse()));
+
+    // Нижняя граница
+    printBorder('-');
+}
+
+void StudentWorkCourseTable(StudentCourseWork studentCourseWork) {
+    bool isAdmin = studentCourseWork.isUserAdmin();
+
+    if (isAdmin)
+        return;
+
+    // Верхняя граница
+    printBorder('-');
+
+    printTableRow("ID:", to_string(studentCourseWork.getId()));
+
+    printBorder('-');
+
+    // Секция ФИО
+    printTableRow("Имя:", studentCourseWork.getName());
+    printTableRow("Фамилия:", studentCourseWork.getSecondName());
+    printTableRow("Отчество:", studentCourseWork.getSurname());
+
+    // Разделитель
+    printBorder('-');
+    if (isAdmin)
+        return;
+
+    // Секция учебной информации
+    printTableRow("Группа:", to_string(studentCourseWork.getGroup()));
+    printTableRow("Курс:", to_string(studentCourseWork.getCourse()));
+
+    // Нижняя граница
+    printBorder('-');
+
+    // Секция данных курсовой работы
+    printTableRow("Тема курсовой:", studentCourseWork.getCourseWorkTheme());
+    printTableRow("Ссылка на ресурс:", studentCourseWork.getCourseWorkLink());
 
     // Нижняя граница
     printBorder('-');

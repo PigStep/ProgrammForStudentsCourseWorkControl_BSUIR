@@ -1,1 +1,3 @@
-1;0;ui;asd;asd;;sad;1;1;1;1;
+1;1;admin;admin;ADMIN;ADMIN;ADMIN;-1;-1;NO_THEME;NO_STORAGE_LINK_HAS_PROVIDED;
+2;0;998!;stud1;Влад;Смертьев;Валерьевич;478101;1;NO_THEME;NO_STORAGE_LINK_HAS_PROVIDED;
+3;0;67_1;stud2;Костя;Галькин;Андреевич;478101;1;NO_THEME;NO_STORAGE_LINK_HAS_PROVIDED;

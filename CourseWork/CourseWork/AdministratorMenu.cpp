@@ -2,20 +2,27 @@
 #include "Student.h"
 
 extern void AdminFunctionsMenu() {
-	const string OPTIONS_TO_CHOOSE[4] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу студентов", "Установить контрольные точки для работ", "Провести рецензирование работ"};
+	const string OPTIONS_TO_CHOOSE[4] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу данных студентов", "Установить контрольные точки для работ", "Провести рецензирование работ"};
 	const string HEADER = { "МЕНЮ АДМИНИСТРАТОРА" };
 	int n;
 
 	do {
 		MenuWithOptionsHeaderCentralized(4, OPTIONS_TO_CHOOSE, HEADER);
 		cin >> n;
+		GetStudentsFromFile();
 
 		ClearTerminal();
 
 		switch (n)
 		{
-		case(1):
+		case 1:
 			StudentsListOperations();
+			break;
+		case 2:
+			ShowStudentsDataTable();
+			break;
+		case 3:
+			SetCourseDeadlines();
 			break;
 		default:
 			break;
@@ -137,6 +144,8 @@ void DeleteStudentsFromArrayMenu() {
 				RefreshStudentsId();
 				StudentFileRewrite();
 			}
+
+			cout << "Запись успешно удалена"<<endl;
 		}
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
@@ -144,3 +153,27 @@ void DeleteStudentsFromArrayMenu() {
 	} while (indexes.size() != 0);
 }
 
+void ShowStudentsDataTable() {
+	const string HEADER = "ТАБЛИЦА ДАННЫХ СТУДЕНТОВ";
+	HeaderSecondLevel(HEADER);
+
+	for (int i = 0; i < studentsArray.size(); i++) {
+		StudentWorkCourseTable(studentsArray[i]);
+	}
+	cin.ignore();
+	WaitEnterInput();
+}
+
+
+void SetCourseDeadlines() {
+	const string HEADER = "УСТАНОВКА КОНТРОЛЬНЫХ ТОЧЕК";
+	HeaderSecondLevel(HEADER);
+
+	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+		cout << "Установите дату контрольной точки [" << i + 1 <<"]"<< endl;
+		courseDeadLinePoints[i].SetDate();
+		cout << endl;
+	}
+
+	SaveDeadLinesInFile();
+}

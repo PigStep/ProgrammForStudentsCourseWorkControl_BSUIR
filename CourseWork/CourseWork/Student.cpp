@@ -132,7 +132,7 @@ vector<int> FindStudentInFile() {
 
 void GetStudentsFromFile() {
 	studentsArray;
-	ifstream file(DB_FILE_NAME);
+	ifstream file(STUD_REG_FILE);
 
 	studentsArray.clear();
 
@@ -183,8 +183,8 @@ void GetStudentsFromFile() {
 		);
 
 		// Устанавливаем дополнительные поля
-		student.SetCourseWorkTheme(tokens[7]);
-		student.SetCourseWorkStorageLink(tokens[8]);
+		student.SetCourseWorkTheme(tokens[9]);
+		student.SetCourseWorkStorageLink(tokens[10]);
 
 		studentsArray.push_back(student);
 
@@ -309,7 +309,7 @@ void RegistrateStudentInFile() {
 				secondname,
 				surname);
 
-			studentsFileDB << StudentCourse;
+			studentsFileReg << StudentCourse;
 			continue;
 		}
 
@@ -335,14 +335,79 @@ void RegistrateStudentInFile() {
 			group,
 			course);
 
-		studentsFileDB << StudentCourse;
+		studentsFileReg << StudentCourse;
 	}
 }
 
 void StudentFileRewrite() {
-	fstream outFile(DB_FILE_NAME, ios::out | ios::trunc);
+	fstream outFile(STUD_REG_FILE, ios::out | ios::trunc);
 
 	for (int i = 0; i < studentsArray.size(); i++) {
 		outFile << studentsArray[i];
 	}
+}
+
+//Методы Класса Student
+Student::Student() {
+	name = "NO_NAME";
+	secondname = "";
+	surname = "";
+
+	id = -1;
+	group = -1;
+	course = -1;
+	user_level = 0;
+}
+Student::Student(int id, int userLevel,
+	string login, string password, string name, string secondname, string surname,
+	int group, int course) 
+{
+	this->id = id;
+	this->password = password;
+	this->login = login;
+
+	this->user_level = userLevel;
+	this->name = name;
+	this->secondname = secondname;
+	this->surname = surname;
+	this->group = group;
+	this->course = course;
+}
+
+//Методы класса StudentCourseWork
+
+StudentCourseWork::StudentCourseWork(int id, int userLevel, 
+	string password, string login, 
+	string name, string secondname, string surname) {
+
+	this->id = id;
+	this->user_level = userLevel;
+	this->password = password;
+	this->login = login;
+
+	this->name = name;
+	this->secondname = secondname;
+	this->surname = surname;
+
+	courseWorkStorageLink = "NO_STORAGE_LINK_HAS_PROVIDED";
+	courseWorkTheme = "NO_THEME";
+	group = -1;
+	course = -1;
+}
+
+fstream& operator<<(fstream& stream, const StudentCourseWork& self) {
+
+	stream << self.id << ";"
+		<< self.user_level << ";"
+		<< self.login << ';'
+		<< self.password << ';'
+		<< self.name << ';'
+		<< self.secondname << ';'
+		<< self.surname << ';'
+		<< self.group << ';'
+		<< self.course << ';'
+		<< self.courseWorkTheme << ';'
+		<< self.courseWorkStorageLink << ';' << endl;
+
+	return stream;
 }

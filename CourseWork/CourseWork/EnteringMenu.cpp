@@ -1,19 +1,26 @@
 ﻿#include "TableManips.h"
 #include "Student.h"
 
-fstream studentsFileDB; //global file stream variable (link in header)
-//vector<StudentCourseWork> students_DB;
+fstream studentsFileReg; 
+fstream studentsCorseDeadLines;
 
 int main()
 {
     SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
 
-    studentsFileDB.open(DB_FILE_NAME, ios::in | ios::out | ios::app);
+    FilePreparation();
 
     InitializeMenuLoginEntering();
 }
 
+void FilePreparation(){
+    studentsFileReg.open(STUD_REG_FILE, ios::in | ios::out | ios::app);
+    studentsCorseDeadLines.open(DEAD_LINES_FILE, ios::in | ios::out | ios::app);
+
+    LoadDeadlinesFromFile();
+    GetStudentsFromFile();
+}
 
 void InitializeMenuLoginEntering() {
     int choice;
@@ -44,7 +51,8 @@ void InitializeMenuLoginEntering() {
 
     } while (choice != 0);
 
-    studentsFileDB.close();
+    studentsFileReg.close();
+    studentsCorseDeadLines.close();
 }
 
 bool UserAuthorizationMenu(bool isAdmin) {

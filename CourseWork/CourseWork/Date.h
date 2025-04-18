@@ -1,6 +1,8 @@
 #pragma once
 #include "Header.h"
 
+using namespace std;
+
 class Date {
 	int day;
 	int month;
@@ -12,32 +14,17 @@ public:
 		month = 0;
 		year = 0;
 	}
+	void parse(string);
+	void SetDate();
+	string getDate() const;
+	bool isCorrectDate() { return true; }
 
-	void SetUpDate() {
-		cout << "\t¬ведите день приема на работу: ";
-		cin >> day;
-
-		cout << "\tмес€ц :";
-		cin >> month;
-
-		cout << "\tгод: ";
-		cin >> year;
-	}
-	string GetDate() {
-		string ret = "";
-
-		if (day < 10)
-			ret += "0";
-		ret += to_string(day);
-		ret += ".";
-
-		if (month < 10)
-			ret += "0";
-		ret += to_string(month);
-		ret += ".";
-
-		ret += to_string(year);
-
-		return ret;
-	}
+	friend fstream& operator<<(fstream&, const Date&);
 };
+
+const int NUM_OF_DEADLINES = 3;
+
+extern Date courseDeadLinePoints[NUM_OF_DEADLINES];
+
+void SaveDeadLinesInFile();
+void LoadDeadlinesFromFile();

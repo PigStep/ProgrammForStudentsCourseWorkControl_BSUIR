@@ -1,12 +1,11 @@
 #pragma once
-#include "Header.h"
 #include "Student.h"
 
-// table macroses
-#define BORDERS_WIDTH 100
-#define OPTIONS_PADDING 5
-#define HEADER_PADDING 5
-#define INPUT_PADDING 10
+// табличные константы
+const int BORDERS_WIDTH = 100;
+const int OPTIONS_PADDING = 5;
+const int HEADER_PADDING = 5;
+const int INPUT_PADDING = 10;
 
 // functions prototypes
 
@@ -28,3 +27,4 @@ void printBorder(char);
 // Функция для вывода строки таблицы
 void printTableRow(const string&, const string&, char);
 void RegistratedStudentTable(Student);
+void StudentWorkCourseTable(StudentCourseWork);
