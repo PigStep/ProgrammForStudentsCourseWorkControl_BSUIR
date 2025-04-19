@@ -16,10 +16,23 @@ int main()
     InitializeMenuLoginEntering();
 }
 
+//Функция провери и создания Админа в случае его отсутвия
+void CheckAdmins() {
+    if (AdminArrayCount() == 0) {
+        CreateBaseAdmin();
+        cout << NO_ADMIN_FOUND << endl;
+    }
+
+}
+
 void FilePreparation(){
     studentsFileReg.open(STUD_REG_FILE, ios::in | ios::out | ios::app);
     studentsFileData.open(STUD_DATA_FILE, ios::in | ios::out | ios::app);
     studentsFileDeadLines.open(DEAD_LINES_FILE, ios::in | ios::out | ios::app);
+
+
+    LoadStudentsFromFile();
+    CheckAdmins();
 
     LoadDeadlinesFromFile();
     LoadStudentsFromFile();
@@ -29,7 +42,6 @@ void InitializeMenuLoginEntering() {
     int choice;
 
     do {
-        ClearTerminal();
         const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь (в разработке)","Вход как администратор"};
         HeaderFirstLevel(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
 
@@ -64,7 +76,7 @@ void InitializeMenuLoginEntering() {
 }
 
 bool UserAuthorizationMenu(bool isAdmin) {
-    LoginFormHeader(isAdmin); //show authorization menu
+    LoginFormHeader(isAdmin);
 
     string login, password;
 
@@ -94,7 +106,7 @@ bool UserAuthorizationMenu(bool isAdmin) {
 bool CheckRegistration(bool isAdmin, string& login, string& password) {
     for (int i = 0; i < studentsArray.size(); i++) {
         if (studentsArray[i].getLogin() == login 
-            && studentsArray[i].getPassword() == password
+            && studentsArray[i].checkPassword(password)
             && (bool)studentsArray[i].getUserLevel() == isAdmin) {
             return true;
         }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Header.h"
 #include "DeadLines.h"
+#include "Encryption.h"
 #include <sstream>
 
 using namespace std;
@@ -20,19 +21,29 @@ protected:
 	int id;
 
 	string login;
-	string soltedPassword;
-	string password;
+	string salt;
+	string hashedPassword;
 public:
-	void setId(int newId) {
-		id = newId;
-	}
-
 	User();
 
 	User(int id, int userLevel,
-		string login, string password);
+		string login, string salt, string password);
+
+	void setId(int newId) { id = newId; }
+
+	int getId() const { return id; }
 
 	friend fstream& operator<<(fstream& stream, const User& self);
+
+	string getLogin() const { return login; }
+
+	bool checkPassword(const string& password);
+
+	void hashPassword(const string& password);
+
+	string getSalt() const { return salt; }
+
+	string getHashedPassword() const { return hashedPassword; }
 };
 class Student : public User {
 protected:
@@ -46,17 +57,20 @@ public:
 	Student();
 
 	Student(int id, int userLevel,
-		string login, string password, string name, string secondname, string surname, 
-		int group, int course);
+		string login, string salt, string password,
+		string name, string secondname, string surname);
+
+
+	Student(int id, int userLevel,
+		string login, string salt, string password,
+		string name, string secondname, string surname,
+		int groupe, int course);
 
 	void StudentEdit();
 
 	friend fstream& operator<<(fstream& stream, const Student& self);
 
 	// Геттеры для всех полей
-	string getLogin() const { return login; }
-
-	string getPassword() const { return password; }
 
 	string getName() const { return name; }
 
@@ -74,8 +88,6 @@ public:
 	}
 
 	int getUserLevel() const { return userLevel; }
-
-	int getId() const { return id; }
 
 };
 
@@ -97,13 +109,13 @@ public:
 
 	//Конструктор Администратора
 	StudentCourseWork(int id, int userLevel, 
-		string password, string login, 
+		string login, string salt, string password,
 		string name, string secondname, string surname);
 
 	StudentCourseWork(int id, int userLevel, 
-		string password, string login,
+		string login, string salt, string password,
 		string name, string secondname, string surname, 
-		int group, int course) : Student(id, userLevel, password, login, name, secondname, surname, group, course) {
+		int group, int course): Student(id,userLevel,login,salt,password,name,secondname,surname, group,course){
 
 		courseWorkStorageLink = STORAGE_LINK_DEFAULT;
 		courseWorkTheme = THEME_DEFAULT;
@@ -134,19 +146,40 @@ public:
 
 extern vector<StudentCourseWork> studentsArray;
 
+//Функция загрузки студентов из файла в оперативную память
 void LoadStudentsFromFile();
+
 // Вспомогательная функция для разделения строки
 vector<string> SplitString(const string& str, char delimiter);
+
+//Функция регистрации студента с записью в файл
 void RegistrateStudentInFile();
+
+//Функция перезаписи файла студентами из оперативной памяти
 void StudentFileRewrite();
+
+//Функция поиска студента по параметру
 vector<int> FindStudentByParam();
+
+//Найти количество админов в оперативной памяти
+int AdminArrayCount();
+void CreateBaseAdmin();
+
+//Функция удаления студента из вектора
 void DeleteStudentArray(int);
+
+//Функция обновления всей ID у студентов
 void RefreshStudentsId();
 
 //Операции с контрольными точками
 
+//Функция записи контрольных точек из консоли в файл
 void SaveDeadLinesInFile();
+
+//Функция загрузки контрольных точек из файла в оперативную память
 void LoadDeadlinesFromFile();
 
+//Функция получения всех дат контрольных точек одной строкой
 string GetDeadLines();
+//Функция вывода всех контрльных точек в виде списка
 void ShowDeadLinesList();

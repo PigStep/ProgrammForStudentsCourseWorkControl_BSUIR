@@ -2,12 +2,12 @@
 #include "StudentFileManip.h"
 
 extern void AdminFunctionsMenu() {
-	const string OPTIONS_TO_CHOOSE[4] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу данных студентов", "Установить контрольные точки для работ", "Провести рецензирование работ"};
+	const string OPTIONS_TO_CHOOSE[5] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу данных студентов", "Установить контрольные точки для работ", "Провести рецензирование работ", "Установить темы курсовых работ"};
 	const string HEADER = { "МЕНЮ АДМИНИСТРАТОРА" };
 	int n;
 
 	do {
-		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
+		HeaderFirstLevel(5, OPTIONS_TO_CHOOSE, HEADER);
 		cin >> n;
 		LoadStudentsFromFile();
 
@@ -27,6 +27,8 @@ extern void AdminFunctionsMenu() {
 		case 4:
 			SetStudentsMarks();
 			break;
+		case 5:
+
 		default:
 			break;
 		}

@@ -142,10 +142,13 @@
     <ClCompile Include="AdministratorMenu.cpp" />
     <ClCompile Include="DeadLines.cpp" />
     <ClCompile Include="EnteringMenu.cpp" />
+    <ClCompile Include="Encryption.cpp" />
     <ClCompile Include="StudentFileManip.cpp" />
     <ClCompile Include="TableManips.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Encryption.h" />
+    <ClInclude Include="ErrorsProccessing.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="DeadLines.h" />
     <ClInclude Include="TableManips.h" />

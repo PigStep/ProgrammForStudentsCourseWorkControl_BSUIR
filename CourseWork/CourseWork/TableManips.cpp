@@ -101,7 +101,8 @@ void RegistratedStudentTable(Student student) {
 
     // Секция логина и пароля
     printTableRow("Логин:", student.getLogin());
-    printTableRow("Пароль:", student.getPassword());
+    printTableRow("Соль:", student.getSalt());
+    printTableRow("Хэшированный пароль:", student.getHashedPassword());
 
     // Разделитель
     printBorder('-');

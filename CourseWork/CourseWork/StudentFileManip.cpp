@@ -51,8 +51,6 @@ int FindStudentInFileMenu() {
 	cout << setw(OPTIONS_PADDING) << "" << "4. Отчество\n";
 	cout << setw(OPTIONS_PADDING) << "" << "5. Группа\n";
 	cout << setw(OPTIONS_PADDING) << "" << "6. Курс\n";
-	cout << setw(OPTIONS_PADDING) << "" << "7. Логин\n";
-	cout << setw(OPTIONS_PADDING) << "" << "8. Пароль\n\n";
 	cout << setw(OPTIONS_PADDING) << "" << "0. Выход\n\n";
 
 	// Ввод выбора пользователя
@@ -107,12 +105,6 @@ vector<int> FindStudentByParam() {
 		case 6: // Курс
 			found = (studentsArray[i].getCourse() == intSearchValue);
 			break;
-		case 7: // Логин
-			found = (studentsArray[i].getLogin() == searchValue);
-			break;
-		case 8: // Пароль
-			found = (studentsArray[i].getPassword() == searchValue);
-			break;
 		default:
 			cout << setw(INPUT_PADDING) << "" << "Неверный выбор!\n";
 		}
@@ -134,8 +126,8 @@ vector<int> FindStudentByParam() {
 void LoadStudentsFromFile() {
 	studentsArray.clear();
 
-	ifstream regFile(STUD_REG_FILE);
-	ifstream dataFile(STUD_DATA_FILE);
+	ifstream regFile(STUD_REG_FILE, ios::in | ios::out);
+	ifstream dataFile(STUD_DATA_FILE, ios::in | ios::out);
 
 	// Читаем оба файла построчно одновременно
 	string regLine, dataLine;
@@ -144,18 +136,19 @@ void LoadStudentsFromFile() {
 
 		// Обрабатываем строку из регистрационного файла (User данные)
 		vector<string> regTokens = SplitString(regLine, ';');
-		if (regTokens.size() < 4) continue; // Минимум 4 поля для User
+		if (regTokens.size() < 5) continue; // Минимум 5 поля для User
 
 		// Обрабатываем строку из файла данных (Student + CourseWork)
 		vector<string> dataTokens = SplitString(dataLine, ';');
-		if (dataTokens.size() < 9) continue; // Минимум 9 полей
+		if (dataTokens.size() < 8) continue; // Минимум 8 полей
 
 		// Создаем объект StudentCourseWork
 		StudentCourseWork student(
 			stoi(regTokens[0]),  // id
 			stoi(regTokens[1]),  // userLevel
 			regTokens[2],        // login
-			regTokens[3],        // password
+			regTokens[3],		 // salt
+			regTokens[4],        // hashedpassword
 			dataTokens[0],       // name
 			dataTokens[1],       // secondname
 			dataTokens[2],       // surname
@@ -239,7 +232,7 @@ void Student::StudentEdit() {
 		case 7:
 			cout << setw(INPUT_PADDING) << "" << "Введите новый пароль: ";
 			cin >> newString;
-			password = newString;
+			hashedPassword = newString;
 			break;
 		case 0:
 			break;
@@ -310,6 +303,7 @@ void RegistrateStudentInFile() {
 				userLevel,
 				password,
 				login,
+				"",
 				name,
 				secondname,
 				surname);
@@ -332,8 +326,9 @@ void RegistrateStudentInFile() {
 		StudentCourseWork StudentCourse(
 			currentStudentsNum,
 			userLevel,
-			password,
 			login,
+			"",
+			password,
 			name,
 			secondname,
 			surname,
@@ -362,22 +357,61 @@ void StudentFileRewrite() {
 	regStream.close();
 }
 
+int AdminArrayCount() {
+	int count = 0;
+
+	for (int i = 0; i < studentsArray.size(); i++) {
+		if (studentsArray[i].getUserLevel() == 1)
+			count++;
+	}
+
+	return count;
+}
+void CreateBaseAdmin() {
+	StudentCourseWork admin;
+
+	admin.writeInFiles(studentsFileData,studentsFileReg);
+}
+
 //методы Класса User
 
 User::User() {
-	userLevel=-1;
-	id=-1;
+	userLevel=1;
+	id=1;
 
-	login="";
-	soltedPassword="";
-	password="";
+	login="admin";
+	salt = "adminSalt";
+	hashedPassword=HashPassword("admin",salt);
 }
+
 User::User(int id, int userLevel,
-	string login, string password) {
+	string login, string salt, string password) {
 	this->id = id;
-	this->password = password;
+
+	if (salt.empty()) {
+		hashPassword(password);
+	}
+	else {
+		this->salt = salt;
+		this->hashedPassword = password;
+	}
+
+
+	
 	this->login = login;
 	this->userLevel = userLevel;
+}
+
+//Фукнкция проверки на существование пароля
+bool User::checkPassword(const string& password){
+	return HashPassword(password, salt) == hashedPassword;
+}
+
+//захэшировать пароль с уникальной солью для записи
+void User::hashPassword(const string& password)
+{
+	salt = GenerateSalt();
+	hashedPassword = HashPassword(password, salt);
 }
 
 fstream& operator<<(fstream& stream, const User& self){
@@ -385,33 +419,39 @@ fstream& operator<<(fstream& stream, const User& self){
 	stream << self.id << ";"
 		<< self.userLevel << ";"
 		<< self.login << ";"
-		<< self.password << ";";
+		<< self.salt<<";"
+		<< self.hashedPassword << ";";
 
 	return stream;
 }
 
 //Методы Класса Student
 Student::Student() {
-	name = "NO_NAME";
-	secondname = "";
-	surname = "";
+	name = "ADMIN";
+	secondname = "ADMIN";
+	surname = "ADMIN";
 
-	id = -1;
 	group = -1;
 	course = -1;
-	userLevel = 0;
 }
 Student::Student(int id, int userLevel,
-	string login, string password, string name, string secondname, string surname,
-	int group, int course) : User(id, userLevel, login, password)
-{
+	string login, string salt, string password, 
+	string name, string secondname, string surname,
+	int group, int course) : User(id, userLevel, login, salt, password){
+	this->name = name;
+	this->secondname = secondname;
+	this->surname = surname;
+
+	this->course = course;
+	this->group = group;
+}
+Student::Student(int id, int userLevel,
+	string login, string salt, string password,
+	string name, string secondname, string surname) : User(id, userLevel, login, salt, password) {
 
 	this->name = name;
 	this->secondname = secondname;
 	this->surname = surname;
-	this->group = group;
-	this->course = course;
-
 }
 
 fstream& operator<<(fstream& stream, const Student& self) {
@@ -427,17 +467,8 @@ fstream& operator<<(fstream& stream, const Student& self) {
 //Методы класса StudentCourseWork
 
 StudentCourseWork::StudentCourseWork(int id, int userLevel, 
-	string password, string login, 
-	string name, string secondname, string surname) {
-
-	this->id = id;
-	this->userLevel = userLevel;
-	this->password = password;
-	this->login = login;
-
-	this->name = name;
-	this->secondname = secondname;
-	this->surname = surname;
+	string password, string login, string salt,
+	string name, string secondname, string surname) : Student(id, userLevel, login, salt, password, name, secondname, surname) {
 
 	courseWorkStorageLink = STORAGE_LINK_DEFAULT;
 	courseWorkTheme = THEME_DEFAULT;
@@ -479,6 +510,7 @@ void StudentCourseWork::writeInFiles(fstream& dataStream, fstream& regStream) {
 	// Явное приведение к базовому классу User для вызова нужной перегрузки
 	regStream << static_cast<const User&>(*this);
 	regStream << "\n";
+	regStream.flush();
 
 
 	// 2. Запись данных Student и StudentCourseWork во второй файл
@@ -488,7 +520,7 @@ void StudentCourseWork::writeInFiles(fstream& dataStream, fstream& regStream) {
 	// Затем записываем StudentCourseWork часть
 	dataStream << *this;
 	dataStream << "\n";  // Добавляем перевод строки для разделения записей
-
+	dataStream.flush();  // Принудительная запись
 }
 
 //Функции работы с контрольными точками

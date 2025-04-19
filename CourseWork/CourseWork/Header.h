@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <vector>
 #include <fstream>
+#include "ErrorsProccessing.h"
 
 using namespace std;
 
@@ -19,19 +20,12 @@ const string STUD_REG_FILE = "REG_STUDENTS.txt";
 const string STUD_DATA_FILE = "DATA_STUDENTS.txt";
 const string DEAD_LINES_FILE = "StudentsDeadLines.txt";
 
-//константы ошибок и предупреждений
-const string ERR_CHOICE_INP = "";
-const string ENTER_INP_WAIT = "Нажмите Enter для продолжения";
-const string REG_AUTH_FAIL = "Ошибка, пользователь с такими данными не найден!";
-
-//даты
-const string EMPTY_DEADLINES_FILE_WARN = "ВНИМАНИЕ, ФАЙЛ С КОНТРОЛЬНЫМИ ТОЧКАМИ ПУСТ";
-
 //Fuctions prototypes 
 //EnteringMenu.cpp
 
 void FilePreparation();
 void InitializeMenuLoginEntering();
+void CheckAdmins();
 bool UserAuthorizationMenu(bool);
 bool CheckRegistration(bool isAdmin, string& login, string& password);
 

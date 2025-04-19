@@ -9,7 +9,8 @@ const int INPUT_PADDING = 10;   // Отступ для полей ввода
 
 // functions prototypes
 
-//base tableFunctions
+//Базовые табличные функции
+
 void ClearTerminal();
 void WaitEnterInput();
 ostream& headerBorder(ostream&);
