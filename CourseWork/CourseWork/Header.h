@@ -4,14 +4,14 @@
 #include <Windows.h>
 #include <cstdlib>
 #include <iomanip>
-#include<vector>
+#include <vector>
 #include <fstream>
 
 using namespace std;
 
 //extern для избегания ошибки линковки
 extern fstream studentsFileReg; 
-extern fstream studentsCorseDeadLines;
+extern fstream studentsFileDeadLines;
 
 // константы файлов
 const string STUD_REG_FILE = "StudentsDB.txt";
@@ -22,10 +22,11 @@ const string ERR_CHOICE_INP = "";
 const string ENTER_INP_WAIT = "Нажмите Enter для продолжения";
 
 //даты
-const string EMPTY_DEADLINES_FILE = "ВНИМАНИЕ, ФАЙЛ С КОНТРОЛЬНЫМИ ТОЧКАМИ ПУСТ";
+const string EMPTY_DEADLINES_FILE_WARN = "ВНИМАНИЕ, ФАЙЛ С КОНТРОЛЬНЫМИ ТОЧКАМИ ПУСТ";
 
 //Fuctions prototypes 
 //EnteringMenu.cpp
+
 void FilePreparation();
 void InitializeMenuLoginEntering();
 bool UserAuthorizationMenu(bool);
@@ -43,3 +44,5 @@ void DeleteStudentsFromArrayMenu();
 void ShowStudentsDataTable();
 
 void SetCourseDeadlines();
+
+void SetStudentsMarks();

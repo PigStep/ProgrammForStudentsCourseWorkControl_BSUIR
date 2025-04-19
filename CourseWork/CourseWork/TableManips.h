@@ -1,11 +1,11 @@
 #pragma once
-#include "Student.h"
+#include "StudentFileManip.h"
 
 // табличные константы
-const int BORDERS_WIDTH = 100;
-const int OPTIONS_PADDING = 5;
-const int HEADER_PADDING = 5;
-const int INPUT_PADDING = 10;
+const int BORDERS_WIDTH = 80;   // Общая ширина таблицы
+const int OPTIONS_PADDING = 5; // Отступ для значений
+const int HEADER_WIDTH = 10;  // Ширина левой колонки
+const int INPUT_PADDING = 10;   // Отступ для полей ввода
 
 // functions prototypes
 
@@ -13,8 +13,9 @@ const int INPUT_PADDING = 10;
 void ClearTerminal();
 void WaitEnterInput();
 ostream& headerBorder(ostream&);
-void MenuWithOptionsHeaderCentralized(int, const string[], string);
+void HeaderFirstLevel(int, const string[], string);
 void HeaderSecondLevel(const string);
+void LogMessage(string&);
 
 //loginTableFunctions
 void LoginFormHeader(bool);

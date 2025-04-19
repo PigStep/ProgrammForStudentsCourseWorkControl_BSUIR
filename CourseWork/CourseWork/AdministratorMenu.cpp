@@ -1,5 +1,5 @@
 #include "TableManips.h"
-#include "Student.h"
+#include "StudentFileManip.h"
 
 extern void AdminFunctionsMenu() {
 	const string OPTIONS_TO_CHOOSE[4] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу данных студентов", "Установить контрольные точки для работ", "Провести рецензирование работ"};
@@ -7,7 +7,7 @@ extern void AdminFunctionsMenu() {
 	int n;
 
 	do {
-		MenuWithOptionsHeaderCentralized(4, OPTIONS_TO_CHOOSE, HEADER);
+		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
 		cin >> n;
 		GetStudentsFromFile();
 
@@ -24,6 +24,9 @@ extern void AdminFunctionsMenu() {
 		case 3:
 			SetCourseDeadlines();
 			break;
+		case 4:
+			SetStudentsMarks();
+			break;
 		default:
 			break;
 		}
@@ -39,7 +42,7 @@ void StudentsListOperations() {
 	int n;
 
 	do {
-		MenuWithOptionsHeaderCentralized(4, OPTIONS_TO_CHOOSE, HEADER);
+		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
 		cin >> n;
 		GetStudentsFromFile();
 
@@ -169,11 +172,52 @@ void SetCourseDeadlines() {
 	const string HEADER = "УСТАНОВКА КОНТРОЛЬНЫХ ТОЧЕК";
 	HeaderSecondLevel(HEADER);
 
-	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
-		cout << "Установите дату контрольной точки [" << i + 1 <<"]"<< endl;
-		courseDeadLinePoints[i].SetDate();
-		cout << endl;
-	}
+	string message = "Текущие контрольные точки:\n";
+	message += GetDeadLines();
+	LogMessage(message);
 
-	SaveDeadLinesInFile();
+	int confirm;
+
+	cout << "Вы хотите изменить контрольные точки? (1 - да; 0 - нет)\n";
+	cin >> confirm;
+
+	if (confirm) {
+		for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+			cout << "Установите дату контрольной точки [" << i + 1 << "]" << endl;
+			courseDeadLinePoints[i].SetDate();
+			cout << endl;
+		}
+
+		string message = "Точки успешно созданы";
+		LogMessage(message);
+		SaveDeadLinesInFile();
+		cin.ignore();
+		WaitEnterInput();
+	}
+	else
+		return;
+	
+}
+
+void SetStudentsMarks() {
+	const string HEADER = "МЕНЮ ОЦЕНИВАНИЯ РАБОТЫ СТУДЕНТА";
+	HeaderSecondLevel(HEADER);
+	vector<int> indexes;
+
+	do {
+		indexes = FindStudentInFile();
+
+		for (int i = 0; i < indexes.size(); i++) {
+			int index = indexes[i];
+
+			RefreshMenu(HEADER, index);
+
+			cout << "Выберете контрольную точку на изменение: ";
+
+			StudentFileRewrite();
+		}
+
+		ClearTerminal();
+		HeaderSecondLevel(HEADER);
+	} while (indexes.size() != 0);
 }

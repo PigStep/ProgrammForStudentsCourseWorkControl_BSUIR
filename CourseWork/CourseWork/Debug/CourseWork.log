@@ -1,15 +1,16 @@
 ﻿  AdministratorMenu.cpp
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(75,20): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(99,21): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(130,21): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(160,20): warning C4018: <: несоответствие типов со знаком и без знака
-  Date.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(78,20): warning C4018: <: несоответствие типов со знаком и без знака
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(102,21): warning C4018: <: несоответствие типов со знаком и без знака
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(133,21): warning C4018: <: несоответствие типов со знаком и без знака
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(163,20): warning C4018: <: несоответствие типов со знаком и без знака
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(210,21): warning C4018: <: несоответствие типов со знаком и без знака
+  DeadLines.cpp
   EnteringMenu.cpp
-  Student.cpp
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\Student.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\Student.cpp(35,20): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\Student.cpp(86,20): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\Student.cpp(345,20): warning C4018: <: несоответствие типов со знаком и без знака
+  StudentFileManip.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(36,20): warning C4018: <: несоответствие типов со знаком и без знака
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(87,20): warning C4018: <: несоответствие типов со знаком и без знака
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(346,20): warning C4018: <: несоответствие типов со знаком и без знака
   TableManips.cpp
   Создание кода...
   CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\Debug\CourseWork.exe

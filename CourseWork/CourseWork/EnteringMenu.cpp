@@ -1,8 +1,8 @@
 ﻿#include "TableManips.h"
-#include "Student.h"
+#include "StudentFileManip.h"
 
 fstream studentsFileReg; 
-fstream studentsCorseDeadLines;
+fstream studentsFileDeadLines;
 
 int main()
 {
@@ -16,7 +16,7 @@ int main()
 
 void FilePreparation(){
     studentsFileReg.open(STUD_REG_FILE, ios::in | ios::out | ios::app);
-    studentsCorseDeadLines.open(DEAD_LINES_FILE, ios::in | ios::out | ios::app);
+    studentsFileDeadLines.open(DEAD_LINES_FILE, ios::in | ios::out | ios::app);
 
     LoadDeadlinesFromFile();
     GetStudentsFromFile();
@@ -27,7 +27,7 @@ void InitializeMenuLoginEntering() {
 
     do {
         const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь (в разработке)","Вход как администратор"};
-        MenuWithOptionsHeaderCentralized(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
+        HeaderFirstLevel(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
 
         cin >> choice;
 
@@ -52,7 +52,7 @@ void InitializeMenuLoginEntering() {
     } while (choice != 0);
 
     studentsFileReg.close();
-    studentsCorseDeadLines.close();
+    studentsFileDeadLines.close();
 }
 
 bool UserAuthorizationMenu(bool isAdmin) {

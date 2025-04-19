@@ -14,7 +14,7 @@ ostream& headerBorder(ostream& stream) {
     return stream;
 }
 
-void MenuWithOptionsHeaderCentralized(int optionsCount, const string optionsArray[], string header) {
+void HeaderFirstLevel(int optionsCount, const string optionsArray[], string header) {
     // Верхняя граница
     cout << headerBorder;
 
@@ -51,6 +51,11 @@ void HeaderSecondLevel(const string HEADER) {
 
     cout << headerBorder;
 }
+void LogMessage(string& message) {
+    cout << "\n" << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << "\n"
+        << "  "<< message<<endl
+        << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
+}
 void LoginFormHeader(bool isAdmin) {
     // Верхняя граница
     cout << headerBorder;
@@ -69,13 +74,18 @@ void LoginAutorizationStatus(bool isAdmin) {
 
 
 void printBorder(char fill = '=') {
-    cout << "+" << string(BORDERS_WIDTH - 2, fill) << "+" << endl;
+    cout << "+" << string(BORDERS_WIDTH, fill) << "+" << endl;
 }
 
 void printTableRow(const string& label, const string& value, char border = '|') {
-    cout << border << " " << left << setw(HEADER_PADDING * 4) << label
-        << border << " " << setw(BORDERS_WIDTH - HEADER_PADDING * 4 - OPTIONS_PADDING-1) << value
-        << " " << border << endl;
+    // Рассчитываем фактическую ширину для значения
+    const int value_width = BORDERS_WIDTH - HEADER_WIDTH * 4 - 4; // 4 = 2 границы + 2 пробела
+
+    cout << border << " "
+        << left << setw(HEADER_WIDTH * 4) << label
+        << border << " "
+        << left << setw(value_width) << value
+        << border << endl;
 }
 
 void RegistratedStudentTable(Student student) {
@@ -97,8 +107,8 @@ void RegistratedStudentTable(Student student) {
     printBorder('-');
 
     // Секция ФИО
-    printTableRow("Имя:", student.getName());
     printTableRow("Фамилия:", student.getSecondName());
+    printTableRow("Имя:", student.getName());
     printTableRow("Отчество:", student.getSurname());
 
     // Разделитель
@@ -128,8 +138,8 @@ void StudentWorkCourseTable(StudentCourseWork studentCourseWork) {
     printBorder('-');
 
     // Секция ФИО
-    printTableRow("Имя:", studentCourseWork.getName());
     printTableRow("Фамилия:", studentCourseWork.getSecondName());
+    printTableRow("Имя:", studentCourseWork.getName());
     printTableRow("Отчество:", studentCourseWork.getSurname());
 
     // Разделитель
@@ -141,13 +151,25 @@ void StudentWorkCourseTable(StudentCourseWork studentCourseWork) {
     printTableRow("Группа:", to_string(studentCourseWork.getGroup()));
     printTableRow("Курс:", to_string(studentCourseWork.getCourse()));
 
-    // Нижняя граница
+    // Разделитель
     printBorder('-');
 
     // Секция данных курсовой работы
     printTableRow("Тема курсовой:", studentCourseWork.getCourseWorkTheme());
     printTableRow("Ссылка на ресурс:", studentCourseWork.getCourseWorkLink());
 
+
+    printBorder('-');
+    for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+        string markMessage = "Оцека по контрольной точке (" + courseDeadLinePoints[i].getDate() + "): ";
+
+        string mark = to_string(studentCourseWork.getMark(i));
+        bool isDefault = to_string(DEFAULT_MARK) == mark;
+
+        printTableRow(markMessage, (isDefault ? DEFAULT_MARK_TEXT:mark));
+    }
     // Нижняя граница
     printBorder('-');
+
+
 }

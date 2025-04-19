@@ -140,16 +140,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdministratorMenu.cpp" />
-    <ClCompile Include="Date.cpp" />
+    <ClCompile Include="DeadLines.cpp" />
     <ClCompile Include="EnteringMenu.cpp" />
-    <ClCompile Include="Student.cpp" />
+    <ClCompile Include="StudentFileManip.cpp" />
     <ClCompile Include="TableManips.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
-    <ClInclude Include="Date.h" />
+    <ClInclude Include="DeadLines.h" />
     <ClInclude Include="TableManips.h" />
-    <ClInclude Include="Student.h" />
+    <ClInclude Include="StudentFileManip.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
