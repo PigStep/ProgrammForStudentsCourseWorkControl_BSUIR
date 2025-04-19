@@ -16,7 +16,7 @@ extern Date courseDeadLinePoints[NUM_OF_DEADLINES];
 
 class User {
 protected:
-	int user_level;
+	int userLevel;
 	int id;
 
 	string login;
@@ -26,6 +26,13 @@ public:
 	void setId(int newId) {
 		id = newId;
 	}
+
+	User();
+
+	User(int id, int userLevel,
+		string login, string password);
+
+	friend fstream& operator<<(fstream& stream, const User& self);
 };
 class Student : public User {
 protected:
@@ -44,6 +51,8 @@ public:
 
 	void StudentEdit();
 
+	friend fstream& operator<<(fstream& stream, const Student& self);
+
 	// Геттеры для всех полей
 	string getLogin() const { return login; }
 
@@ -60,11 +69,11 @@ public:
 	int getCourse() const { return course; }
 
 	bool isUserAdmin()const {
-		if (user_level == 1) return true;
+		if (userLevel == 1) return true;
 		return false;
 	}
 
-	int getUserLevel() const { return user_level; }
+	int getUserLevel() const { return userLevel; }
 
 	int getId() const { return id; }
 
@@ -118,15 +127,19 @@ public:
 
 	int getMark(int index);
 
-	void setDeadLineMark(int deadLineIndex, int mark);
+	void setMark(int deadLineIndex, int mark);
+
+	void writeInFiles(fstream& dataStream, fstream& regStream);
 };
 
 extern vector<StudentCourseWork> studentsArray;
 
-void GetStudentsFromFile();
+void LoadStudentsFromFile();
+// Вспомогательная функция для разделения строки
+vector<string> SplitString(const string& str, char delimiter);
 void RegistrateStudentInFile();
 void StudentFileRewrite();
-vector<int> FindStudentInFile();
+vector<int> FindStudentByParam();
 void DeleteStudentArray(int);
 void RefreshStudentsId();
 
@@ -136,3 +149,4 @@ void SaveDeadLinesInFile();
 void LoadDeadlinesFromFile();
 
 string GetDeadLines();
+void ShowDeadLinesList();

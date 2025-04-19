@@ -64,7 +64,7 @@ int FindStudentInFileMenu() {
 }
 
 //Получить вектор студентов из файла
-vector<int> FindStudentInFile() {
+vector<int> FindStudentByParam() {
 	vector<int> studentsIndexes;
 	string searchValue;
 	int intSearchValue;
@@ -131,65 +131,69 @@ vector<int> FindStudentInFile() {
 	return studentsIndexes;
 }
 
-void GetStudentsFromFile() {
-	studentsArray;
-	ifstream file(STUD_REG_FILE);
-
+void LoadStudentsFromFile() {
 	studentsArray.clear();
 
-	if (!file.is_open()) {
-		throw runtime_error("Failed to open file");
-	}
+	ifstream regFile(STUD_REG_FILE);
+	ifstream dataFile(STUD_DATA_FILE);
 
-	string line;
-	while (getline(file, line)) {
-		if (line.empty()) continue; // Пропускаем пустые строки
+	// Читаем оба файла построчно одновременно
+	string regLine, dataLine;
+	while (getline(regFile, regLine) && getline(dataFile, dataLine)) {
+		if (regLine.empty() || dataLine.empty()) continue;
 
-		istringstream iss(line);
-		string token;
-		vector<string> tokens;
+		// Обрабатываем строку из регистрационного файла (User данные)
+		vector<string> regTokens = SplitString(regLine, ';');
+		if (regTokens.size() < 4) continue; // Минимум 4 поля для User
 
-		// Разбиваем строку по разделителю ';'
-		while (getline(iss, token, ';')) {
-			tokens.push_back(token);
-		}
-
-		// Проверяем, что получили все 11 полей (10 ';' в строке)
-		if (tokens.size() != 11) {
-			continue;
-		}
+		// Обрабатываем строку из файла данных (Student + CourseWork)
+		vector<string> dataTokens = SplitString(dataLine, ';');
+		if (dataTokens.size() < 9) continue; // Минимум 9 полей
 
 		// Создаем объект StudentCourseWork
-		// Преобразуем группу и курс из строки в число
-		int id = stoi(tokens[0]);
-		int userLevel = stoi(tokens[1]);
-		int group, course = -1;
-
-		if (!tokens[7].empty())
-			group = stoi(tokens[7]);
-
-		if (!tokens[8].empty())
-			course = stoi(tokens[8]);
-
 		StudentCourseWork student(
-			id,
-			userLevel,
-			tokens[2], // password
-			tokens[3], // login
-			tokens[4], // name
-			tokens[5], // secondname
-			tokens[6], // surname
-			group,
-			course
+			stoi(regTokens[0]),  // id
+			stoi(regTokens[1]),  // userLevel
+			regTokens[2],        // login
+			regTokens[3],        // password
+			dataTokens[0],       // name
+			dataTokens[1],       // secondname
+			dataTokens[2],       // surname
+			dataTokens[3].empty() ? -1 : stoi(dataTokens[3]),  // group
+			dataTokens[4].empty() ? -1 : stoi(dataTokens[4])   // course
 		);
 
 		// Устанавливаем дополнительные поля
-		student.SetCourseWorkTheme(tokens[9]);
-		student.SetCourseWorkStorageLink(tokens[10]);
+		if (dataTokens.size() > 5) {
+			student.SetCourseWorkTheme(dataTokens[5]);
+		}
+		if (dataTokens.size() > 6) {
+			student.SetCourseWorkStorageLink(dataTokens[6]);
+		}
+		if (dataTokens.size() > 7) { //обработка оценок
+			for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+				if (!dataTokens[7 + i].empty()) {
+					student.setMark(i, stoi(dataTokens[7 + i]));
+					}
+				}
+			}
 
 		studentsArray.push_back(student);
-
+		
 	}
+
+	regFile.close();
+	dataFile.close();
+}
+
+vector<string> SplitString(const string& str, char delimiter) {
+	vector<string> tokens;
+	string token;
+	istringstream tokenStream(str);
+	while (getline(tokenStream, token, delimiter)) {
+		tokens.push_back(token);
+	}
+	return tokens;
 }
 
 void Student::StudentEdit() {
@@ -310,7 +314,7 @@ void RegistrateStudentInFile() {
 				secondname,
 				surname);
 
-			studentsFileReg << StudentCourse;
+			StudentCourse.writeInFiles(studentsFileData, studentsFileReg);
 			continue;
 		}
 
@@ -336,16 +340,54 @@ void RegistrateStudentInFile() {
 			group,
 			course);
 
-		studentsFileReg << StudentCourse;
+		StudentCourse.writeInFiles(studentsFileData,studentsFileReg);
 	}
 }
 
 void StudentFileRewrite() {
-	fstream outFile(STUD_REG_FILE, ios::out | ios::trunc);
+	fstream dataStream;
+	fstream regStream;
+
+	dataStream.open(STUD_DATA_FILE,ios::out | ios::trunc);
+	regStream.open(STUD_REG_FILE, ios::out | ios::trunc);
+
+	dataStream << flush;
+	regStream << flush;
 
 	for (int i = 0; i < studentsArray.size(); i++) {
-		outFile << studentsArray[i];
+		studentsArray[i].writeInFiles(dataStream,regStream);
 	}
+
+	dataStream.close();
+	regStream.close();
+}
+
+//методы Класса User
+
+User::User() {
+	userLevel=-1;
+	id=-1;
+
+	login="";
+	soltedPassword="";
+	password="";
+}
+User::User(int id, int userLevel,
+	string login, string password) {
+	this->id = id;
+	this->password = password;
+	this->login = login;
+	this->userLevel = userLevel;
+}
+
+fstream& operator<<(fstream& stream, const User& self){
+
+	stream << self.id << ";"
+		<< self.userLevel << ";"
+		<< self.login << ";"
+		<< self.password << ";";
+
+	return stream;
 }
 
 //Методы Класса Student
@@ -357,22 +399,96 @@ Student::Student() {
 	id = -1;
 	group = -1;
 	course = -1;
-	user_level = 0;
+	userLevel = 0;
 }
 Student::Student(int id, int userLevel,
 	string login, string password, string name, string secondname, string surname,
-	int group, int course) 
+	int group, int course) : User(id, userLevel, login, password)
 {
-	this->id = id;
-	this->password = password;
-	this->login = login;
 
-	this->user_level = userLevel;
 	this->name = name;
 	this->secondname = secondname;
 	this->surname = surname;
 	this->group = group;
 	this->course = course;
+
+}
+
+fstream& operator<<(fstream& stream, const Student& self) {
+	stream << self.name << ";"
+		<< self.secondname << ";"
+		<< self.surname << ";"
+
+		<< self.group << ";"
+		<< self.course << ";";
+	return stream;
+}
+
+//Методы класса StudentCourseWork
+
+StudentCourseWork::StudentCourseWork(int id, int userLevel, 
+	string password, string login, 
+	string name, string secondname, string surname) {
+
+	this->id = id;
+	this->userLevel = userLevel;
+	this->password = password;
+	this->login = login;
+
+	this->name = name;
+	this->secondname = secondname;
+	this->surname = surname;
+
+	courseWorkStorageLink = STORAGE_LINK_DEFAULT;
+	courseWorkTheme = THEME_DEFAULT;
+	group = -1;
+	course = -1;
+
+	setMarksDefault();
+}
+
+fstream& operator<<(fstream& stream, const StudentCourseWork& self) {
+
+	stream << self.courseWorkTheme << ';'
+		<< self.courseWorkStorageLink << ';';
+
+	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+		stream << self.deadLinePointsMarks[i] << ";";
+	}
+
+	return stream;
+}
+
+
+void StudentCourseWork::setMark(int deadLineIndex, int mark) {
+	deadLinePointsMarks[deadLineIndex] = mark;
+}
+
+int StudentCourseWork::getMark(int index) {
+	return deadLinePointsMarks[index];
+}
+
+void StudentCourseWork::setMarksDefault() {
+	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+		deadLinePointsMarks[i] = DEFAULT_MARK;
+	}
+}
+
+void StudentCourseWork::writeInFiles(fstream& dataStream, fstream& regStream) {
+	// 1. Запись данных User в первый файл
+	// Явное приведение к базовому классу User для вызова нужной перегрузки
+	regStream << static_cast<const User&>(*this);
+	regStream << "\n";
+
+
+	// 2. Запись данных Student и StudentCourseWork во второй файл
+	// Сначала записываем Student часть
+	dataStream << static_cast<const Student&>(*this);
+
+	// Затем записываем StudentCourseWork часть
+	dataStream << *this;
+	dataStream << "\n";  // Добавляем перевод строки для разделения записей
+
 }
 
 //Функции работы с контрольными точками
@@ -416,61 +532,13 @@ void LoadDeadlinesFromFile() {
 string GetDeadLines() {
 	string dates;
 	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
-		dates += courseDeadLinePoints[i].getDate() + '\n';
+		dates += to_string(i + 1) + "- " + courseDeadLinePoints[i].getDate() + '\n';
 	}
 	return dates;
 }
 
-//Методы класса StudentCourseWork
-
-StudentCourseWork::StudentCourseWork(int id, int userLevel, 
-	string password, string login, 
-	string name, string secondname, string surname) {
-
-	this->id = id;
-	this->user_level = userLevel;
-	this->password = password;
-	this->login = login;
-
-	this->name = name;
-	this->secondname = secondname;
-	this->surname = surname;
-
-	courseWorkStorageLink = STORAGE_LINK_DEFAULT;
-	courseWorkTheme = THEME_DEFAULT;
-	group = -1;
-	course = -1;
-
-	setMarksDefault();
-}
-
-fstream& operator<<(fstream& stream, const StudentCourseWork& self) {
-
-	stream << self.id << ";"
-		<< self.user_level << ";"
-		<< self.login << ';'
-		<< self.password << ';'
-		<< self.name << ';'
-		<< self.secondname << ';'
-		<< self.surname << ';'
-		<< self.group << ';'
-		<< self.course << ';'
-		<< self.courseWorkTheme << ';'
-		<< self.courseWorkStorageLink << ';' << endl;
-
-	return stream;
-}
-
-void StudentCourseWork::setDeadLineMark(int deadLineIndex, int mark) {
-	deadLinePointsMarks[deadLineIndex] = mark;
-}
-
-int StudentCourseWork::getMark(int index) {
-	return deadLinePointsMarks[index];
-}
-
-void StudentCourseWork::setMarksDefault() {
-	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
-		deadLinePointsMarks[i] = DEFAULT_MARK;
-	}
+void ShowDeadLinesList() {
+	string message = "Текущие контрольные точки:\n";
+	message += GetDeadLines();
+	LogMessage(message);
 }

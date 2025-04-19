@@ -5,7 +5,7 @@ void ClearTerminal() {
 }
 void WaitEnterInput() {
     cout << ENTER_INP_WAIT << endl;
-    cin.get();
+    cin.ignore();
     ClearTerminal();
 }
 

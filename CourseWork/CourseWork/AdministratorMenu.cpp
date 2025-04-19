@@ -9,7 +9,7 @@ extern void AdminFunctionsMenu() {
 	do {
 		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
 		cin >> n;
-		GetStudentsFromFile();
+		LoadStudentsFromFile();
 
 		ClearTerminal();
 
@@ -44,7 +44,7 @@ void StudentsListOperations() {
 	do {
 		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
 		cin >> n;
-		GetStudentsFromFile();
+		LoadStudentsFromFile();
 
 		ClearTerminal();
 
@@ -54,7 +54,7 @@ void StudentsListOperations() {
 			PrintStudentsFromFile();
 			break;
 		case 2:
-			AddStudentFromArrayMenu();
+			AddStudentMenu();
 			break;
 		case 3:
 			EditStudentsFromArrayMenu();
@@ -83,7 +83,7 @@ void PrintStudentsFromFile() {
 	WaitEnterInput();
 }
 
-void AddStudentFromArrayMenu() {
+void AddStudentMenu() {
 	const string HEADER = "РЕГИСТРАЦИЯ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
@@ -97,7 +97,7 @@ void EditStudentsFromArrayMenu() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindStudentInFile();
+		indexes = FindStudentByParam();
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
@@ -128,7 +128,7 @@ void DeleteStudentsFromArrayMenu() {
 	int delChoice;
 
 	do {
-		indexes = FindStudentInFile();
+		indexes = FindStudentByParam();
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
@@ -146,9 +146,9 @@ void DeleteStudentsFromArrayMenu() {
 				DeleteStudentArray(i);
 				RefreshStudentsId();
 				StudentFileRewrite();
+				cout << "Запись успешно удалена" << endl;
 			}
 
-			cout << "Запись успешно удалена"<<endl;
 		}
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
@@ -172,9 +172,7 @@ void SetCourseDeadlines() {
 	const string HEADER = "УСТАНОВКА КОНТРОЛЬНЫХ ТОЧЕК";
 	HeaderSecondLevel(HEADER);
 
-	string message = "Текущие контрольные точки:\n";
-	message += GetDeadLines();
-	LogMessage(message);
+	ShowDeadLinesList();
 
 	int confirm;
 
@@ -199,25 +197,53 @@ void SetCourseDeadlines() {
 	
 }
 
+bool SelectMark(int index) {
+	int mark;
+	int deadLineIndex;
+
+	cout << "Выберете контрольную точку на изменение (0 для выхода): ";
+	cin >> deadLineIndex;
+
+	if (deadLineIndex == 0) return false;
+
+	deadLineIndex--;
+
+
+	cout << "Введите оценку за контрольную точку: ";
+	cin >> mark;
+	studentsArray[index].setMark(deadLineIndex, mark);
+
+	return true;
+}
+
 void SetStudentsMarks() {
 	const string HEADER = "МЕНЮ ОЦЕНИВАНИЯ РАБОТЫ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 	vector<int> indexes;
 
 	do {
-		indexes = FindStudentInFile();
+		ClearTerminal();
+		HeaderSecondLevel(HEADER);
+
+		indexes = FindStudentByParam();
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
 
-			RefreshMenu(HEADER, index);
+			if (studentsArray[index].getId() == 1)
+			{
+				cout << "Невозможно провести рецензирование преподавателю";
+				return;
+				WaitEnterInput();
+			}
 
-			cout << "Выберете контрольную точку на изменение: ";
-
-			StudentFileRewrite();
+			do {
+				ClearTerminal();
+				HeaderSecondLevel(HEADER);
+				StudentWorkCourseTable(studentsArray[index]);
+			}while (SelectMark(index));
 		}
-
-		ClearTerminal();
-		HeaderSecondLevel(HEADER);
 	} while (indexes.size() != 0);
+	StudentFileRewrite();
+	LoadStudentsFromFile();
 }
