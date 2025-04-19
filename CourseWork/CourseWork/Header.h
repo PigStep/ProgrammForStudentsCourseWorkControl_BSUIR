@@ -44,3 +44,5 @@ void ShowStudentsDataTable();
 void SetCourseDeadlines();
 
 void SetStudentsMarks();
+
+void SetStudentCourseTheme();

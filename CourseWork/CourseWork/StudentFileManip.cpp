@@ -58,7 +58,6 @@ int FindStudentInFileMenu() {
 	cin >> choice;
 
 	return choice;
-
 }
 
 //Получить вектор студентов из файла
@@ -123,6 +122,38 @@ vector<int> FindStudentByParam() {
 	return studentsIndexes;
 }
 
+vector<int> SortIndexes() {
+	vector<int> indexes(studentsArray.size());
+
+	// Заполняем вектор индексами от 0 до arraySize-1
+	for (int i = 0; i < studentsArray.size(); ++i) {
+		indexes[i] = i;
+	}
+
+	int sortField = FindStudentInFileMenu();
+
+	// Сортируем индексы по выбранному полю
+	sort(indexes.begin(), indexes.end(), [&](int a, int b) {
+		switch (sortField) {
+		case 1: // ID
+			return studentsArray[a].getId() < studentsArray[b].getId();
+		case 2: // Имя
+			return studentsArray[a].getName() < studentsArray[b].getName();
+		case 3: // Фамилия
+			return studentsArray[a].getSurname() < studentsArray[b].getSurname();
+		case 4: // Отчество
+			return studentsArray[a].getSecondName() < studentsArray[b].getSecondName();
+		case 5: // Группа
+			return studentsArray[a].getGroup() < studentsArray[b].getGroup();
+		case 6: // Курс
+			return studentsArray[a].getCourse() < studentsArray[b].getCourse();
+		default:
+			return studentsArray[a].getId() < studentsArray[b].getId(); // По умолчанию сортируем по ID
+		}
+		});
+
+	return indexes;
+}
 void LoadStudentsFromFile() {
 	studentsArray.clear();
 
@@ -232,7 +263,7 @@ void Student::StudentEdit() {
 		case 7:
 			cout << setw(INPUT_PADDING) << "" << "Введите новый пароль: ";
 			cin >> newString;
-			hashedPassword = newString;
+			this->hashPassword(newString);
 			break;
 		case 0:
 			break;
@@ -490,10 +521,21 @@ fstream& operator<<(fstream& stream, const StudentCourseWork& self) {
 	return stream;
 }
 
+void StudentCourseWork::setCourseWorkTheme() {
+	string theme;
+
+	cin.ignore();
+	cout << "Введите новую тему курсовой работы\n";
+	cout << setw(INPUT_PADDING);
+	getline(cin, theme);
+
+	this->courseWorkTheme = theme;
+}
 
 void StudentCourseWork::setMark(int deadLineIndex, int mark) {
 	deadLinePointsMarks[deadLineIndex] = mark;
 }
+
 
 int StudentCourseWork::getMark(int index) {
 	return deadLinePointsMarks[index];

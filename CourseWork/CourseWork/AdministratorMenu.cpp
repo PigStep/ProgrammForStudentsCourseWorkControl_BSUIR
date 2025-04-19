@@ -28,7 +28,8 @@ extern void AdminFunctionsMenu() {
 			SetStudentsMarks();
 			break;
 		case 5:
-
+			SetStudentCourseTheme();
+			break;
 		default:
 			break;
 		}
@@ -74,7 +75,7 @@ void StudentsListOperations() {
 }
 
 void PrintStudentsFromFile() {
-	const string HEADER = "ТАБЛИЦА СТУДЕНТОВ";
+	const string HEADER = "ТАБЛИЦА УЧЕТНЫХ ЗАПИСЕЙ";
 	HeaderSecondLevel(HEADER);
 
 	for (int i = 0; i < studentsArray.size(); i++) {
@@ -162,9 +163,13 @@ void ShowStudentsDataTable() {
 	const string HEADER = "ТАБЛИЦА ДАННЫХ СТУДЕНТОВ";
 	HeaderSecondLevel(HEADER);
 
-	for (int i = 0; i < studentsArray.size(); i++) {
-		StudentWorkCourseTable(studentsArray[i]);
+	vector<int> indexes = SortIndexes();
+
+	for (int i = 0; i < indexes.size(); i++) {
+		int index = indexes[i];
+		StudentWorkCourseTable(studentsArray[index]);
 	}
+
 	cin.ignore();
 	WaitEnterInput();
 }
@@ -234,9 +239,9 @@ void SetStudentsMarks() {
 
 			if (studentsArray[index].getId() == 1)
 			{
-				cout << "Невозможно провести рецензирование преподавателю";
-				return;
+				cout << "Невозможно провести рецензирование преподавателя";
 				WaitEnterInput();
+				return;
 			}
 
 			do {
@@ -244,6 +249,48 @@ void SetStudentsMarks() {
 				HeaderSecondLevel(HEADER);
 				StudentWorkCourseTable(studentsArray[index]);
 			}while (SelectMark(index));
+		}
+	} while (indexes.size() != 0);
+	StudentFileRewrite();
+	LoadStudentsFromFile();
+}
+
+void SetStudentCourseTheme() {
+	const string HEADER = "МЕНЮ УСТАНОВКИ ТЕМЫ РАБОТЫ СТУДЕНТА";
+	HeaderSecondLevel(HEADER);
+	vector<int> indexes;
+
+	do {
+		indexes = FindStudentByParam();
+		ClearTerminal();
+		HeaderSecondLevel(HEADER);
+
+		for (int i = 0; i < indexes.size(); i++) {
+			int index = indexes[i];
+
+			if (studentsArray[index].getId() == 1)
+			{
+				cout << "Невозможно установить тему преподавателю";
+				WaitEnterInput();
+				return;
+			}
+
+			StudentWorkCourseTable(studentsArray[index]);
+			cin.ignore();
+
+			cout << "Вы хотите установить новую тему этому студенту? (1- да; 0 - нет)\n";
+			int confirm;
+			cin >> confirm;
+
+			if (confirm == 1) {
+				
+				studentsArray[index].setCourseWorkTheme();
+
+				ClearTerminal();
+				StudentWorkCourseTable(studentsArray[index]);
+				WaitEnterInput();
+			}
+			ClearTerminal();
 		}
 	} while (indexes.size() != 0);
 	StudentFileRewrite();

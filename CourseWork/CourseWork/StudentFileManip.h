@@ -141,6 +141,8 @@ public:
 
 	void setMark(int deadLineIndex, int mark);
 
+	void setCourseWorkTheme();
+
 	void writeInFiles(fstream& dataStream, fstream& regStream);
 };
 
@@ -160,6 +162,7 @@ void StudentFileRewrite();
 
 //Функция поиска студента по параметру
 vector<int> FindStudentByParam();
+vector<int> SortIndexes();
 
 //Найти количество админов в оперативной памяти
 int AdminArrayCount();
