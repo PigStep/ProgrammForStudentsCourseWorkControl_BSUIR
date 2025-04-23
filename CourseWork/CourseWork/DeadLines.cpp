@@ -1,7 +1,7 @@
 #include "StudentFileManip.h"
 #include "TableManips.h"
 
-//методы класса
+//РјРµС‚РѕРґС‹ РєР»Р°СЃСЃР°
 string Date::getDate() const{
 	string ret = "";
 
@@ -20,13 +20,13 @@ string Date::getDate() const{
 	return ret;
 }
 void Date::SetDate() {
-	cout << "Введите число: "<< setw(INPUT_PADDING) <<"";
+	cout << "Р’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ: "<< setw(INPUT_PADDING) <<"";
 	cin >> day;
 
-	cout << "Введите месяц: " << setw(INPUT_PADDING) << "";
+	cout << "Р’РІРµРґРёС‚Рµ РјРµСЃСЏС†: " << setw(INPUT_PADDING) << "";
 	cin >> month;
 
-	cout << "Введите год: " << setw(INPUT_PADDING) << "";
+	cout << "Р’РІРµРґРёС‚Рµ РіРѕРґ: " << setw(INPUT_PADDING) << "";
 	cin >> year;
 }
 
@@ -34,12 +34,12 @@ void Date::parse(string str) {
 	size_t dot1 = str.find('.');
 	size_t dot2 = str.rfind('.');
 
-	// Извлекаем подстроки: день, месяц, год
+	// РР·РІР»РµРєР°РµРј РїРѕРґСЃС‚СЂРѕРєРё: РґРµРЅСЊ, РјРµСЃСЏС†, РіРѕРґ
 	string dayStr = str.substr(0, dot1);
 	string monthStr = str.substr(dot1 + 1, dot2 - dot1 - 1);
 	string yearStr = str.substr(dot2 + 1);
 
-	// Преобразуем строки в числа
+	// РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєРё РІ С‡РёСЃР»Р°
 	int day, month, year;
 
 	day = stoi(dayStr);
@@ -47,7 +47,7 @@ void Date::parse(string str) {
 	year = stoi(yearStr);
 	
 
-	// Устанавливаем значения
+	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ
 	this->day = day;
 	this->month = month;
 	this->year = year;

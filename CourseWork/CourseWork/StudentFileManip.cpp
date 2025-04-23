@@ -9,19 +9,19 @@ using namespace std;
 int StudentEditMenuChoice() {
 	int choice;
 
-	// Вывод меню выбора параметра
-	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для изменения:\n";
-	cout << setw(OPTIONS_PADDING) << "" << "1. Имя\n";
-	cout << setw(OPTIONS_PADDING) << "" << "2. Фамилия\n";
-	cout << setw(OPTIONS_PADDING) << "" << "3. Отчество\n";
-	cout << setw(OPTIONS_PADDING) << "" << "4. Группа\n";
-	cout << setw(OPTIONS_PADDING) << "" << "5. Курс\n";
-	cout << setw(OPTIONS_PADDING) << "" << "6. Логин\n";
-	cout << setw(OPTIONS_PADDING) << "" << "7. Пароль\n\n";
-	cout << setw(OPTIONS_PADDING) << "" << "0. Выход\n\n";
+	// Р’С‹РІРѕРґ РјРµРЅСЋ РІС‹Р±РѕСЂР° РїР°СЂР°РјРµС‚СЂР°
+	cout << setw(OPTIONS_PADDING) << "" << "Р’С‹Р±РµСЂРёС‚Рµ РїР°СЂР°РјРµС‚СЂ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ:\n";
+	cout << setw(OPTIONS_PADDING) << "" << "1. РРјСЏ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "2. Р¤Р°РјРёР»РёСЏ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "3. РћС‚С‡РµСЃС‚РІРѕ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "4. Р“СЂСѓРїРїР°\n";
+	cout << setw(OPTIONS_PADDING) << "" << "5. РљСѓСЂСЃ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "6. Р›РѕРіРёРЅ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "7. РџР°СЂРѕР»СЊ\n\n";
+	cout << setw(OPTIONS_PADDING) << "" << "0. Р’С‹С…РѕРґ\n\n";
 
-	// Ввод выбора пользователя
-	cout << setw(INPUT_PADDING) << "" << "Ваш выбор: ";
+	// Р’РІРѕРґ РІС‹Р±РѕСЂР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	cout << setw(INPUT_PADDING) << "" << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
 	cin >> choice;
 
 	return choice;
@@ -38,29 +38,29 @@ void RefreshStudentsId() {
 	}
 }
 
-//Получить номер параметра поиска
+//РџРѕР»СѓС‡РёС‚СЊ РЅРѕРјРµСЂ РїР°СЂР°РјРµС‚СЂР° РїРѕРёСЃРєР°
 int FindStudentInFileMenu() {
 	int choice;
 
-	// Вывод меню выбора параметра
-	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для поиска:\n";
+	// Р’С‹РІРѕРґ РјРµРЅСЋ РІС‹Р±РѕСЂР° РїР°СЂР°РјРµС‚СЂР°
+	cout << setw(OPTIONS_PADDING) << "" << "Р’С‹Р±РµСЂРёС‚Рµ РїР°СЂР°РјРµС‚СЂ РґР»СЏ РїРѕРёСЃРєР°:\n";
 
-	cout << setw(OPTIONS_PADDING) << "" << "1. ID пользователя\n";
-	cout << setw(OPTIONS_PADDING) << "" << "2. Имя\n";
-	cout << setw(OPTIONS_PADDING) << "" << "3. Фамилия\n";
-	cout << setw(OPTIONS_PADDING) << "" << "4. Отчество\n";
-	cout << setw(OPTIONS_PADDING) << "" << "5. Группа\n";
-	cout << setw(OPTIONS_PADDING) << "" << "6. Курс\n";
-	cout << setw(OPTIONS_PADDING) << "" << "0. Выход\n\n";
+	cout << setw(OPTIONS_PADDING) << "" << "1. ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "2. РРјСЏ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "3. Р¤Р°РјРёР»РёСЏ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "4. РћС‚С‡РµСЃС‚РІРѕ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "5. Р“СЂСѓРїРїР°\n";
+	cout << setw(OPTIONS_PADDING) << "" << "6. РљСѓСЂСЃ\n";
+	cout << setw(OPTIONS_PADDING) << "" << "0. Р’С‹С…РѕРґ\n\n";
 
-	// Ввод выбора пользователя
-	cout << setw(INPUT_PADDING) << "" << "Ваш выбор: ";
+	// Р’РІРѕРґ РІС‹Р±РѕСЂР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	cout << setw(INPUT_PADDING) << "" << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
 	cin >> choice;
 
 	return choice;
 }
 
-//Получить вектор студентов из файла
+//РџРѕР»СѓС‡РёС‚СЊ РІРµРєС‚РѕСЂ СЃС‚СѓРґРµРЅС‚РѕРІ РёР· С„Р°Р№Р»Р°
 vector<int> FindStudentByParam() {
 	vector<int> studentsIndexes;
 	string searchValue;
@@ -68,44 +68,44 @@ vector<int> FindStudentByParam() {
 
 	int choice = FindStudentInFileMenu();
 
-	if (choice == 0) return studentsIndexes; // Выход
+	if (choice == 0) return studentsIndexes; // Р’С‹С…РѕРґ
 
-	// Запрос значения для поиска
-	cout << setw(INPUT_PADDING) << "" << "Введите значение для поиска: ";
+	// Р—Р°РїСЂРѕСЃ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ РїРѕРёСЃРєР°
+	cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ РїРѕРёСЃРєР°: ";
 	if (choice == 1 || choice == 5 || choice == 6) {
 		cin >> intSearchValue;
 	}
 	else {
-		cin.ignore(); // Очищаем буфер перед чтением строки
+		cin.ignore(); // РћС‡РёС‰Р°РµРј Р±СѓС„РµСЂ РїРµСЂРµРґ С‡С‚РµРЅРёРµРј СЃС‚СЂРѕРєРё
 		getline(cin, searchValue);
 	}
 
-	// Поиск по выбранному параметру
+	// РџРѕРёСЃРє РїРѕ РІС‹Р±СЂР°РЅРЅРѕРјСѓ РїР°СЂР°РјРµС‚СЂСѓ
 	for (int i = 0; i < studentsArray.size(); i++) {
 		
 		bool found = false;
 
 		switch (choice) {
-		case 1: // ID пользователя
+		case 1: // ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 			found = (studentsArray[i].getId() == intSearchValue);
 			break;
-		case 2: // Имя
+		case 2: // РРјСЏ
 			found = (studentsArray[i].getName() == searchValue);
 			break;
-		case 3: // Фамилия
+		case 3: // Р¤Р°РјРёР»РёСЏ
 			found = (studentsArray[i].getSurname() == searchValue);
 			break;
-		case 4: // Отчество
+		case 4: // РћС‚С‡РµСЃС‚РІРѕ
 			found = (studentsArray[i].getSecondName() == searchValue);
 			break;
-		case 5: // Группа
+		case 5: // Р“СЂСѓРїРїР°
 			found = (studentsArray[i].getGroup() == intSearchValue);
 			break;
-		case 6: // Курс
+		case 6: // РљСѓСЂСЃ
 			found = (studentsArray[i].getCourse() == intSearchValue);
 			break;
 		default:
-			cout << setw(INPUT_PADDING) << "" << "Неверный выбор!\n";
+			cout << setw(INPUT_PADDING) << "" << "РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ!\n";
 		}
 
 		if (found) {
@@ -114,7 +114,7 @@ vector<int> FindStudentByParam() {
 	}
 
 	if (studentsIndexes.size() == 0) {
-		cout << setw(INPUT_PADDING) << "" << "Студент не найден!\n";
+		cout << setw(INPUT_PADDING) << "" << "РЎС‚СѓРґРµРЅС‚ РЅРµ РЅР°Р№РґРµРЅ!\n";
 		cin.ignore();
 		WaitEnterInput();
 	}
@@ -125,30 +125,30 @@ vector<int> FindStudentByParam() {
 vector<int> SortIndexes() {
 	vector<int> indexes(studentsArray.size());
 
-	// Заполняем вектор индексами от 0 до arraySize-1
+	// Р—Р°РїРѕР»РЅСЏРµРј РІРµРєС‚РѕСЂ РёРЅРґРµРєСЃР°РјРё РѕС‚ 0 РґРѕ arraySize-1
 	for (int i = 0; i < studentsArray.size(); ++i) {
 		indexes[i] = i;
 	}
 
 	int sortField = FindStudentInFileMenu();
 
-	// Сортируем индексы по выбранному полю
+	// РЎРѕСЂС‚РёСЂСѓРµРј РёРЅРґРµРєСЃС‹ РїРѕ РІС‹Р±СЂР°РЅРЅРѕРјСѓ РїРѕР»СЋ
 	sort(indexes.begin(), indexes.end(), [&](int a, int b) {
 		switch (sortField) {
 		case 1: // ID
 			return studentsArray[a].getId() < studentsArray[b].getId();
-		case 2: // Имя
+		case 2: // РРјСЏ
 			return studentsArray[a].getName() < studentsArray[b].getName();
-		case 3: // Фамилия
+		case 3: // Р¤Р°РјРёР»РёСЏ
 			return studentsArray[a].getSurname() < studentsArray[b].getSurname();
-		case 4: // Отчество
+		case 4: // РћС‚С‡РµСЃС‚РІРѕ
 			return studentsArray[a].getSecondName() < studentsArray[b].getSecondName();
-		case 5: // Группа
+		case 5: // Р“СЂСѓРїРїР°
 			return studentsArray[a].getGroup() < studentsArray[b].getGroup();
-		case 6: // Курс
+		case 6: // РљСѓСЂСЃ
 			return studentsArray[a].getCourse() < studentsArray[b].getCourse();
 		default:
-			return studentsArray[a].getId() < studentsArray[b].getId(); // По умолчанию сортируем по ID
+			return studentsArray[a].getId() < studentsArray[b].getId(); // РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ СЃРѕСЂС‚РёСЂСѓРµРј РїРѕ ID
 		}
 		});
 
@@ -160,20 +160,20 @@ void LoadStudentsFromFile() {
 	ifstream regFile(STUD_REG_FILE, ios::in | ios::out);
 	ifstream dataFile(STUD_DATA_FILE, ios::in | ios::out);
 
-	// Читаем оба файла построчно одновременно
+	// Р§РёС‚Р°РµРј РѕР±Р° С„Р°Р№Р»Р° РїРѕСЃС‚СЂРѕС‡РЅРѕ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ
 	string regLine, dataLine;
 	while (getline(regFile, regLine) && getline(dataFile, dataLine)) {
 		if (regLine.empty() || dataLine.empty()) continue;
 
-		// Обрабатываем строку из регистрационного файла (User данные)
+		// РћР±СЂР°Р±Р°С‚С‹РІР°РµРј СЃС‚СЂРѕРєСѓ РёР· СЂРµРіРёСЃС‚СЂР°С†РёРѕРЅРЅРѕРіРѕ С„Р°Р№Р»Р° (User РґР°РЅРЅС‹Рµ)
 		vector<string> regTokens = SplitString(regLine, ';');
-		if (regTokens.size() < 5) continue; // Минимум 5 поля для User
+		if (regTokens.size() < 5) continue; // РњРёРЅРёРјСѓРј 5 РїРѕР»СЏ РґР»СЏ User
 
-		// Обрабатываем строку из файла данных (Student + CourseWork)
+		// РћР±СЂР°Р±Р°С‚С‹РІР°РµРј СЃС‚СЂРѕРєСѓ РёР· С„Р°Р№Р»Р° РґР°РЅРЅС‹С… (Student + CourseWork)
 		vector<string> dataTokens = SplitString(dataLine, ';');
-		if (dataTokens.size() < 8) continue; // Минимум 8 полей
+		if (dataTokens.size() < 8) continue; // РњРёРЅРёРјСѓРј 8 РїРѕР»РµР№
 
-		// Создаем объект StudentCourseWork
+		// РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ StudentCourseWork
 		StudentCourseWork student(
 			stoi(regTokens[0]),  // id
 			stoi(regTokens[1]),  // userLevel
@@ -187,14 +187,14 @@ void LoadStudentsFromFile() {
 			dataTokens[4].empty() ? -1 : stoi(dataTokens[4])   // course
 		);
 
-		// Устанавливаем дополнительные поля
+		// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ
 		if (dataTokens.size() > 5) {
 			student.SetCourseWorkTheme(dataTokens[5]);
 		}
 		if (dataTokens.size() > 6) {
 			student.SetCourseWorkStorageLink(dataTokens[6]);
 		}
-		if (dataTokens.size() > 7) { //обработка оценок
+		if (dataTokens.size() > 7) { //РѕР±СЂР°Р±РѕС‚РєР° РѕС†РµРЅРѕРє
 			for (int i = 0; i < NUM_OF_DEADLINES; i++) {
 				if (!dataTokens[7 + i].empty()) {
 					student.setMark(i, stoi(dataTokens[7 + i]));
@@ -228,47 +228,47 @@ void Student::StudentEdit() {
 	do {
 		choice = StudentEditMenuChoice();
 
-		// Обработка выбора
+		// РћР±СЂР°Р±РѕС‚РєР° РІС‹Р±РѕСЂР°
 		switch (choice) {
 		case 1:
-			cout << setw(INPUT_PADDING) << "" << "Введите новое имя: ";
+			cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РёРјСЏ: ";
 			cin >> newString;
 			name = newString;
 			break;
 		case 2:
-			cout << setw(INPUT_PADDING) << "" << "Введите новую фамилию: ";
+			cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ РЅРѕРІСѓСЋ С„Р°РјРёР»РёСЋ: ";
 			cin >> newString;
 			secondname = newString;
 			break;
 		case 3:
-			cout << setw(INPUT_PADDING) << "" << "Введите новое отчество: ";
+			cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РѕС‚С‡РµСЃС‚РІРѕ: ";
 			cin >> newString;
 			surname = newString;
 			break;
 		case 4:
-			cout << setw(INPUT_PADDING) << "" << "Введите новую группу: ";
+			cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ РЅРѕРІСѓСЋ РіСЂСѓРїРїСѓ: ";
 			cin >> newInt;
 			group = newInt;
 			break;
 		case 5:
-			cout << setw(INPUT_PADDING) << "" << "Введите новый курс: ";
+			cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РєСѓСЂСЃ: ";
 			cin >> newInt;
 			course = newInt;
 			break;
 		case 6:
-			cout << setw(INPUT_PADDING) << "" << "Введите новый логин: ";
+			cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ Р»РѕРіРёРЅ: ";
 			cin >> newString;
 			login = newString;
 			break;
 		case 7:
-			cout << setw(INPUT_PADDING) << "" << "Введите новый пароль: ";
+			cout << setw(INPUT_PADDING) << "" << "Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ: ";
 			cin >> newString;
 			this->hashPassword(newString);
 			break;
 		case 0:
 			break;
 		default:
-			cout << setw(INPUT_PADDING) << "" << "Ошибка: неверный выбор!\n";
+			cout << setw(INPUT_PADDING) << "" << "РћС€РёР±РєР°: РЅРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ!\n";
 			break;
 		}
 
@@ -294,38 +294,38 @@ void RegistrateStudentInFile() {
 	int currentStudentsNum = studentsArray.size();
 
 	int n;
-	cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей: ";
+	cout << left << setw(OPTIONS_PADDING) << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРѕР±Р°РІР»СЏРµРјС‹С… Р·Р°РїРёСЃРµР№: ";
 	cin >> n;
-	cin.ignore(); // Очистка буфера после cin >> 
+	cin.ignore(); // РћС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° РїРѕСЃР»Рµ cin >> 
 
 	for (int i = 0; i < n; i++) {
-		currentStudentsNum ++; //начинаем индексирование с 1
+		currentStudentsNum ++; //РЅР°С‡РёРЅР°РµРј РёРЅРґРµРєСЃРёСЂРѕРІР°РЅРёРµ СЃ 1
 
-		//Уровень доступа
-		cout << "Уровень доступа записи (0 - студент, 1 - администратор): ";
+		//РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР°
+		cout << "РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° Р·Р°РїРёСЃРё (0 - СЃС‚СѓРґРµРЅС‚, 1 - Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ): ";
 		cin >> userLevel;
 		cin.ignore();
 
-		// Ввод имени
-		cout << "Запись " << currentStudentsNum << ":\n\n";
+		// Р’РІРѕРґ РёРјРµРЅРё
+		cout << "Р—Р°РїРёСЃСЊ " << currentStudentsNum << ":\n\n";
 
-		// Ввод логина
-		cout << left << setw(OPTIONS_PADDING) << "Логин: ";
+		// Р’РІРѕРґ Р»РѕРіРёРЅР°
+		cout << left << setw(OPTIONS_PADDING) << "Р›РѕРіРёРЅ: ";
 		getline(cin, login);
 
-		// Ввод пароля
-		cout << left << setw(OPTIONS_PADDING) << "Пароль: ";
+		// Р’РІРѕРґ РїР°СЂРѕР»СЏ
+		cout << left << setw(OPTIONS_PADDING) << "РџР°СЂРѕР»СЊ: ";
 		getline(cin, password);
 
-		cout << left << setw(OPTIONS_PADDING) << "Имя: ";
+		cout << left << setw(OPTIONS_PADDING) << "РРјСЏ: ";
 		getline(cin, name);
 
-		// Ввод фамилии
-		cout << left << setw(OPTIONS_PADDING) << "Фамилия: ";
+		// Р’РІРѕРґ С„Р°РјРёР»РёРё
+		cout << left << setw(OPTIONS_PADDING) << "Р¤Р°РјРёР»РёСЏ: ";
 		getline(cin, secondname);
 
-		// Ввод отчества
-		cout << left << setw(OPTIONS_PADDING) << "Отчество: ";
+		// Р’РІРѕРґ РѕС‚С‡РµСЃС‚РІР°
+		cout << left << setw(OPTIONS_PADDING) << "РћС‚С‡РµСЃС‚РІРѕ: ";
 		getline(cin, surname);
 
 		if (userLevel == 1) {
@@ -343,15 +343,15 @@ void RegistrateStudentInFile() {
 			continue;
 		}
 
-		// Ввод группы (число)
-		cout << left << setw(OPTIONS_PADDING) << "Группа: ";
+		// Р’РІРѕРґ РіСЂСѓРїРїС‹ (С‡РёСЃР»Рѕ)
+		cout << left << setw(OPTIONS_PADDING) << "Р“СЂСѓРїРїР°: ";
 		cin >> group;
-		cin.ignore();  // Очистка буфера после cin >> 
+		cin.ignore();  // РћС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° РїРѕСЃР»Рµ cin >> 
 
-		// Ввод курса (число)
-		cout << left << setw(OPTIONS_PADDING) << "Курс: ";
+		// Р’РІРѕРґ РєСѓСЂСЃР° (С‡РёСЃР»Рѕ)
+		cout << left << setw(OPTIONS_PADDING) << "РљСѓСЂСЃ: ";
 		cin >> course;
-		cin.ignore();  // Очистка буфера после cin >>
+		cin.ignore();  // РћС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° РїРѕСЃР»Рµ cin >>
 
 
 		StudentCourseWork StudentCourse(
@@ -404,7 +404,7 @@ void CreateBaseAdmin() {
 	admin.writeInFiles(studentsFileData,studentsFileReg);
 }
 
-//методы Класса User
+//РјРµС‚РѕРґС‹ РљР»Р°СЃСЃР° User
 
 User::User() {
 	userLevel=1;
@@ -433,12 +433,12 @@ User::User(int id, int userLevel,
 	this->userLevel = userLevel;
 }
 
-//Фукнкция проверки на существование пароля
+//Р¤СѓРєРЅРєС†РёСЏ РїСЂРѕРІРµСЂРєРё РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїР°СЂРѕР»СЏ
 bool User::checkPassword(const string& password){
 	return HashPassword(password, salt) == hashedPassword;
 }
 
-//захэшировать пароль с уникальной солью для записи
+//Р·Р°С…СЌС€РёСЂРѕРІР°С‚СЊ РїР°СЂРѕР»СЊ СЃ СѓРЅРёРєР°Р»СЊРЅРѕР№ СЃРѕР»СЊСЋ РґР»СЏ Р·Р°РїРёСЃРё
 void User::hashPassword(const string& password)
 {
 	salt = GenerateSalt();
@@ -456,7 +456,7 @@ fstream& operator<<(fstream& stream, const User& self){
 	return stream;
 }
 
-//Методы Класса Student
+//РњРµС‚РѕРґС‹ РљР»Р°СЃСЃР° Student
 Student::Student() {
 	name = "ADMIN";
 	secondname = "ADMIN";
@@ -495,7 +495,7 @@ fstream& operator<<(fstream& stream, const Student& self) {
 	return stream;
 }
 
-//Методы класса StudentCourseWork
+//РњРµС‚РѕРґС‹ РєР»Р°СЃСЃР° StudentCourseWork
 
 StudentCourseWork::StudentCourseWork(int id, int userLevel, 
 	string password, string login, string salt,
@@ -525,7 +525,7 @@ void StudentCourseWork::setCourseWorkTheme() {
 	string theme;
 
 	cin.ignore();
-	cout << "Введите новую тему курсовой работы\n";
+	cout << "Р’РІРµРґРёС‚Рµ РЅРѕРІСѓСЋ С‚РµРјСѓ РєСѓСЂСЃРѕРІРѕР№ СЂР°Р±РѕС‚С‹\n";
 	cout << setw(INPUT_PADDING);
 	getline(cin, theme);
 
@@ -548,52 +548,52 @@ void StudentCourseWork::setMarksDefault() {
 }
 
 void StudentCourseWork::writeInFiles(fstream& dataStream, fstream& regStream) {
-	// 1. Запись данных User в первый файл
-	// Явное приведение к базовому классу User для вызова нужной перегрузки
+	// 1. Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… User РІ РїРµСЂРІС‹Р№ С„Р°Р№Р»
+	// РЇРІРЅРѕРµ РїСЂРёРІРµРґРµРЅРёРµ Рє Р±Р°Р·РѕРІРѕРјСѓ РєР»Р°СЃСЃСѓ User РґР»СЏ РІС‹Р·РѕРІР° РЅСѓР¶РЅРѕР№ РїРµСЂРµРіСЂСѓР·РєРё
 	regStream << static_cast<const User&>(*this);
 	regStream << "\n";
 	regStream.flush();
 
 
-	// 2. Запись данных Student и StudentCourseWork во второй файл
-	// Сначала записываем Student часть
+	// 2. Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… Student Рё StudentCourseWork РІРѕ РІС‚РѕСЂРѕР№ С„Р°Р№Р»
+	// РЎРЅР°С‡Р°Р»Р° Р·Р°РїРёСЃС‹РІР°РµРј Student С‡Р°СЃС‚СЊ
 	dataStream << static_cast<const Student&>(*this);
 
-	// Затем записываем StudentCourseWork часть
+	// Р—Р°С‚РµРј Р·Р°РїРёСЃС‹РІР°РµРј StudentCourseWork С‡Р°СЃС‚СЊ
 	dataStream << *this;
-	dataStream << "\n";  // Добавляем перевод строки для разделения записей
-	dataStream.flush();  // Принудительная запись
+	dataStream << "\n";  // Р”РѕР±Р°РІР»СЏРµРј РїРµСЂРµРІРѕРґ СЃС‚СЂРѕРєРё РґР»СЏ СЂР°Р·РґРµР»РµРЅРёСЏ Р·Р°РїРёСЃРµР№
+	dataStream.flush();  // РџСЂРёРЅСѓРґРёС‚РµР»СЊРЅР°СЏ Р·Р°РїРёСЃСЊ
 }
 
-//Функции работы с контрольными точками
+//Р¤СѓРЅРєС†РёРё СЂР°Р±РѕС‚С‹ СЃ РєРѕРЅС‚СЂРѕР»СЊРЅС‹РјРё С‚РѕС‡РєР°РјРё
 
 void SaveDeadLinesInFile() {
-	// Закрываем и переоткрываем файл в режиме перезаписи
+	// Р—Р°РєСЂС‹РІР°РµРј Рё РїРµСЂРµРѕС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» РІ СЂРµР¶РёРјРµ РїРµСЂРµР·Р°РїРёСЃРё
 	studentsFileDeadLines.close();
-	studentsFileDeadLines.open(DEAD_LINES_FILE, ios::out | ios::trunc); // перезаписываем файл
+	studentsFileDeadLines.open(DEAD_LINES_FILE, ios::out | ios::trunc); // РїРµСЂРµР·Р°РїРёСЃС‹РІР°РµРј С„Р°Р№Р»
 
-	// Записываем даты с разделителями
+	// Р—Р°РїРёСЃС‹РІР°РµРј РґР°С‚С‹ СЃ СЂР°Р·РґРµР»РёС‚РµР»СЏРјРё
 	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
 		studentsFileDeadLines << courseDeadLinePoints[i].getDate();
 		if (i < NUM_OF_DEADLINES - 1) {
-			studentsFileDeadLines << ";"; // добавляем разделитель
+			studentsFileDeadLines << ";"; // РґРѕР±Р°РІР»СЏРµРј СЂР°Р·РґРµР»РёС‚РµР»СЊ
 		}
 	}
-	studentsFileDeadLines << endl; // добавляем перевод строки
+	studentsFileDeadLines << endl; // РґРѕР±Р°РІР»СЏРµРј РїРµСЂРµРІРѕРґ СЃС‚СЂРѕРєРё
 
-	// Возвращаем файл в исходный режим (если нужно)
+	// Р’РѕР·РІСЂР°С‰Р°РµРј С„Р°Р№Р» РІ РёСЃС…РѕРґРЅС‹Р№ СЂРµР¶РёРј (РµСЃР»Рё РЅСѓР¶РЅРѕ)
 	studentsFileDeadLines.close();
 	studentsFileDeadLines.open(DEAD_LINES_FILE, ios::in | ios::out | ios::app);
 }
 
 void LoadDeadlinesFromFile() {
 	string line;
-	if (getline(studentsFileDeadLines, line) && !line.empty()) { // Считываем строку с датами
+	if (getline(studentsFileDeadLines, line) && !line.empty()) { // РЎС‡РёС‚С‹РІР°РµРј СЃС‚СЂРѕРєСѓ СЃ РґР°С‚Р°РјРё
 		istringstream iss(line);
 		string dateStr;
 		int index = 0;
 
-		// Разделяем строку по символу ';' и парсим даты
+		// Р Р°Р·РґРµР»СЏРµРј СЃС‚СЂРѕРєСѓ РїРѕ СЃРёРјРІРѕР»Сѓ ';' Рё РїР°СЂСЃРёРј РґР°С‚С‹
 		while (getline(iss, dateStr, ';') && index < NUM_OF_DEADLINES) {
 			courseDeadLinePoints[index].parse(dateStr);
 			index++;
@@ -612,7 +612,7 @@ string GetDeadLines() {
 }
 
 void ShowDeadLinesList() {
-	string message = "Текущие контрольные точки:\n";
+	string message = "РўРµРєСѓС‰РёРµ РєРѕРЅС‚СЂРѕР»СЊРЅС‹Рµ С‚РѕС‡РєРё:\n";
 	message += GetDeadLines();
 	LogMessage(message);
 }

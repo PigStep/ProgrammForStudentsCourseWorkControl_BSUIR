@@ -15,33 +15,33 @@ ostream& headerBorder(ostream& stream) {
 }
 
 void HeaderFirstLevel(int optionsCount, const string optionsArray[], string header) {
-    // Верхняя граница
+    // Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р°
     cout << headerBorder;
 
-    int total_width = BORDERS_WIDTH - 1; // -1 для границ
+    int total_width = BORDERS_WIDTH - 1; // -1 РґР»СЏ РіСЂР°РЅРёС†
     int padding = (total_width - header.length()) / 2;
 
     cout << "|" << setw(padding + header.length()) << right << header
         << setw(total_width - padding - header.length() + 2) << "|" << endl;
 
-    // Разделитель
+    // Р Р°Р·РґРµР»РёС‚РµР»СЊ
     cout << headerBorder;
 
     for (int i = 0; i < optionsCount; i++) {
         cout << "|"
             << left
-            << setw(OPTIONS_PADDING) << (to_string(i + 1) + ".")  // "1. ", "10." и т.д.
+            << setw(OPTIONS_PADDING) << (to_string(i + 1) + ".")  // "1. ", "10." Рё С‚.Рґ.
             << setw(BORDERS_WIDTH - OPTIONS_PADDING) << optionsArray[i]
             << "|" << endl;
 
         cout << "+" << setfill('-') << setw(BORDERS_WIDTH) <<"" << "+" << setfill(' ') << endl;
     }
 
-    cout << "|" << left << setw(OPTIONS_PADDING) << "0." << setw(BORDERS_WIDTH - OPTIONS_PADDING) << "Выход" << "|" << endl;
+    cout << "|" << left << setw(OPTIONS_PADDING) << "0." << setw(BORDERS_WIDTH - OPTIONS_PADDING) << "Р’С‹С…РѕРґ" << "|" << endl;
 
-    // Нижняя граница
+    // РќРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р°
     cout << headerBorder;
-    cout << "Ваш выбор: ";
+    cout << "Р’Р°С€ РІС‹Р±РѕСЂ: ";
 }
 void HeaderSecondLevel(const string HEADER) { 
     cout << headerBorder;
@@ -57,10 +57,10 @@ void LogMessage(string& message) {
         << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
 }
 void LoginFormHeader(bool isAdmin) {
-    // Верхняя граница
+    // Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р°
     cout << headerBorder;
 
-    cout << "|" << " ВХОД " << (isAdmin ? "АДМИНИСТРАТОР" : "ПОЛЬЗОВАТЕЛЬ")
+    cout << "|" << " Р’РҐРћР” " << (isAdmin ? "РђР”РњРРќРРЎРўР РђРўРћР " : "РџРћР›Р¬Р—РћР’РђРўР•Р›Р¬")
         << setw(BORDERS_WIDTH - 7 - (isAdmin ? 12 : 10)) << "" << "|" << endl;
 
     cout << headerBorder;
@@ -68,7 +68,7 @@ void LoginFormHeader(bool isAdmin) {
 
 void LoginAutorizationStatus(bool isAdmin) {
     cout << "\n" << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << "\n"
-        << "  Вход выполнен как " << (isAdmin ? "администратор" : "пользователь") << "!\n"
+        << "  Р’С…РѕРґ РІС‹РїРѕР»РЅРµРЅ РєР°Рє " << (isAdmin ? "Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ" : "РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ") << "!\n"
         << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
 }
 
@@ -78,8 +78,8 @@ void printBorder(char fill = '=') {
 }
 
 void printTableRow(const string& label, const string& value, char border = '|') {
-    // Рассчитываем фактическую ширину для значения
-    const int value_width = BORDERS_WIDTH - HEADER_WIDTH * 4 - 4; // 4 = 2 границы + 2 пробела
+    // Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј С„Р°РєС‚РёС‡РµСЃРєСѓСЋ С€РёСЂРёРЅСѓ РґР»СЏ Р·РЅР°С‡РµРЅРёСЏ
+    const int value_width = BORDERS_WIDTH - HEADER_WIDTH * 4 - 4; // 4 = 2 РіСЂР°РЅРёС†С‹ + 2 РїСЂРѕР±РµР»Р°
 
     cout << border << " "
         << left << setw(HEADER_WIDTH * 4) << label
@@ -89,39 +89,39 @@ void printTableRow(const string& label, const string& value, char border = '|') 
 }
 
 void RegistratedStudentTable(Student student) {
-    // Верхняя граница
+    // Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р°
     printBorder('-');
 
     printTableRow("ID:", to_string(student.getId()));
 
     bool isAdmin = student.isUserAdmin();
-    printTableRow("УРОВЕНЬ ДОСТУПА:", ( isAdmin ? "ПРЕПОДАВАТЕЛЬ" : "СТУДЕНТ"));
+    printTableRow("РЈР РћР’Р•РќР¬ Р”РћРЎРўРЈРџРђ:", ( isAdmin ? "РџР Р•РџРћР”РђР’РђРўР•Р›Р¬" : "РЎРўРЈР”Р•РќРў"));
 
     printBorder('-');
 
-    // Секция логина и пароля
-    printTableRow("Логин:", student.getLogin());
-    printTableRow("Соль:", student.getSalt());
-    printTableRow("Хэшированный пароль:", student.getHashedPassword());
+    // РЎРµРєС†РёСЏ Р»РѕРіРёРЅР° Рё РїР°СЂРѕР»СЏ
+    printTableRow("Р›РѕРіРёРЅ:", student.getLogin());
+    printTableRow("РЎРѕР»СЊ:", student.getSalt());
+    printTableRow("РҐСЌС€РёСЂРѕРІР°РЅРЅС‹Р№ РїР°СЂРѕР»СЊ:", student.getHashedPassword());
 
-    // Разделитель
+    // Р Р°Р·РґРµР»РёС‚РµР»СЊ
     printBorder('-');
 
-    // Секция ФИО
-    printTableRow("Фамилия:", student.getSecondName());
-    printTableRow("Имя:", student.getName());
-    printTableRow("Отчество:", student.getSurname());
+    // РЎРµРєС†РёСЏ Р¤РРћ
+    printTableRow("Р¤Р°РјРёР»РёСЏ:", student.getSecondName());
+    printTableRow("РРјСЏ:", student.getName());
+    printTableRow("РћС‚С‡РµСЃС‚РІРѕ:", student.getSurname());
 
-    // Разделитель
+    // Р Р°Р·РґРµР»РёС‚РµР»СЊ
     printBorder('-');
     if (isAdmin)
         return;
 
-    // Секция учебной информации
-    printTableRow("Группа:", to_string(student.getGroup()));
-    printTableRow("Курс:", to_string(student.getCourse()));
+    // РЎРµРєС†РёСЏ СѓС‡РµР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё
+    printTableRow("Р“СЂСѓРїРїР°:", to_string(student.getGroup()));
+    printTableRow("РљСѓСЂСЃ:", to_string(student.getCourse()));
 
-    // Нижняя граница
+    // РќРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р°
     printBorder('-');
 }
 
@@ -131,45 +131,45 @@ void StudentWorkCourseTable(StudentCourseWork studentCourseWork) {
     if (isAdmin)
         return;
 
-    // Верхняя граница
+    // Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р°
     printBorder('-');
 
     printTableRow("ID:", to_string(studentCourseWork.getId()));
 
     printBorder('-');
 
-    // Секция ФИО
-    printTableRow("Фамилия:", studentCourseWork.getSecondName());
-    printTableRow("Имя:", studentCourseWork.getName());
-    printTableRow("Отчество:", studentCourseWork.getSurname());
+    // РЎРµРєС†РёСЏ Р¤РРћ
+    printTableRow("Р¤Р°РјРёР»РёСЏ:", studentCourseWork.getSecondName());
+    printTableRow("РРјСЏ:", studentCourseWork.getName());
+    printTableRow("РћС‚С‡РµСЃС‚РІРѕ:", studentCourseWork.getSurname());
 
-    // Разделитель
+    // Р Р°Р·РґРµР»РёС‚РµР»СЊ
     printBorder('-');
     if (isAdmin)
         return;
 
-    // Секция учебной информации
-    printTableRow("Группа:", to_string(studentCourseWork.getGroup()));
-    printTableRow("Курс:", to_string(studentCourseWork.getCourse()));
+    // РЎРµРєС†РёСЏ СѓС‡РµР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё
+    printTableRow("Р“СЂСѓРїРїР°:", to_string(studentCourseWork.getGroup()));
+    printTableRow("РљСѓСЂСЃ:", to_string(studentCourseWork.getCourse()));
 
-    // Разделитель
+    // Р Р°Р·РґРµР»РёС‚РµР»СЊ
     printBorder('-');
 
-    // Секция данных курсовой работы
-    printTableRow("Тема курсовой:", studentCourseWork.getCourseWorkTheme());
-    printTableRow("Ссылка на ресурс:", studentCourseWork.getCourseWorkLink());
+    // РЎРµРєС†РёСЏ РґР°РЅРЅС‹С… РєСѓСЂСЃРѕРІРѕР№ СЂР°Р±РѕС‚С‹
+    printTableRow("РўРµРјР° РєСѓСЂСЃРѕРІРѕР№:", studentCourseWork.getCourseWorkTheme());
+    printTableRow("РЎСЃС‹Р»РєР° РЅР° СЂРµСЃСѓСЂСЃ:", studentCourseWork.getCourseWorkLink());
 
 
     printBorder('-');
     for (int i = 0; i < NUM_OF_DEADLINES; i++) {
-        string markMessage = "Оцека по контрольной точке (" + courseDeadLinePoints[i].getDate() + "): ";
+        string markMessage = "РћС†РµРєР° РїРѕ РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ С‚РѕС‡РєРµ (" + courseDeadLinePoints[i].getDate() + "): ";
 
         string mark = to_string(studentCourseWork.getMark(i));
         bool isDefault = to_string(DEFAULT_MARK) == mark;
 
         printTableRow(markMessage, (isDefault ? DEFAULT_MARK_TEXT:mark));
     }
-    // Нижняя граница
+    // РќРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р°
     printBorder('-');
 
 

@@ -10,12 +10,12 @@
 
 using namespace std;
 
-//extern для избегания ошибки линковки
+//extern РґР»СЏ РёР·Р±РµРіР°РЅРёСЏ РѕС€РёР±РєРё Р»РёРЅРєРѕРІРєРё
 extern fstream studentsFileReg; 
 extern fstream studentsFileData;
 extern fstream studentsFileDeadLines;
 
-// константы файлов
+// РєРѕРЅСЃС‚Р°РЅС‚С‹ С„Р°Р№Р»РѕРІ
 const string STUD_REG_FILE = "REG_STUDENTS.txt";
 const string STUD_DATA_FILE = "DATA_STUDENTS.txt";
 const string DEAD_LINES_FILE = "StudentsDeadLines.txt";

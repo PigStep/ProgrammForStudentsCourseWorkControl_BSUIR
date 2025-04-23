@@ -2,8 +2,8 @@
 #include "StudentFileManip.h"
 
 extern void AdminFunctionsMenu() {
-	const string OPTIONS_TO_CHOOSE[5] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу данных студентов", "Установить контрольные точки для работ", "Провести рецензирование работ", "Установить темы курсовых работ"};
-	const string HEADER = { "МЕНЮ АДМИНИСТРАТОРА" };
+	const string OPTIONS_TO_CHOOSE[5] = {"РџСЂРѕСЃРјРѕС‚СЂРµС‚СЊ РІРѕР·РјРѕР¶РЅС‹Рµ РѕРїРµСЂР°С†РёРё СЃ СѓС‡РµС‚РЅС‹РјРё Р·Р°РїРёСЃСЏРјРё", "РџСЂРµРґРѕСЃС‚Р°РІРёС‚СЊ РїРѕР»РЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ РґР°РЅРЅС‹С… СЃС‚СѓРґРµРЅС‚РѕРІ", "РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РєРѕРЅС‚СЂРѕР»СЊРЅС‹Рµ С‚РѕС‡РєРё РґР»СЏ СЂР°Р±РѕС‚", "РџСЂРѕРІРµСЃС‚Рё СЂРµС†РµРЅР·РёСЂРѕРІР°РЅРёРµ СЂР°Р±РѕС‚", "РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РµРјС‹ РєСѓСЂСЃРѕРІС‹С… СЂР°Р±РѕС‚"};
+	const string HEADER = { "РњР•РќР® РђР”РњРРќРРЎРўР РђРўРћР Рђ" };
 	int n;
 
 	do {
@@ -40,8 +40,8 @@ extern void AdminFunctionsMenu() {
 }
 
 void StudentsListOperations() {
-	const string OPTIONS_TO_CHOOSE[4] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Изменить учетную запись/записи", "Удалить учетную запись / записи"  };
-	const string HEADER = { "МЕНЮ ОПЕРАЦИЙ С УЧЕТНЫМИ ЗАПИСЯМИ" };
+	const string OPTIONS_TO_CHOOSE[4] = { "РџСЂРѕСЃРјРѕС‚СЂРµС‚СЊ РІСЃРµ СѓС‡РµС‚РЅС‹Рµ Р·Р°РїРёСЃРё","Р”РѕР±Р°РІРёС‚СЊ СѓС‡РµС‚РЅСѓСЋ Р·Р°РїРёСЃСЊ/Р·Р°РїРёСЃРё", "РР·РјРµРЅРёС‚СЊ СѓС‡РµС‚РЅСѓСЋ Р·Р°РїРёСЃСЊ/Р·Р°РїРёСЃРё", "РЈРґР°Р»РёС‚СЊ СѓС‡РµС‚РЅСѓСЋ Р·Р°РїРёСЃСЊ / Р·Р°РїРёСЃРё"  };
+	const string HEADER = { "РњР•РќР® РћРџР•Р РђР¦РР™ РЎ РЈР§Р•РўРќР«РњР Р—РђРџРРЎРЇРњР" };
 	int n;
 
 	do {
@@ -75,7 +75,7 @@ void StudentsListOperations() {
 }
 
 void PrintStudentsFromFile() {
-	const string HEADER = "ТАБЛИЦА УЧЕТНЫХ ЗАПИСЕЙ";
+	const string HEADER = "РўРђР‘Р›РР¦Рђ РЈР§Р•РўРќР«РҐ Р—РђРџРРЎР•Р™";
 	HeaderSecondLevel(HEADER);
 
 	for (int i = 0; i < studentsArray.size(); i++) {
@@ -87,14 +87,14 @@ void PrintStudentsFromFile() {
 }
 
 void AddStudentMenu() {
-	const string HEADER = "РЕГИСТРАЦИЯ СТУДЕНТА";
+	const string HEADER = "Р Р•Р“РРЎРўР РђР¦РРЇ РЎРўРЈР”Р•РќРўРђ";
 	HeaderSecondLevel(HEADER);
 
 	RegistrateStudentInFile();
 }
 
 void EditStudentsFromArrayMenu() {
-	const string HEADER = "РЕДАКТИРОВАНИЕ СТУДЕНТА";
+	const string HEADER = "Р Р•Р”РђРљРўРР РћР’РђРќРР• РЎРўРЈР”Р•РќРўРђ";
 	HeaderSecondLevel(HEADER);
 
 	vector<int> indexes;
@@ -124,7 +124,7 @@ void RefreshMenu(const string HEADER, int index) {
 }
 
 void DeleteStudentsFromArrayMenu() {
-	const string HEADER = "УДАЛЕНИЕ СТУДЕНТА";
+	const string HEADER = "РЈР”РђР›Р•РќРР• РЎРўРЈР”Р•РќРўРђ";
 	HeaderSecondLevel(HEADER);
 
 	vector<int> indexes;
@@ -137,11 +137,11 @@ void DeleteStudentsFromArrayMenu() {
 			int index = indexes[i];
 			
 			
-			cout << "Вы хотите удалить эту запись? (1 - да, 0 - нет)\n";
+			cout << "Р’С‹ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ СЌС‚Сѓ Р·Р°РїРёСЃСЊ? (1 - РґР°, 0 - РЅРµС‚)\n";
 
 			RegistratedStudentTable(studentsArray[index]);
 
-			cout <<"Подтвердите удаление" << setw(INPUT_PADDING) << ": ";
+			cout <<"РџРѕРґС‚РІРµСЂРґРёС‚Рµ СѓРґР°Р»РµРЅРёРµ" << setw(INPUT_PADDING) << ": ";
 			cin >> delChoice;
 
 
@@ -149,7 +149,7 @@ void DeleteStudentsFromArrayMenu() {
 				DeleteStudentArray(i);
 				RefreshStudentsId();
 				StudentFileRewrite();
-				cout << "Запись успешно удалена" << endl;
+				cout << "Р—Р°РїРёСЃСЊ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅР°" << endl;
 			}
 
 		}
@@ -160,7 +160,7 @@ void DeleteStudentsFromArrayMenu() {
 }
 
 void ShowStudentsDataTable() {
-	const string HEADER = "ТАБЛИЦА ДАННЫХ СТУДЕНТОВ";
+	const string HEADER = "РўРђР‘Р›РР¦Рђ Р”РђРќРќР«РҐ РЎРўРЈР”Р•РќРўРћР’";
 	HeaderSecondLevel(HEADER);
 
 	vector<int> indexes = SortIndexes();
@@ -176,24 +176,24 @@ void ShowStudentsDataTable() {
 
 
 void SetCourseDeadlines() {
-	const string HEADER = "УСТАНОВКА КОНТРОЛЬНЫХ ТОЧЕК";
+	const string HEADER = "РЈРЎРўРђРќРћР’РљРђ РљРћРќРўР РћР›Р¬РќР«РҐ РўРћР§Р•Рљ";
 	HeaderSecondLevel(HEADER);
 
 	ShowDeadLinesList();
 
 	int confirm;
 
-	cout << "Вы хотите изменить контрольные точки? (1 - да; 0 - нет)\n";
+	cout << "Р’С‹ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ РєРѕРЅС‚СЂРѕР»СЊРЅС‹Рµ С‚РѕС‡РєРё? (1 - РґР°; 0 - РЅРµС‚)\n";
 	cin >> confirm;
 
 	if (confirm) {
 		for (int i = 0; i < NUM_OF_DEADLINES; i++) {
-			cout << "Установите дату контрольной точки [" << i + 1 << "]" << endl;
+			cout << "РЈСЃС‚Р°РЅРѕРІРёС‚Рµ РґР°С‚Сѓ РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ С‚РѕС‡РєРё [" << i + 1 << "]" << endl;
 			courseDeadLinePoints[i].SetDate();
 			cout << endl;
 		}
 
-		string message = "Точки успешно созданы";
+		string message = "РўРѕС‡РєРё СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅС‹";
 		LogMessage(message);
 		SaveDeadLinesInFile();
 		cin.ignore();
@@ -208,7 +208,7 @@ bool SelectMark(int index) {
 	int mark;
 	int deadLineIndex;
 
-	cout << "Выберете контрольную точку на изменение (0 для выхода): ";
+	cout << "Р’С‹Р±РµСЂРµС‚Рµ РєРѕРЅС‚СЂРѕР»СЊРЅСѓСЋ С‚РѕС‡РєСѓ РЅР° РёР·РјРµРЅРµРЅРёРµ (0 РґР»СЏ РІС‹С…РѕРґР°): ";
 	cin >> deadLineIndex;
 
 	if (deadLineIndex == 0) return false;
@@ -216,7 +216,7 @@ bool SelectMark(int index) {
 	deadLineIndex--;
 
 
-	cout << "Введите оценку за контрольную точку: ";
+	cout << "Р’РІРµРґРёС‚Рµ РѕС†РµРЅРєСѓ Р·Р° РєРѕРЅС‚СЂРѕР»СЊРЅСѓСЋ С‚РѕС‡РєСѓ: ";
 	cin >> mark;
 	studentsArray[index].setMark(deadLineIndex, mark);
 
@@ -224,7 +224,7 @@ bool SelectMark(int index) {
 }
 
 void SetStudentsMarks() {
-	const string HEADER = "МЕНЮ ОЦЕНИВАНИЯ РАБОТЫ СТУДЕНТА";
+	const string HEADER = "РњР•РќР® РћР¦Р•РќРР’РђРќРРЇ Р РђР‘РћРўР« РЎРўРЈР”Р•РќРўРђ";
 	HeaderSecondLevel(HEADER);
 	vector<int> indexes;
 
@@ -239,7 +239,7 @@ void SetStudentsMarks() {
 
 			if (studentsArray[index].getId() == 1)
 			{
-				cout << "Невозможно провести рецензирование преподавателя";
+				cout << "РќРµРІРѕР·РјРѕР¶РЅРѕ РїСЂРѕРІРµСЃС‚Рё СЂРµС†РµРЅР·РёСЂРѕРІР°РЅРёРµ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЏ";
 				WaitEnterInput();
 				return;
 			}
@@ -256,7 +256,7 @@ void SetStudentsMarks() {
 }
 
 void SetStudentCourseTheme() {
-	const string HEADER = "МЕНЮ УСТАНОВКИ ТЕМЫ РАБОТЫ СТУДЕНТА";
+	const string HEADER = "РњР•РќР® РЈРЎРўРђРќРћР’РљР РўР•РњР« Р РђР‘РћРўР« РЎРўРЈР”Р•РќРўРђ";
 	HeaderSecondLevel(HEADER);
 	vector<int> indexes;
 
@@ -270,7 +270,7 @@ void SetStudentCourseTheme() {
 
 			if (studentsArray[index].getId() == 1)
 			{
-				cout << "Невозможно установить тему преподавателю";
+				cout << "РќРµРІРѕР·РјРѕР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РµРјСѓ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЋ";
 				WaitEnterInput();
 				return;
 			}
@@ -278,7 +278,7 @@ void SetStudentCourseTheme() {
 			StudentWorkCourseTable(studentsArray[index]);
 			cin.ignore();
 
-			cout << "Вы хотите установить новую тему этому студенту? (1- да; 0 - нет)\n";
+			cout << "Р’С‹ С…РѕС‚РёС‚Рµ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РЅРѕРІСѓСЋ С‚РµРјСѓ СЌС‚РѕРјСѓ СЃС‚СѓРґРµРЅС‚Сѓ? (1- РґР°; 0 - РЅРµС‚)\n";
 			int confirm;
 			cin >> confirm;
 

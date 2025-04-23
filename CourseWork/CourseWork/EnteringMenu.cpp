@@ -1,4 +1,4 @@
-﻿#include "TableManips.h"
+#include "TableManips.h"
 #include "StudentFileManip.h"
 
 fstream studentsFileReg; 

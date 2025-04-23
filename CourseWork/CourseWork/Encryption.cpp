@@ -1,6 +1,6 @@
 #include "Encryption.h"
 
-// Генерация случайной соли (16 символов)
+// Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅРѕР№ СЃРѕР»Рё (16 СЃРёРјРІРѕР»РѕРІ)
 string GenerateSalt() {
     const string chars =
         "0123456789"
@@ -18,7 +18,7 @@ string GenerateSalt() {
     return salt;
 }
 
-//хеш-функция
+//С…РµС€-С„СѓРЅРєС†РёСЏ
 string SimpleHash(const string& s) {
     return to_string(
         accumulate(s.begin(), s.end(), 0,
@@ -27,7 +27,7 @@ string SimpleHash(const string& s) {
     );
 }
 
-// Хеширование пароля с солью
+// РҐРµС€РёСЂРѕРІР°РЅРёРµ РїР°СЂРѕР»СЏ СЃ СЃРѕР»СЊСЋ
 string HashPassword(const string& password, const string& salt) {
     return SimpleHash(password + salt);
 }

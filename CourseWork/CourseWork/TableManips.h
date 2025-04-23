@@ -1,15 +1,15 @@
 #pragma once
 #include "StudentFileManip.h"
 
-// табличные константы
-const int BORDERS_WIDTH = 80;   // Общая ширина таблицы
-const int OPTIONS_PADDING = 5; // Отступ для значений
-const int HEADER_WIDTH = 10;  // Ширина левой колонки
-const int INPUT_PADDING = 10;   // Отступ для полей ввода
+// С‚Р°Р±Р»РёС‡РЅС‹Рµ РєРѕРЅСЃС‚Р°РЅС‚С‹
+const int BORDERS_WIDTH = 80;   // РћР±С‰Р°СЏ С€РёСЂРёРЅР° С‚Р°Р±Р»РёС†С‹
+const int OPTIONS_PADDING = 5; // РћС‚СЃС‚СѓРї РґР»СЏ Р·РЅР°С‡РµРЅРёР№
+const int HEADER_WIDTH = 10;  // РЁРёСЂРёРЅР° Р»РµРІРѕР№ РєРѕР»РѕРЅРєРё
+const int INPUT_PADDING = 10;   // РћС‚СЃС‚СѓРї РґР»СЏ РїРѕР»РµР№ РІРІРѕРґР°
 
 // functions prototypes
 
-//Базовые табличные функции
+//Р‘Р°Р·РѕРІС‹Рµ С‚Р°Р±Р»РёС‡РЅС‹Рµ С„СѓРЅРєС†РёРё
 
 void ClearTerminal();
 void WaitEnterInput();
@@ -24,9 +24,9 @@ void LoginAutorizationStatus(bool);
 
 //studentTableFunctions
 
-// Функция для вывода горизонтальной границы
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РІРѕРґР° РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅРѕР№ РіСЂР°РЅРёС†С‹
 void printBorder(char);
-// Функция для вывода строки таблицы
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РІРѕРґР° СЃС‚СЂРѕРєРё С‚Р°Р±Р»РёС†С‹
 void printTableRow(const string&, const string&, char);
 void RegistratedStudentTable(Student);
 void StudentWorkCourseTable(StudentCourseWork);
