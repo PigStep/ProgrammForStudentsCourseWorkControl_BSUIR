@@ -6,5 +6,7 @@
 *.pdf binary
 *.png binary
 
-# Для исходников явно указываем UTF-8
-*.* text working-tree-encoding=UTF-8 eol=CRLF
+# Для исходников явно указываем CP1251
+*.cpp text working-tree-encoding=CP1251 eol=CRLF
+*.h text working-tree-encoding=CP1251 eol=CRLF
+*.txt text working-tree-encoding=CP1251 eol=CRLF
