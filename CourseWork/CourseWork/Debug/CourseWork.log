@@ -1,8 +1,0 @@
-﻿  AdministratorMenu.cpp
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(81,20): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(105,21): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(136,21): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(168,20): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(237,21): warning C4018: <: несоответствие типов со знаком и без знака
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(268,21): warning C4018: <: несоответствие типов со знаком и без знака
-  CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\Debug\CourseWork.exe

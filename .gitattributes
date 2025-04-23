@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Явные исключения для бинарных файлов
+*.suo binary
+*.pdf binary
+*.png binary
+
+# Для исходников явно указываем UTF-8
+*.* text working-tree-encoding=UTF-8 eol=CRLF
