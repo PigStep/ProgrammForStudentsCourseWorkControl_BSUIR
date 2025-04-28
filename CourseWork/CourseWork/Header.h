@@ -46,3 +46,7 @@ void SetCourseDeadlines();
 void SetStudentsMarks();
 
 void SetStudentCourseTheme();
+
+//Меню пользователя
+extern void UserFunctionsMenu();
+void PrintAccountData();

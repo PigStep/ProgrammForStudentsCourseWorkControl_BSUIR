@@ -5,6 +5,7 @@ fstream studentsFileReg;
 fstream studentsFileData;
 fstream studentsFileDeadLines;
 
+StudentCourseWork* userAccount;
 
 int main()
 {
@@ -42,7 +43,7 @@ void InitializeMenuLoginEntering() {
     int choice;
 
     do {
-        const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь (в разработке)","Вход как администратор"};
+        const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь","Вход как администратор"};
         HeaderFirstLevel(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
 
         cin >> choice;
@@ -53,10 +54,12 @@ void InitializeMenuLoginEntering() {
 
         switch (choice) {
         case 1: 
-            UserAuthorizationMenu(false); //log as user
+            if (UserAuthorizationMenu(false)) {
+                UserFunctionsMenu();
+            }
             break;
         case 2:
-            if (UserAuthorizationMenu(true)) { //log as admin
+            if (UserAuthorizationMenu(true)) {
                 AdminFunctionsMenu();
             }
             break;
@@ -108,6 +111,7 @@ bool CheckRegistration(bool isAdmin, string& login, string& password) {
         if (studentsArray[i].getLogin() == login 
             && studentsArray[i].checkPassword(password)
             && (bool)studentsArray[i].getUserLevel() == isAdmin) {
+            userAccount = &studentsArray[i];
             return true;
         }
     }

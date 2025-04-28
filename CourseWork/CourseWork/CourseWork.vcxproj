@@ -145,6 +145,7 @@
     <ClCompile Include="Encryption.cpp" />
     <ClCompile Include="StudentFileManip.cpp" />
     <ClCompile Include="TableManips.cpp" />
+    <ClCompile Include="UserMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Encryption.h" />

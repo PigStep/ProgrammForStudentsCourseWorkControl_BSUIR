@@ -1,10 +1,16 @@
 #pragma once
-#include "Header.h"
 #include "DeadLines.h"
 #include "Encryption.h"
 #include <sstream>
 
 using namespace std;
+
+class User;
+class Student;
+class StudentCourseWork;
+
+//Ссылка на текущую учетную запись
+extern StudentCourseWork* userAccount;
 
 const string THEME_DEFAULT = "NO_THEME_WAS_PROVIDED";
 const string STORAGE_LINK_DEFAULT = "NO_STORAGE_LINK_WAS_PROVIDED";
@@ -14,6 +20,43 @@ const int DEFAULT_MARK = -1;
 const string DEFAULT_MARK_TEXT = "Кнтр. точка не оценена";
 
 extern Date courseDeadLinePoints[NUM_OF_DEADLINES];
+
+extern vector<StudentCourseWork> studentsArray;
+
+//Функция загрузки студентов из файла в оперативную память
+void LoadStudentsFromFile();
+
+// Вспомогательная функция для разделения строки
+vector<string> SplitString(const string& str, char delimiter);
+
+//Функция регистрации студента с записью в файл
+void RegistrateStudentInFile();
+
+//Функция перезаписи файла студентами из оперативной памяти
+void StudentFileRewrite();
+
+//Функция поиска студента по параметру
+vector<int> FindStudentByParam();
+vector<int> SortIndexes();
+
+//Найти количество админов в оперативной памяти
+int AdminArrayCount();
+void CreateBaseAdmin();
+
+//Функция удаления студента из вектора
+void DeleteStudentArray(int);
+
+//Функция обновления всей ID у студентов
+void RefreshStudentsId();
+
+//Операции с контрольными точками
+
+//Функция записи контрольных точек из консоли в файл
+void SaveDeadLinesInFile();
+void LoadDeadlinesFromFile();
+string GetDeadLines();
+void ShowDeadLinesList();
+
 
 class User {
 protected:
@@ -145,44 +188,3 @@ public:
 
 	void writeInFiles(fstream& dataStream, fstream& regStream);
 };
-
-extern vector<StudentCourseWork> studentsArray;
-
-//Функция загрузки студентов из файла в оперативную память
-void LoadStudentsFromFile();
-
-// Вспомогательная функция для разделения строки
-vector<string> SplitString(const string& str, char delimiter);
-
-//Функция регистрации студента с записью в файл
-void RegistrateStudentInFile();
-
-//Функция перезаписи файла студентами из оперативной памяти
-void StudentFileRewrite();
-
-//Функция поиска студента по параметру
-vector<int> FindStudentByParam();
-vector<int> SortIndexes();
-
-//Найти количество админов в оперативной памяти
-int AdminArrayCount();
-void CreateBaseAdmin();
-
-//Функция удаления студента из вектора
-void DeleteStudentArray(int);
-
-//Функция обновления всей ID у студентов
-void RefreshStudentsId();
-
-//Операции с контрольными точками
-
-//Функция записи контрольных точек из консоли в файл
-void SaveDeadLinesInFile();
-
-//Функция загрузки контрольных точек из файла в оперативную память
-void LoadDeadlinesFromFile();
-
-//Функция получения всех дат контрольных точек одной строкой
-string GetDeadLines();
-//Функция вывода всех контрльных точек в виде списка
-void ShowDeadLinesList();

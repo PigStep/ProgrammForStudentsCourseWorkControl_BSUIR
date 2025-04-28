@@ -43,7 +43,7 @@ int FindStudentInFileMenu() {
 	int choice;
 
 	// Вывод меню выбора параметра
-	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для поиска:\n";
+	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для поиска студента:\n";
 
 	cout << setw(OPTIONS_PADDING) << "" << "1. ID пользователя\n";
 	cout << setw(OPTIONS_PADDING) << "" << "2. Имя\n";
@@ -586,6 +586,7 @@ void SaveDeadLinesInFile() {
 	studentsFileDeadLines.open(DEAD_LINES_FILE, ios::in | ios::out | ios::app);
 }
 
+//Функция загрузки контрольных точек из файла в оперативную память
 void LoadDeadlinesFromFile() {
 	string line;
 	if (getline(studentsFileDeadLines, line) && !line.empty()) { // Считываем строку с датами
@@ -602,7 +603,7 @@ void LoadDeadlinesFromFile() {
 	else
 		cout << EMPTY_DEADLINES_FILE_WARN << endl;
 }
-
+//Функция получения всех дат контрольных точек одной строкой
 string GetDeadLines() {
 	string dates;
 	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
@@ -611,6 +612,7 @@ string GetDeadLines() {
 	return dates;
 }
 
+//Функция вывода всех контрльных точек в виде списка
 void ShowDeadLinesList() {
 	string message = "Текущие контрольные точки:\n";
 	message += GetDeadLines();

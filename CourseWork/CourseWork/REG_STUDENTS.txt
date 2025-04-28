@@ -1,5 +1,3 @@
-1;1;admn1;7pLPtayezR7BUBfT;57846;
-2;1;dmtr;vqRIVXtrvYAXO243;52080;
-3;1;dmtr1;VYJIfzP9rCW53dVr;52886;
-4;1;123;IhVQa7rKgASThyhJ;48763;
-5;0;йцу;irbpQTCKbA1bNjva;55118;
+1;1;admin;adminSalt;44826;
+2;0;123;ujFZd0K6ETAQvtrn;48577;
+3;0;111;UYC7KukqYzDSBymW;49600;
