@@ -50,3 +50,7 @@ void SetStudentCourseTheme();
 //Меню пользователя
 extern void UserFunctionsMenu();
 void PrintAccountData();
+
+void SetCourseWorkLink();
+
+void GetStudentByParam();

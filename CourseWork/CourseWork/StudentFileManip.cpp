@@ -39,11 +39,11 @@ void RefreshStudentsId() {
 }
 
 //Получить номер параметра поиска
-int FindStudentInFileMenu() {
+int FindStudentInFileMenu(string message) {
 	int choice;
 
 	// Вывод меню выбора параметра
-	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для поиска студента:\n";
+	cout << setw(OPTIONS_PADDING) << "" << message<<endl;
 
 	cout << setw(OPTIONS_PADDING) << "" << "1. ID пользователя\n";
 	cout << setw(OPTIONS_PADDING) << "" << "2. Имя\n";
@@ -60,13 +60,13 @@ int FindStudentInFileMenu() {
 	return choice;
 }
 
-//Получить вектор студентов из файла
+//Получить вектор студентов из файла по значению
 vector<int> FindStudentByParam() {
 	vector<int> studentsIndexes;
 	string searchValue;
 	int intSearchValue;
 
-	int choice = FindStudentInFileMenu();
+	int choice = FindStudentInFileMenu("Выберете параметр поиска студента");
 
 	if (choice == 0) return studentsIndexes; // Выход
 
@@ -130,27 +130,49 @@ vector<int> SortIndexes() {
 		indexes[i] = i;
 	}
 
-	int sortField = FindStudentInFileMenu();
+	int sortField = FindStudentInFileMenu("Введите параметр сортировки студентов (по убыванию):");
 
-	// Сортируем индексы по выбранному полю
-	sort(indexes.begin(), indexes.end(), [&](int a, int b) {
-		switch (sortField) {
-		case 1: // ID
-			return studentsArray[a].getId() < studentsArray[b].getId();
-		case 2: // Имя
-			return studentsArray[a].getName() < studentsArray[b].getName();
-		case 3: // Фамилия
-			return studentsArray[a].getSurname() < studentsArray[b].getSurname();
-		case 4: // Отчество
-			return studentsArray[a].getSecondName() < studentsArray[b].getSecondName();
-		case 5: // Группа
-			return studentsArray[a].getGroup() < studentsArray[b].getGroup();
-		case 6: // Курс
-			return studentsArray[a].getCourse() < studentsArray[b].getCourse();
-		default:
-			return studentsArray[a].getId() < studentsArray[b].getId(); // По умолчанию сортируем по ID
+	// Функция пузырьковой сортировки индексов по выбранному полю
+	if (studentsArray.empty()) {
+		indexes.clear(); // Если массив студентов пуст, возвращаем пустой вектор индексов
+	}
+	else {
+		// Пузырьковая сортировка
+		for (size_t i = 0; i < indexes.size(); ++i) {
+			for (size_t j = 0; j < indexes.size() - i - 1; ++j) {
+				bool needSwap = false;
+
+				// Определяем нужно ли менять элементы местами
+				switch (sortField) {
+				case 1: // ID
+					needSwap = studentsArray[indexes[j]].getId() > studentsArray[indexes[j + 1]].getId();
+					break;
+				case 2: // Имя
+					needSwap = studentsArray[indexes[j]].getName() > studentsArray[indexes[j + 1]].getName();
+					break;
+				case 3: // Фамилия
+					needSwap = studentsArray[indexes[j]].getSurname() > studentsArray[indexes[j + 1]].getSurname();
+					break;
+				case 4: // Отчество
+					needSwap = studentsArray[indexes[j]].getSecondName() > studentsArray[indexes[j + 1]].getSecondName();
+					break;
+				case 5: // Группа
+					needSwap = studentsArray[indexes[j]].getGroup() > studentsArray[indexes[j + 1]].getGroup();
+					break;
+				case 6: // Курс
+					needSwap = studentsArray[indexes[j]].getCourse() > studentsArray[indexes[j + 1]].getCourse();
+					break;
+				default: // По умолчанию сортируем по ID
+					needSwap = studentsArray[indexes[j]].getId() > studentsArray[indexes[j + 1]].getId();
+				}
+
+				// Если нужно, меняем элементы местами
+				if (needSwap) {
+					swap(indexes[j], indexes[j + 1]);
+				}
+			}
 		}
-		});
+	}
 
 	return indexes;
 }
