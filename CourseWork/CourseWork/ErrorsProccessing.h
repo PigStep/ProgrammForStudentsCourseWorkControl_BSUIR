@@ -20,11 +20,15 @@ bool IsAlphaString(const std::string& s);
 
 int GetIntegerInput(int min = INT_MIN, int max = INT_MAX, const std::string & prompt = "");
 
-std::string GetStringInput(const std::string& prompt, bool allowEmpty = false, bool checkAlphaString = true);
+std::string GetStringInput(const std::string& prompt, bool allowEmpty = false, bool checkAlphaString = false);
 
-bool CheckRegistration(bool isAdmin, std::string& login, std::string& password);
+bool CheckRegistration(bool isAdmin, std::string& login, std::string& password);\
+
+bool IsLoginExist(const std::string& login);
 
 bool CheckIsManipulatingAdmin(Student student);
 
 bool GetUserApprove();
+
+
 

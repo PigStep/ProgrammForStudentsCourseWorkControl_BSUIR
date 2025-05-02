@@ -60,6 +60,7 @@ void InitializeMenuLoginEntering() {
         default:
             break;
         }
+        WaitEnterInput();
     } while (choice != 0);
 
     studentsFileReg.close();

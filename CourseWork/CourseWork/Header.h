@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <locale>
 #include <Windows.h>
-#include <cstdlib>
 #include <iomanip>
 #include <vector>
 #include <fstream>

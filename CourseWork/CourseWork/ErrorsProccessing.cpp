@@ -39,14 +39,17 @@ bool IsInRange(int value, int min, int max) {
 bool IsAlphaString(const string& s) {
     if (s.empty()) return false;
     
+    locale loc("");
+
     for (char c : s) {
-        if (!isalpha(c) && c != ' ') { // разрешаем пробелы
+        if (c == ' ')
+            return false; // запрещаем пробелы
+        if (!isalpha(c, loc)) { 
             return false;
         }
     }
     return true;
 }
-
 
 // Безопасный ввод целого числа с проверкой
 int GetIntegerInput(int min, int max, const string& prompt) {
@@ -91,7 +94,7 @@ int GetIntegerInput(int min, int max, const string& prompt) {
 }
 
 // Безопасный ввод строки с проверкой
-string GetStringInput(const string& prompt, bool allowEmpty , bool allowAlphaString) {
+string GetStringInput(const string& prompt, bool allowEmpty , bool checkAlphaString) {
     string input;
     
     while (true) {
@@ -103,7 +106,7 @@ string GetStringInput(const string& prompt, bool allowEmpty , bool allowAlphaStr
             continue;
         }
         
-        if (allowAlphaString && !IsAlphaString(input))
+        if (checkAlphaString && !IsAlphaString(input))
         {
             cout << "Ошибка: в строке обнаружены посторонние символы. Повторите ввод.\n";
             continue;
@@ -157,4 +160,17 @@ bool GetUserApprove() {
     delChoise = GetIntegerInput(0, 1);
     
     return (bool)delChoise;
+}
+
+bool IsLoginExist(const string& login) {
+    for (int i = 0; i < studentsArray.size(); i++) {
+        if (studentsArray[i].getLogin() == login){
+
+            userAccount = &studentsArray[i];
+            cout << "Ошибка. Пользователь с подобным логином уже существует! Попробуйте другой\n";
+
+            return true;
+        }
+    }
+    return false;
 }

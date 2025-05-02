@@ -81,8 +81,6 @@ void PrintStudentsFromFile() {
 	for (int i = 0; i < studentsArray.size(); i++) {
 		RegistratedStudentTable(studentsArray[i]);
 	}
-
-	cin.get();
 	WaitEnterInput();
 }
 

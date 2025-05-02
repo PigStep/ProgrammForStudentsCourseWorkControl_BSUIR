@@ -329,8 +329,10 @@ void RegistrateStudentInFile() {
 		// Вывод индекса
 		cout << "Запись[" << currentStudentsNum << "]:\n\n";
 
-		// Ввод логина
-		login = GetStringInput("Логин: ");
+		do{
+			// Ввод логина
+			login = GetStringInput("Логин: ");
+		}while (IsLoginExist(login));
 
 		// Ввод пароля
 		password = GetStringInput("Пароль: ");
@@ -360,10 +362,10 @@ void RegistrateStudentInFile() {
 		}
 
 		// Ввод группы (число)
-		group = GetIntegerInput(INT_MIN, INT_MAX,"Группа: ");
+		group = GetIntegerInput(400000, INT_MAX,"Группа: ");
 
 		// Ввод курса (число)
-		course = GetIntegerInput(INT_MIN,INT_MAX,"Курс: ");
+		course = GetIntegerInput(0,4,"Курс: ");
 
 
 		StudentCourseWork StudentCourse(
