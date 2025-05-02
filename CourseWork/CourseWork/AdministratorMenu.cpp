@@ -8,7 +8,7 @@ extern void AdminFunctionsMenu() {
 
 	do {
 		HeaderFirstLevel(5, OPTIONS_TO_CHOOSE, HEADER);
-		cin >> n;
+		n = GetIntegerInput(0, 5);
 		LoadStudentsFromFile();
 
 		ClearTerminal();
@@ -30,11 +30,11 @@ extern void AdminFunctionsMenu() {
 		case 5:
 			SetStudentCourseTheme();
 			break;
+		case 0:
+			break;
 		default:
 			break;
 		}
-
-		ClearTerminal();
 	} while (n != 0);
 
 }
@@ -46,7 +46,7 @@ void StudentsListOperations() {
 
 	do {
 		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
-		cin >> n;
+		n = GetIntegerInput(0, 4);
 		LoadStudentsFromFile();
 
 		ClearTerminal();
@@ -137,15 +137,11 @@ void DeleteStudentsFromArrayMenu() {
 			int index = indexes[i];
 			
 			
-			cout << "Вы хотите удалить эту запись? (1 - да, 0 - нет)\n";
+			cout << "Вы хотите удалить эту запись\n";
 
 			RegistratedStudentTable(studentsArray[index]);
 
-			cout <<"Подтвердите удаление" << setw(INPUT_PADDING) << ": ";
-			cin >> delChoice;
-
-
-			if (delChoice == 1) {
+			if (GetUserApprove) {
 				DeleteStudentArray(i);
 				RefreshStudentsId();
 				StudentFileRewrite();
@@ -237,11 +233,8 @@ void SetStudentsMarks() {
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
 
-			if (studentsArray[index].getId() == 1)
-			{
-				cout << "Невозможно провести рецензирование преподавателя";
+			if (CheckIsManipulatingAdmin(studentsArray[index])) {
 				WaitEnterInput();
-				return;
 			}
 
 			do {

@@ -1,11 +1,30 @@
 #pragma once
 #include "Header.h"
+#include "StudentFileManip.h"
 
-//константы ошибок и предупреждений
-const std::string ERR_CHOICE_INP = "";
-const std::string ENTER_INP_WAIT = "Нажмите Enter для продолжения";
-const std::string REG_AUTH_FAIL = "Ошибка, пользователь с такими данными не найден!";
-const std::string NO_ADMIN_FOUND = "ВНИМАНИЕ, В ФАЙЛЕ ДАННЫХ НЕ НАЙДЕН АДМИНИСТРАТОР, БЫЛ СОЗДАН АДМИНИСТРАТОР ПО УМОЛЧАНИЮ (admin admin)";
+class Student;
+class User;
+class StudentCourseWork;
 
-//даты
-const std::string EMPTY_DEADLINES_FILE_WARN = "ВНИМАНИЕ, ФАЙЛ С КОНТРОЛЬНЫМИ ТОЧКАМИ ПУСТ";
+//проверка, существует ли логин
+//проверка, удаляется ли админ
+
+bool IsInteger(const std::string& s);
+bool IsNumber(const std::string& s);
+
+bool IsEmptyString(const std::string& s);
+
+bool IsInRange(int value, int min, int max);
+
+bool IsAlphaString(const std::string& s);
+
+int GetIntegerInput(int min = INT_MIN, int max = INT_MAX, const std::string & prompt = "");
+
+std::string GetStringInput(const std::string& prompt, bool allowEmpty = false, bool checkAlphaString = true);
+
+bool CheckRegistration(bool isAdmin, std::string& login, std::string& password);
+
+bool CheckIsManipulatingAdmin(Student student);
+
+bool GetUserApprove();
+

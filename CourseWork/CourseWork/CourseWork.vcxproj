@@ -143,6 +143,7 @@
     <ClCompile Include="DeadLines.cpp" />
     <ClCompile Include="EnteringMenu.cpp" />
     <ClCompile Include="Encryption.cpp" />
+    <ClCompile Include="ErrorsProccessing.cpp" />
     <ClCompile Include="StudentFileManip.cpp" />
     <ClCompile Include="TableManips.cpp" />
     <ClCompile Include="UserMenu.cpp" />

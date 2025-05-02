@@ -20,6 +20,12 @@ const string STUD_REG_FILE = "REG_STUDENTS.txt";
 const string STUD_DATA_FILE = "DATA_STUDENTS.txt";
 const string DEAD_LINES_FILE = "StudentsDeadLines.txt";
 
+// табличные константы
+const int BORDERS_WIDTH = 80;   // Общая ширина таблицы
+const int OPTIONS_PADDING = 5; // Отступ для значений
+const int HEADER_WIDTH = 10;  // Ширина левой колонки
+const int INPUT_PADDING = 10;   // Отступ для полей ввода
+
 //Fuctions prototypes 
 //EnteringMenu.cpp
 
@@ -30,6 +36,7 @@ bool UserAuthorizationMenu(bool);
 bool CheckRegistration(bool isAdmin, string& login, string& password);
 
 //AdministratorMenu
+
 extern void AdminFunctionsMenu();
 void RefreshMenu(const string, int);
 

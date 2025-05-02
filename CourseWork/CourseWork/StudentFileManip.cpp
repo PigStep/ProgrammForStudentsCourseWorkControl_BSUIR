@@ -317,38 +317,32 @@ void RegistrateStudentInFile() {
 
 	int n;
 	cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей: ";
-	cin >> n;
-	cin.ignore(); // Очистка буфера после cin >> 
+	n = GetIntegerInput(0);
 
 	for (int i = 0; i < n; i++) {
 		currentStudentsNum ++; //начинаем индексирование с 1
 
 		//Уровень доступа
 		cout << "Уровень доступа записи (0 - студент, 1 - администратор): ";
-		cin >> userLevel;
-		cin.ignore();
+		userLevel = GetIntegerInput(0, 1);
 
-		// Ввод имени
-		cout << "Запись " << currentStudentsNum << ":\n\n";
+		// Вывод индекса
+		cout << "Запись[" << currentStudentsNum << "]:\n\n";
 
 		// Ввод логина
-		cout << left << setw(OPTIONS_PADDING) << "Логин: ";
-		getline(cin, login);
+		login = GetStringInput("Логин: ");
 
 		// Ввод пароля
-		cout << left << setw(OPTIONS_PADDING) << "Пароль: ";
-		getline(cin, password);
+		password = GetStringInput("Пароль: ");
 
-		cout << left << setw(OPTIONS_PADDING) << "Имя: ";
-		getline(cin, name);
+		//Ввод имени
+		name = GetStringInput("Имя: ", false, true);
 
 		// Ввод фамилии
-		cout << left << setw(OPTIONS_PADDING) << "Фамилия: ";
-		getline(cin, secondname);
+		secondname = GetStringInput("Фамилия: ", false, true);
 
 		// Ввод отчества
-		cout << left << setw(OPTIONS_PADDING) << "Отчество: ";
-		getline(cin, surname);
+		surname = GetStringInput("Отчество: ", false, true);
 
 		if (userLevel == 1) {
 			StudentCourseWork StudentCourse(
@@ -366,14 +360,10 @@ void RegistrateStudentInFile() {
 		}
 
 		// Ввод группы (число)
-		cout << left << setw(OPTIONS_PADDING) << "Группа: ";
-		cin >> group;
-		cin.ignore();  // Очистка буфера после cin >> 
+		group = GetIntegerInput(INT_MIN, INT_MAX,"Группа: ");
 
 		// Ввод курса (число)
-		cout << left << setw(OPTIONS_PADDING) << "Курс: ";
-		cin >> course;
-		cin.ignore();  // Очистка буфера после cin >>
+		course = GetIntegerInput(INT_MIN,INT_MAX,"Курс: ");
 
 
 		StudentCourseWork StudentCourse(
@@ -623,9 +613,9 @@ void LoadDeadlinesFromFile() {
 		}
 	}
 	else
-		cout << EMPTY_DEADLINES_FILE_WARN << endl;
+		cout << "ВНИМАНИЕ, ФАЙЛ С КОНТРОЛЬНЫМИ ТОЧКАМИ ОТСУТСВТУЕТ, ДОБАВЛЕНЫ КОНТРОЛЬНЫЕ ТОЧКИ ПО УМОЛЧАНИЮ" << endl;
 }
-//Функция получения всех дат контрольных точек одной строкой
+//Функция вывода всех дат контрольных точек одной строкой
 string GetDeadLines() {
 	string dates;
 	for (int i = 0; i < NUM_OF_DEADLINES; i++) {

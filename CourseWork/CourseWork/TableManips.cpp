@@ -4,7 +4,7 @@ void ClearTerminal() {
     system("cls");
 }
 void WaitEnterInput() {
-    cout << ENTER_INP_WAIT << endl;
+    cout << "Нажмите Enter для продолжения" << endl;
     cin.ignore();
     ClearTerminal();
 }

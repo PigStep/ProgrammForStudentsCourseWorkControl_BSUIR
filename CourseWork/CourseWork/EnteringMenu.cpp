@@ -17,15 +17,6 @@ int main()
     InitializeMenuLoginEntering();
 }
 
-//Функция провери и создания Админа в случае его отсутвия
-void CheckAdmins() {
-    if (AdminArrayCount() == 0) {
-        CreateBaseAdmin();
-        cout << NO_ADMIN_FOUND << endl;
-    }
-
-}
-
 void FilePreparation(){
     studentsFileReg.open(STUD_REG_FILE, ios::in | ios::out | ios::app);
     studentsFileData.open(STUD_DATA_FILE, ios::in | ios::out | ios::app);
@@ -46,7 +37,7 @@ void InitializeMenuLoginEntering() {
         const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь","Вход как администратор"};
         HeaderFirstLevel(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
 
-        cin >> choice;
+        choice = GetIntegerInput(0,2);
 
         LoadStudentsFromFile();
 
@@ -64,14 +55,11 @@ void InitializeMenuLoginEntering() {
             }
             break;
         case 0:
-            cout << "Выход из программы...\n";
+            return;
             break;
         default:
-            cout << "Неверный выбор! Попробуйте снова.\n";
+            break;
         }
-        WaitEnterInput();
-        ClearTerminal();
-
     } while (choice != 0);
 
     studentsFileReg.close();
@@ -83,37 +71,18 @@ bool UserAuthorizationMenu(bool isAdmin) {
 
     string login, password;
 
-    cout << left << setw(INPUT_PADDING) << "Логин: ";
-    cin.get();
-    getline(cin, login);
+    login = GetStringInput("Логин: ",false);
 
-    cout << left << setw(INPUT_PADDING) << "Пароль: ";
-    getline(cin, password);
-
+    password = GetStringInput("Пароль: ", false);
 
     bool isRegistrated = CheckRegistration(isAdmin,login,password);
 
     if (isRegistrated)
         LoginAutorizationStatus(isAdmin);
     else
-    {
-        cout << REG_AUTH_FAIL<<endl;
         return false;
-    }
 
     WaitEnterInput();
 
     return true;
-}
-
-bool CheckRegistration(bool isAdmin, string& login, string& password) {
-    for (int i = 0; i < studentsArray.size(); i++) {
-        if (studentsArray[i].getLogin() == login 
-            && studentsArray[i].checkPassword(password)
-            && (bool)studentsArray[i].getUserLevel() == isAdmin) {
-            userAccount = &studentsArray[i];
-            return true;
-        }
-    }
-    return false;
 }

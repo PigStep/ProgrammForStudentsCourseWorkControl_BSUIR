@@ -1,12 +1,6 @@
 #pragma once
 #include "StudentFileManip.h"
 
-// табличные константы
-const int BORDERS_WIDTH = 80;   // Общая ширина таблицы
-const int OPTIONS_PADDING = 5; // Отступ для значений
-const int HEADER_WIDTH = 10;  // Ширина левой колонки
-const int INPUT_PADDING = 10;   // Отступ для полей ввода
-
 // functions prototypes
 
 //Базовые табличные функции

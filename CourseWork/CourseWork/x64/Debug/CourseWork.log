@@ -1,2 +1,4 @@
-﻿  UserMenu.cpp
+﻿  StudentFileManip.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(316,47): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
   CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\x64\Debug\CourseWork.exe
