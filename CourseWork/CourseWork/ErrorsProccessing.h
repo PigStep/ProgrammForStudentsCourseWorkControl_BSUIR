@@ -6,7 +6,8 @@ class Student;
 class User;
 class StudentCourseWork;
 
-//проверка, существует ли логин
+//проверка строки с символами сломалась (странная хуйня ток при первом запуске)
+//проверка WaitEnterInput на энтер
 //проверка, удаляется ли админ
 
 bool IsInteger(const std::string& s);

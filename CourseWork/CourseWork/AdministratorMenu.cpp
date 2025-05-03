@@ -100,19 +100,20 @@ void EditStudentsFromArrayMenu() {
 	do {
 		indexes = FindStudentByParam();
 
+		if (indexes.size() == 1 && indexes[0] == -1)
+			break;  //если был выбран выход
+
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
 
 			RefreshMenu(HEADER,index);
 
 			studentsArray[index].StudentEdit();
-
-			StudentFileRewrite();
 		}
-
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
-	}while (indexes.size() != 0);
+	}while (true);
+	StudentFileRewrite();
 }
 
 void RefreshMenu(const string HEADER, int index) {
@@ -163,9 +164,10 @@ void ShowStudentsDataTable() {
 		int index = indexes[i];
 		StudentWorkCourseTable(studentsArray[index]);
 	}
-
-	cin.ignore();
-	WaitEnterInput();
+	if (indexes.size() != 0)
+		WaitEnterInput();
+	else
+		ClearTerminal();
 }
 
 

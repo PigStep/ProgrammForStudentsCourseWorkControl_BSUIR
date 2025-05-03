@@ -162,6 +162,7 @@ bool GetUserApprove() {
     return (bool)delChoise;
 }
 
+//Проверка, существует ли полльзователь с таким логином
 bool IsLoginExist(const string& login) {
     for (int i = 0; i < studentsArray.size(); i++) {
         if (studentsArray[i].getLogin() == login){
