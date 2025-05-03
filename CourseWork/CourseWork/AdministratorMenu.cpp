@@ -183,22 +183,20 @@ void SetCourseDeadlines() {
 
 	ShowDeadLinesList();
 
-	int confirm;
+	cout << "Вы хотите изменить контрольные точки\n";
 
-	cout << "Вы хотите изменить контрольные точки? (1 - да; 0 - нет)\n";
-	cin >> confirm;
-
-	if (confirm) {
-		for (int i = 0; i < NUM_OF_DEADLINES; i++) {
-			cout << "Установите дату контрольной точки [" << i + 1 << "]" << endl;
-			courseDeadLinePoints[i].SetDate();
-			cout << endl;
-		}
+	if (GetUserApprove()) {
+		do {
+			for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+				cout << "Установите дату контрольной точки [" << i + 1 << "]" << endl;
+				courseDeadLinePoints[i].SetDate();
+				cout << endl;
+			}
+		} while (!CheckDates());
 
 		string message = "Точки успешно созданы";
 		LogMessage(message);
 		SaveDeadLinesInFile();
-		cin.ignore();
 		WaitEnterInput();
 	}
 	else

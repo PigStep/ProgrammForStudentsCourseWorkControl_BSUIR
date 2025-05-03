@@ -34,5 +34,6 @@ bool CheckIsManipulatingAdmin(Student student);
 
 bool GetUserApprove();
 
+bool CheckDates();
 
 

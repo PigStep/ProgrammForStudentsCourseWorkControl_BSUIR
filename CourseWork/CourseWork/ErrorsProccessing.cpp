@@ -39,7 +39,7 @@ bool IsInRange(int value, int min, int max) {
 bool IsAlphaString(const string& s) {
     if (s.empty()) return false;
     
-    locale loc("");
+    locale loc("Russian");
 
     for (char c : s) {
         if (c == ' ')
@@ -174,4 +174,15 @@ bool IsLoginExist(const string& login) {
         }
     }
     return false;
+}
+
+//Проверка порядка дат
+bool CheckDates() {
+    for (int i = 1; i < NUM_OF_DEADLINES; i++) {
+        if (courseDeadLinePoints[i - 1] > courseDeadLinePoints[i]) {
+            cout << "Ошибка. Даты неупорядочены. Повторите ввод\n";
+            return false;
+        }
+    }
+    return true;
 }
