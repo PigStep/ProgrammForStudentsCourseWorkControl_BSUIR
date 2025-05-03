@@ -10,7 +10,7 @@ class Student;
 class StudentCourseWork;
 
 //Ссылка на текущую учетную запись
-extern StudentCourseWork* userAccount;
+extern StudentCourseWork* userAccountLink;
 
 const string THEME_DEFAULT = "NO_THEME_WAS_PROVIDED";
 const string STORAGE_LINK_DEFAULT = "NO_STORAGE_LINK_WAS_PROVIDED";
@@ -36,7 +36,7 @@ void RegistrateStudentInFile();
 void StudentFileRewrite();
 
 //Функция поиска студента по параметру
-vector<int> FindStudentByParam();
+vector<int> FindUserByParam();
 vector<int> SortIndexes();
 
 //Найти количество админов в оперативной памяти

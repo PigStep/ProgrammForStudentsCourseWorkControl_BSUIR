@@ -98,7 +98,7 @@ void EditStudentsFromArrayMenu() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
 
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -123,35 +123,41 @@ void RefreshMenu(const string HEADER, int index) {
 }
 
 void DeleteStudentsFromArrayMenu() {
-	const string HEADER = "УДАЛЕНИЕ СТУДЕНТА";
+	const string HEADER = "УДАЛЕНИЕ УЧЕТНОЙ ЗАПИСИ";
 	HeaderSecondLevel(HEADER);
 
 	vector<int> indexes;
 	int delChoice;
 
 	do {
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
+
+		if (indexes.size() == 1 && indexes[0] == -1)
+			break;  //если был выбран выход
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
-			
+
+			if (studentsArray[index].getLogin() == userAccountLink->getLogin()) {
+				cout << "Ошибка, самоудаление невозможно!\n";
+				WaitEnterInput();
+				break;
+			}
 			
 			cout << "Вы хотите удалить эту запись\n";
 
 			RegistratedStudentTable(studentsArray[index]);
 
-			if (GetUserApprove) {
+			if (GetUserApprove()) {
 				DeleteStudentArray(i);
 				RefreshStudentsId();
-				StudentFileRewrite();
 				cout << "Запись успешно удалена" << endl;
 			}
-
 		}
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
-
-	} while (indexes.size() != 0);
+	} while (true);
+	StudentFileRewrite();
 }
 
 void ShowStudentsDataTable() {
@@ -228,7 +234,7 @@ void SetStudentsMarks() {
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
 
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
@@ -254,7 +260,7 @@ void SetStudentCourseTheme() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
 

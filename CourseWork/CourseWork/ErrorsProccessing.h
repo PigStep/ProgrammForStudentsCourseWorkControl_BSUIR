@@ -6,6 +6,8 @@ class Student;
 class User;
 class StudentCourseWork;
 
+const int MIN_COURSE = 100000;
+
 //проверка строки с символами сломалась (странная хуйня ток при первом запуске)
 //проверка WaitEnterInput на энтер
 //проверка, удаляется ли админ
@@ -23,7 +25,8 @@ int GetIntegerInput(int min = INT_MIN, int max = INT_MAX, const std::string & pr
 
 std::string GetStringInput(const std::string& prompt, bool allowEmpty = false, bool checkAlphaString = false);
 
-bool CheckRegistration(bool isAdmin, std::string& login, std::string& password);\
+bool CheckRegistration(bool isAdmin, std::string& login, std::string& password);
+void CheckAdmins();
 
 bool IsLoginExist(const std::string& login);
 

@@ -1,17 +1,6 @@
-﻿  AdministratorMenu.cpp
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(143,8): warning C4551: в вызове функции отсутствует список аргументов
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(130,6): warning C4101: delChoice: неиспользованная локальная переменная
-  DeadLines.cpp
-  Encryption.cpp
-  EnteringMenu.cpp
-  ErrorsProccessing.cpp
-  StudentFileManip.cpp
+﻿  StudentFileManip.cpp
 F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(254,6): warning C4101: newInt: неиспользованная локальная переменная
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(313,47): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-  TableManips.cpp
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\TableManips.cpp(22,54): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-  UserMenu.cpp
-  Создание кода...
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\ErrorsProccessing.cpp(145): warning C4715: CheckIsManipulatingAdmin: значение возвращается не при всех путях выполнения
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(259,6): warning C4101: newInt: неиспользованная локальная переменная
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(318,47): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(427,27): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\x64\Debug\CourseWork.exe

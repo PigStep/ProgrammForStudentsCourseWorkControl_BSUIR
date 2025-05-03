@@ -13,7 +13,7 @@ bool IsInteger(const string& s) {
     }
     
     for (size_t i = start; i < s.length(); i++) {
-        if (!isdigit(s[i])) {
+        if (!iswdigit(s[i])) {
             return false;
         }
     }
@@ -124,7 +124,7 @@ bool CheckRegistration(bool isAdmin, string& login, string& password) {
         if (studentsArray[i].getLogin() == login
             && studentsArray[i].checkPassword(password)
             && (bool)studentsArray[i].getUserLevel() == isAdmin) {
-            userAccount = &studentsArray[i];
+            userAccountLink = &studentsArray[i];
             return true;
         }
     }
@@ -167,7 +167,7 @@ bool IsLoginExist(const string& login) {
     for (int i = 0; i < studentsArray.size(); i++) {
         if (studentsArray[i].getLogin() == login){
 
-            userAccount = &studentsArray[i];
+            userAccountLink = &studentsArray[i];
             cout << "Ошибка. Пользователь с подобным логином уже существует! Попробуйте другой\n";
 
             return true;

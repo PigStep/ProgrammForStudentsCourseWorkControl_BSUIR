@@ -44,7 +44,7 @@ void PrintAccountData() {
 	const string HEADER = "ТЕКУЩАЯ УЧЕТНАЯ ЗАПИСЬ";
 	HeaderSecondLevel(HEADER);
 
-	StudentWorkCourseTable(*userAccount);
+	StudentWorkCourseTable(*userAccountLink);
 
 	WaitEnterInput();
 }
@@ -54,7 +54,7 @@ void SetCourseWorkLink() {
 	const string HEADER = "РЕДАКТИРОВАНИЕ ССЫЛКИ КУРСОВОЙ РАБОТЫ";
 	HeaderSecondLevel(HEADER);
 
-	cout << "Текущая ссылка на курсовую работу:\n"<< userAccount->getCourseWorkLink()<<endl;
+	cout << "Текущая ссылка на курсовую работу:\n"<< userAccountLink->getCourseWorkLink()<<endl;
 	cout << "Вы точно хотите её изменить? (1 - да; 0 - нет)"
 		<<setw(INPUT_PADDING)<<"";
 	
@@ -68,7 +68,7 @@ void SetCourseWorkLink() {
 	cin.ignore();
 	string link;
 	getline(cin, link);
-	userAccount->SetCourseWorkStorageLink(link);
+	userAccountLink->SetCourseWorkStorageLink(link);
 
 	string SCCSS_CHNG_MSG = "Ссылка успешно добавлена";
 
@@ -82,7 +82,7 @@ void GetStudentByParam() {
 	const string HEADER = "ПОИСК СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
-	vector<int> indexes = FindStudentByParam();
+	vector<int> indexes = FindUserByParam();
 
 	for (int i : indexes) {
 		if(studentsArray[i].getId()!=1)

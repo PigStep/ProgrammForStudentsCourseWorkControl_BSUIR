@@ -33,8 +33,14 @@ void DeleteStudentArray(int index) {
 }
 
 void RefreshStudentsId() {
+	int userId = userAccountLink->getId();
 	for (int i = 0; i < studentsArray.size(); i++) {
 		studentsArray[i].setId(i + 1);
+	}
+
+	// Проверяем, что userId всё ещё в допустимых пределах
+	if (userId > 1 && userId <= studentsArray.size()+1) {
+		userAccountLink = &studentsArray[userId-2];
 	}
 }
 
@@ -61,12 +67,12 @@ int FindStudentInFileMenu(string message) {
 }
 
 //Получить вектор студентов из файла по значению
-vector<int> FindStudentByParam() {
+vector<int> FindUserByParam() {
 	vector<int> studentsIndexes;
 	string searchValue;
 	int intSearchValue;
 
-	int choice = FindStudentInFileMenu("Выберете параметр поиска студента");
+	int choice = FindStudentInFileMenu("Выберете параметр поиска записи");
 
 	if (choice == 0){
 		studentsIndexes.push_back(-1);
@@ -116,8 +122,7 @@ vector<int> FindStudentByParam() {
 	}
 
 	if (studentsIndexes.size() == 0) {
-		cout << setw(INPUT_PADDING) << "" << "Студент не найден!\n";
-		cin.ignore();
+		cout << setw(INPUT_PADDING) << "" << "Запись не найдена!\n";
 		WaitEnterInput();
 	}
 
@@ -269,7 +274,7 @@ void Student::StudentEdit() {
 			break;
 		case 4:
 			cout << setw(INPUT_PADDING) << "" << "Введите новую группу: ";
-			group = GetIntegerInput(400000);
+			group = GetIntegerInput(MIN_COURSE);
 			break;
 		case 5:
 			cout << setw(INPUT_PADDING) << "" << "Введите новый курс: ";
@@ -359,7 +364,7 @@ void RegistrateStudentInFile() {
 		}
 
 		// Ввод группы (число)
-		group = GetIntegerInput(400000, INT_MAX,"Группа: ");
+		group = GetIntegerInput(MIN_COURSE, INT_MAX,"Группа: ");
 
 		// Ввод курса (число)
 		course = GetIntegerInput(0,4,"Курс: ");
@@ -419,7 +424,7 @@ void CreateBaseAdmin() {
 
 User::User() {
 	userLevel=1;
-	id=1;
+	id=studentsArray.size()+1;
 
 	login="admin";
 	salt = "adminSalt";

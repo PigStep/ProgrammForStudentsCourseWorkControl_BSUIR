@@ -5,7 +5,7 @@ fstream studentsFileReg;
 fstream studentsFileData;
 fstream studentsFileDeadLines;
 
-StudentCourseWork* userAccount;
+StudentCourseWork* userAccountLink;
 
 int main()
 {
