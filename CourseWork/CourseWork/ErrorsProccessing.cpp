@@ -203,16 +203,6 @@ bool CheckRegistration(bool isAdmin, string& login, string& password) {
     }
 
     cout << "Ошибка, пользователь с такими данными не найден!" << endl;
-
-    if (!isAdmin) {
-        cout << "Возможна регистрация пользователя с логином: " << login << endl;
-        if (GetUserApprove()) {
-            RegistrateStudentInFile(false, login);
-            string successMessage = "УСПЕШНО, ОЖИДАЙТЕ ПОДТВЕРЖДЕНИЕ АДМИНИСТРАТОРОМ";
-        }
-        
-    }
-
     return false;
 }
 

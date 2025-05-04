@@ -66,6 +66,7 @@ void StudentsListOperations() {
 			DeleteStudentsFromArrayMenu();
 			break;
 		case 5:
+			GiveAccesStudents();
 			break;
 		default:
 			break;
@@ -100,7 +101,7 @@ void EditStudentsFromArrayMenu() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -132,7 +133,7 @@ void DeleteStudentsFromArrayMenu() {
 	int delChoice;
 
 	do {
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -235,7 +236,7 @@ void SetStudentsMarks() {
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
 
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -266,7 +267,7 @@ void SetStudentCourseTheme() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 		ClearTerminal();
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -299,4 +300,40 @@ void SetStudentCourseTheme() {
 	ClearTerminal();
 	StudentFileRewrite();
 	LoadStudentsFromFile();
+}
+
+//Выдать доступ студенту
+void GiveAccesStudents() {
+	const string HEADER = "МЕНЮ ПРОСМОТРА НЕПОДТВЕРЖДЕННЫХ ПОЛЬЗОВАТЕЛЕЙ";
+
+	vector<int> indexesWithoutAcces = GetStudentsWithoutAcces();
+	vector<int> indexesToDelete;
+
+	for (int index : indexesWithoutAcces) {
+		HeaderSecondLevel(HEADER);
+		AccoutTable(studentsArray[index]);
+
+		cout << "Отклонить или принять заявку? (1- принять, 0 - отклонить)\n";
+		int choice = GetIntegerInput(0, 1);
+
+		if (choice) {
+			studentsArray[index].setAcces(1);
+		}
+		else {
+			indexesToDelete.push_back(index);
+		}
+		ClearTerminal();
+	}
+
+	for (int index : indexesToDelete) {
+		DeleteStudentArray(index);
+	}
+
+	RefreshStudentsId();
+	StudentFileRewrite();
+	LoadStudentsFromFile();
+
+	string message = "ВСЕ ЗАПИСИ ПРОСМОТРЕНЫ";
+	LogMessage(message);
+	WaitEnterInput();
 }

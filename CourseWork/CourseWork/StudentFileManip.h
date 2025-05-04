@@ -36,8 +36,9 @@ void RegistrateStudentInFile(bool haveAcces = true, string login ="");
 void StudentFileRewrite();
 
 //Функция поиска студента по параметру
-vector<int> FindUserByParam();
+vector<int> FindStudentByParam();
 vector<int> SortIndexes();
+vector<int> GetStudentsWithoutAcces();
 
 //Найти количество админов в оперативной памяти
 int AdminArrayCount();

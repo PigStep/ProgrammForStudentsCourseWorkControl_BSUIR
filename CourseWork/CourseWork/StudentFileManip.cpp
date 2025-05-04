@@ -67,7 +67,7 @@ int FindStudentInFileMenu(string message) {
 }
 
 //Получить вектор студентов из файла по значению
-vector<int> FindUserByParam() {
+vector<int> FindStudentByParam() {
 	vector<int> studentsIndexes;
 	string searchValue;
 	int intSearchValue;
@@ -183,6 +183,17 @@ vector<int> SortIndexes() {
 				}
 			}
 		}
+	}
+
+	return indexes;
+}
+
+vector<int> GetStudentsWithoutAcces() {
+	vector<int> indexes;
+
+	for (int i = 0; i < studentsArray.size(); i++) {
+		if (!studentsArray[i].getAcces())
+			indexes.push_back(i);
 	}
 
 	return indexes;

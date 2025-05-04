@@ -74,7 +74,7 @@ void GetStudentByParam() {
 	const string HEADER = "ПОИСК СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
-	vector<int> indexes = FindUserByParam();
+	vector<int> indexes = FindStudentByParam();
 
 	if (indexes.size() == 1 && indexes[0] == -1)
 		return;  //если был выбран выход

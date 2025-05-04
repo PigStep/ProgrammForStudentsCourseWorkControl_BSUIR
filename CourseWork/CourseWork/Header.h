@@ -46,6 +46,7 @@ void PrintStudentsFromFile();
 void AddStudentMenu();
 void EditStudentsFromArrayMenu();
 void DeleteStudentsFromArrayMenu();
+void GiveAccesStudents();
 
 void ShowStudentsDataTable();
 

@@ -83,8 +83,17 @@ bool UserAuthorizationMenu(bool isAdmin) {
 
     if (isRegistrated)
         LoginAutorizationStatus(isAdmin);
-    else
+    else {
+        if (!isAdmin && !IsLoginExist(login)) {
+            cout << "Возможна регистрация пользователя с логином: " << login << endl;
+            if (GetUserApprove()) {
+                RegistrateStudentInFile(false, login);
+                string successMessage = "УСПЕШНО, ОЖИДАЙТЕ ПОДТВЕРЖДЕНИЕ АДМИНИСТРАТОРОМ";
+            }
+        }
         return false;
+    }
+;
 
     WaitEnterInput();
 

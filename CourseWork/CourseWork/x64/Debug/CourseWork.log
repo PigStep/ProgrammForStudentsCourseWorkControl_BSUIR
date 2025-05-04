@@ -1,3 +1,5 @@
-﻿  ErrorsProccessing.cpp
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\ErrorsProccessing.cpp(226): warning C4715: CheckIsManipulatingAdmin: значение возвращается не при всех путях выполнения
+﻿  EnteringMenu.cpp
+  ErrorsProccessing.cpp
+  Создание кода...
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\ErrorsProccessing.cpp(216): warning C4715: CheckIsManipulatingAdmin: значение возвращается не при всех путях выполнения
   CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\x64\Debug\CourseWork.exe
