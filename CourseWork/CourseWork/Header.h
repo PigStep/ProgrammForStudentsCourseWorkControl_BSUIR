@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <vector>
 #include <fstream>
+#include <conio.h>
 #include "ErrorsProccessing.h"
 
 using namespace std;

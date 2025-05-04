@@ -48,11 +48,15 @@ void InitializeMenuLoginEntering() {
             if (UserAuthorizationMenu(false)) {
                 UserFunctionsMenu();
             }
+            else
+                WaitEnterInput();
             break;
         case 2:
             if (UserAuthorizationMenu(true)) {
                 AdminFunctionsMenu();
             }
+            else
+                WaitEnterInput();
             break;
         case 0:
             return;
@@ -60,7 +64,6 @@ void InitializeMenuLoginEntering() {
         default:
             break;
         }
-        WaitEnterInput();
     } while (choice != 0);
 
     studentsFileReg.close();
@@ -74,7 +77,7 @@ bool UserAuthorizationMenu(bool isAdmin) {
 
     login = GetStringInput("Логин: ",false);
 
-    password = GetStringInput("Пароль: ", false);
+    password = GetPasswordInput("Пароль: ");
 
     bool isRegistrated = CheckRegistration(isAdmin,login,password);
 

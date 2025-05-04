@@ -8,12 +8,11 @@ class StudentCourseWork;
 
 const int MIN_COURSE = 100000;
 
-//проверка строки с символами сломалась (странная хуйня ток при первом запуске)
-//проверка WaitEnterInput на энтер
-//проверка, удаляется ли админ
+//в рецензировани и установке тем сломались индексы
 
 bool IsInteger(const std::string& s);
 bool IsNumber(const std::string& s);
+bool IsLikelyUrl(const std::string& str);
 
 bool IsEmptyString(const std::string& s);
 
@@ -24,6 +23,9 @@ bool IsAlphaString(const std::string& s);
 int GetIntegerInput(int min = INT_MIN, int max = INT_MAX, const std::string & prompt = "");
 
 std::string GetStringInput(const std::string& prompt, bool allowEmpty = false, bool checkAlphaString = false);
+
+std::string GetPasswordInput(const std::string& prompt);
+std::string GetLinkInput(const std::string& prompt);
 
 bool CheckRegistration(bool isAdmin, std::string& login, std::string& password);
 void CheckAdmins();

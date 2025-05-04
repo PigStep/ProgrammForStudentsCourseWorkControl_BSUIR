@@ -10,11 +10,10 @@ extern void UserFunctionsMenu() {
 
 	do {
 		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
-		cin >> n;
+		n = GetIntegerInput();
 		LoadStudentsFromFile();
 
 		ClearTerminal();
-		cin.ignore();
 
 		switch (n)
 		{
@@ -55,24 +54,17 @@ void SetCourseWorkLink() {
 	HeaderSecondLevel(HEADER);
 
 	cout << "Текущая ссылка на курсовую работу:\n"<< userAccountLink->getCourseWorkLink()<<endl;
-	cout << "Вы точно хотите её изменить? (1 - да; 0 - нет)"
-		<<setw(INPUT_PADDING)<<"";
-	
-	int n;
-	cin >> n;
-	if (!n)
+	cout << "Вы хотите изменить ссылку";
+
+	if (!GetUserApprove())
 		return;
 
-	cout << "Введите новую ссылку:"
-		<< setw(INPUT_PADDING) << "";
-	cin.ignore();
-	string link;
-	getline(cin, link);
+	string link = GetLinkInput("Введите новую ссылку:");
 	userAccountLink->SetCourseWorkStorageLink(link);
 
-	string SCCSS_CHNG_MSG = "Ссылка успешно добавлена";
+	string successMessage = "Ссылка успешно добавлена";
 
-	LogMessage(SCCSS_CHNG_MSG);
+	LogMessage(successMessage);
 
 	WaitEnterInput();
 	StudentFileRewrite();
@@ -84,11 +76,13 @@ void GetStudentByParam() {
 
 	vector<int> indexes = FindUserByParam();
 
+	if (indexes.size() == 1 && indexes[0] == -1)
+		return;  //если был выбран выход
+
 	for (int i : indexes) {
 		if(studentsArray[i].getId()!=1)
 			StudentWorkCourseTable(studentsArray[i]);
 	}
 
-	cin.ignore();
 	WaitEnterInput();
 }

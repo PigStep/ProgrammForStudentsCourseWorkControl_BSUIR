@@ -118,6 +118,73 @@ string GetStringInput(const string& prompt, bool allowEmpty , bool checkAlphaStr
     return input;
 }
 
+//Замаскировать вводимый пароль
+string getPasswordWithMask() {
+    string password;
+    char ch;
+
+    while (true) {
+        ch = _getch(); // Читаем символ без отображения
+
+        if (ch == '\r' || ch == '\n') { // Enter - завершение ввода
+            cout << endl;
+            break;
+        }
+        else if (ch == '\b') { // Backspace - удаление символа
+            if (!password.empty()) {
+                password.pop_back();
+                cout << "\b \b"; // Удаляем звёздочку из консоли
+            }
+        }
+        else {
+            password.push_back(ch);
+            cout << '*'; // Выводим звёздочку вместо символа
+        }
+    }
+
+    return password;
+}
+//Безопасный ввод пароля
+string GetPasswordInput(const string& prompt) {
+    string input;
+    do {
+        cout << left << setw(INPUT_PADDING) << prompt;
+        input = getPasswordWithMask();
+
+        if (input.size() < 5) {
+            cout << "Слишком короткий пароль! Попробуйте еще раз" << endl;
+        }
+    } while (input.size() < 5);
+
+    return input;
+}
+// Простая проверка на наличие ключевых элементов URL
+bool IsLikelyUrl(const string& str) {
+    return str.find("http://") == 0 ||
+        str.find("https://") == 0 ||
+        str.find("www.") == 0 ||
+        str.find(".com") != string::npos || //string::npos - некорректная позиция
+        str.find(".ru") != string::npos ||
+        str.find(".net") != string::npos ||
+        str.find(".org") != string::npos;
+}
+
+string GetLinkInput(const string& prompt) {
+    string input;
+    while (true) {
+        input = GetStringInput(prompt);
+
+        if (IsLikelyUrl(input))
+            break;
+        else {
+            cout << "Предупреждение: Это не похоже на ссылку. "
+                << "Пример корректной ссылки: https://example.com\n";
+        }
+    }
+
+    return input;
+}
+
 //Проверка, зарегистрирован ли пользователь
 bool CheckRegistration(bool isAdmin, string& login, string& password) {
     for (int i = 0; i < studentsArray.size(); i++) {
@@ -139,7 +206,6 @@ bool CheckIsManipulatingAdmin(Student student) {
     if (student.getId() == 1)
     {
         cout << "Ошибка, подобную операцию невозможно провести с администратором!" << endl;
-        cin.ignore();
         return true;
     }
 }

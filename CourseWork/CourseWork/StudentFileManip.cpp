@@ -287,7 +287,7 @@ void Student::StudentEdit() {
 			login = newString;
 			break;
 		case 7:
-			newString = GetStringInput("Введите новый пароль: ");;
+			newString = GetPasswordInput("Введите новый пароль: ");;
 			this->hashPassword(newString);
 			break;
 		case 0:
@@ -337,7 +337,7 @@ void RegistrateStudentInFile() {
 		}while (IsLoginExist(login));
 
 		// Ввод пароля
-		password = GetStringInput("Пароль: ");
+		password =  GetPasswordInput("Пароль: ");
 
 		//Ввод имени
 		name = GetStringInput("Имя: ", false, true);

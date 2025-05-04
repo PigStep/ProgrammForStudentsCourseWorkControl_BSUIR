@@ -82,9 +82,26 @@ int Date::DaysInMonth(int m, int y) const {
 
 //Проверка на корректность даты
 bool Date::IsValidDate(int d, int m, int y) const {
-	if (y < 1) return false;
+	// Получаем текущую дату (безопасно, через localtime_s)
+	time_t now = time(nullptr);
+	tm currentTime;
+	if (localtime_s(&currentTime, &now) != 0) {
+		return false; // Ошибка получения времени
+	}
+
+	int currentYear = currentTime.tm_year + 1900;
+	int currentMonth = currentTime.tm_mon + 1;
+	int currentDay = currentTime.tm_mday;
+
+	// Проверка, что дата не раньше текущей
+	if (y < currentYear) return false;
+	if (y == currentYear && m < currentMonth) return false;
+	if (y == currentYear && m == currentMonth && d < currentDay) return false;
+
+	// Проверка на допустимые границы месяца и дня
 	if (m < 1 || m > 12) return false;
 	if (d < 1 || d > DaysInMonth(m, y)) return false;
+
 	return true;
 }
 

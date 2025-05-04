@@ -12,8 +12,8 @@ class StudentCourseWork;
 //Ссылка на текущую учетную запись
 extern StudentCourseWork* userAccountLink;
 
-const string THEME_DEFAULT = "NO_THEME_WAS_PROVIDED";
-const string STORAGE_LINK_DEFAULT = "NO_STORAGE_LINK_WAS_PROVIDED";
+const string THEME_DEFAULT = "Тема курсовой не установлена";
+const string STORAGE_LINK_DEFAULT = "Работа не опубликована";
 
 const int NUM_OF_DEADLINES = 3;
 const int DEFAULT_MARK = -1;

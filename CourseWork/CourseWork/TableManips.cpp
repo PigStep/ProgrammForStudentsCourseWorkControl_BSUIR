@@ -4,8 +4,9 @@ void ClearTerminal() {
     system("cls");
 }
 void WaitEnterInput() {
+    string buf;
     cout << "Нажмите Enter для продолжения" << endl;
-    cin.ignore();
+    getline(cin, buf);
     ClearTerminal();
 }
 
