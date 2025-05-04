@@ -30,7 +30,7 @@ void LoadStudentsFromFile();
 vector<string> SplitString(const string& str, char delimiter);
 
 //Функция регистрации студента с записью в файл
-void RegistrateStudentInFile();
+void RegistrateStudentInFile(bool haveAcces = true, string login ="");
 
 //Функция перезаписи файла студентами из оперативной памяти
 void StudentFileRewrite();
@@ -62,6 +62,7 @@ class User {
 protected:
 	int userLevel;
 	int id;
+	int acces;
 
 	string login;
 	string salt;
@@ -70,7 +71,7 @@ public:
 	User();
 
 	User(int id, int userLevel,
-		string login, string salt, string password);
+		string login, string salt, string password, int acces = 1);
 
 	void setId(int newId) { id = newId; }
 
@@ -87,6 +88,9 @@ public:
 	string getSalt() const { return salt; }
 
 	string getHashedPassword() const { return hashedPassword; }
+
+	int getAcces() const { return acces; }
+	void setAcces(int newAcces) { acces = newAcces; }
 };
 class Student : public User {
 protected:
@@ -103,8 +107,7 @@ public:
 		string login, string salt, string password,
 		string name, string secondname, string surname);
 
-
-	Student(int id, int userLevel,
+	Student(int id, int userLevel, int acces,
 		string login, string salt, string password,
 		string name, string secondname, string surname,
 		int groupe, int course);
@@ -151,14 +154,14 @@ public:
 	}
 
 	//Конструктор Администратора
-	StudentCourseWork(int id, int userLevel, 
+	StudentCourseWork(int id, int userLevel,
 		string login, string salt, string password,
 		string name, string secondname, string surname);
 
-	StudentCourseWork(int id, int userLevel, 
+	StudentCourseWork(int id, int userLevel, int acces,
 		string login, string salt, string password,
 		string name, string secondname, string surname, 
-		int group, int course): Student(id,userLevel,login,salt,password,name,secondname,surname, group,course){
+		int group, int course): Student(id,userLevel, acces, login,salt,password,name,secondname,surname, group,course){
 
 		courseWorkStorageLink = STORAGE_LINK_DEFAULT;
 		courseWorkTheme = THEME_DEFAULT;
