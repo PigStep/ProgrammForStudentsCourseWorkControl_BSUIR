@@ -22,7 +22,7 @@ int StudentEditMenuChoice() {
 
 	// Ввод выбора пользователя
 	cout << setw(INPUT_PADDING) << "" << "Ваш выбор: ";
-	cin >> choice;
+	choice = GetIntegerInput(0, 7);
 
 	return choice;
 
@@ -33,17 +33,23 @@ void DeleteStudentArray(int index) {
 }
 
 void RefreshStudentsId() {
+	int userId = userAccountLink->getId();
 	for (int i = 0; i < studentsArray.size(); i++) {
 		studentsArray[i].setId(i + 1);
+	}
+
+	// Проверяем, что userId всё ещё в допустимых пределах
+	if (userId > 1 && userId <= studentsArray.size()+1) {
+		userAccountLink = &studentsArray[userId-2];
 	}
 }
 
 //Получить номер параметра поиска
-int FindStudentInFileMenu() {
+int FindStudentInFileMenu(string message) {
 	int choice;
 
 	// Вывод меню выбора параметра
-	cout << setw(OPTIONS_PADDING) << "" << "Выберите параметр для поиска:\n";
+	cout << setw(OPTIONS_PADDING) << "" << message<<endl;
 
 	cout << setw(OPTIONS_PADDING) << "" << "1. ID пользователя\n";
 	cout << setw(OPTIONS_PADDING) << "" << "2. Имя\n";
@@ -55,29 +61,31 @@ int FindStudentInFileMenu() {
 
 	// Ввод выбора пользователя
 	cout << setw(INPUT_PADDING) << "" << "Ваш выбор: ";
-	cin >> choice;
+	choice = GetIntegerInput(0, 6);
 
 	return choice;
 }
 
-//Получить вектор студентов из файла
-vector<int> FindStudentByParam() {
+//Получить вектор студентов из файла по значению
+vector<int> FindUserByParam() {
 	vector<int> studentsIndexes;
 	string searchValue;
 	int intSearchValue;
 
-	int choice = FindStudentInFileMenu();
+	int choice = FindStudentInFileMenu("Выберете параметр поиска записи");
 
-	if (choice == 0) return studentsIndexes; // Выход
+	if (choice == 0){
+		studentsIndexes.push_back(-1);
+		return studentsIndexes; // Выход
+	}
 
 	// Запрос значения для поиска
 	cout << setw(INPUT_PADDING) << "" << "Введите значение для поиска: ";
 	if (choice == 1 || choice == 5 || choice == 6) {
-		cin >> intSearchValue;
+		intSearchValue = GetIntegerInput(0);
 	}
 	else {
-		cin.ignore(); // Очищаем буфер перед чтением строки
-		getline(cin, searchValue);
+		searchValue = GetStringInput("");
 	}
 
 	// Поиск по выбранному параметру
@@ -114,8 +122,7 @@ vector<int> FindStudentByParam() {
 	}
 
 	if (studentsIndexes.size() == 0) {
-		cout << setw(INPUT_PADDING) << "" << "Студент не найден!\n";
-		cin.ignore();
+		cout << setw(INPUT_PADDING) << "" << "Запись не найдена!\n";
 		WaitEnterInput();
 	}
 
@@ -130,27 +137,53 @@ vector<int> SortIndexes() {
 		indexes[i] = i;
 	}
 
-	int sortField = FindStudentInFileMenu();
+	int sortField = FindStudentInFileMenu("Введите параметр сортировки студентов (по убыванию):");
 
-	// Сортируем индексы по выбранному полю
-	sort(indexes.begin(), indexes.end(), [&](int a, int b) {
-		switch (sortField) {
-		case 1: // ID
-			return studentsArray[a].getId() < studentsArray[b].getId();
-		case 2: // Имя
-			return studentsArray[a].getName() < studentsArray[b].getName();
-		case 3: // Фамилия
-			return studentsArray[a].getSurname() < studentsArray[b].getSurname();
-		case 4: // Отчество
-			return studentsArray[a].getSecondName() < studentsArray[b].getSecondName();
-		case 5: // Группа
-			return studentsArray[a].getGroup() < studentsArray[b].getGroup();
-		case 6: // Курс
-			return studentsArray[a].getCourse() < studentsArray[b].getCourse();
-		default:
-			return studentsArray[a].getId() < studentsArray[b].getId(); // По умолчанию сортируем по ID
+	if (sortField == 0) {
+		return vector<int>(0); //заглушка на 0
+	}
+
+	// Функция пузырьковой сортировки индексов по выбранному полю
+	if (studentsArray.empty()) {
+		indexes.clear(); // Если массив студентов пуст, возвращаем пустой вектор индексов
+	}
+	else {
+		// Пузырьковая сортировка
+		for (size_t i = 0; i < indexes.size(); ++i) {
+			for (size_t j = 0; j < indexes.size() - i - 1; ++j) {
+				bool needSwap = false;
+
+				// Определяем нужно ли менять элементы местами
+				switch (sortField) {
+				case 1: // ID
+					needSwap = studentsArray[indexes[j]].getId() > studentsArray[indexes[j + 1]].getId();
+					break;
+				case 2: // Имя
+					needSwap = studentsArray[indexes[j]].getName() > studentsArray[indexes[j + 1]].getName();
+					break;
+				case 3: // Фамилия
+					needSwap = studentsArray[indexes[j]].getSurname() > studentsArray[indexes[j + 1]].getSurname();
+					break;
+				case 4: // Отчество
+					needSwap = studentsArray[indexes[j]].getSecondName() > studentsArray[indexes[j + 1]].getSecondName();
+					break;
+				case 5: // Группа
+					needSwap = studentsArray[indexes[j]].getGroup() > studentsArray[indexes[j + 1]].getGroup();
+					break;
+				case 6: // Курс
+					needSwap = studentsArray[indexes[j]].getCourse() > studentsArray[indexes[j + 1]].getCourse();
+					break;
+				default:
+					break;
+				}
+
+				// Если нужно, меняем элементы местами
+				if (needSwap) {
+					swap(indexes[j], indexes[j + 1]);
+				}
+			}
 		}
-		});
+	}
 
 	return indexes;
 }
@@ -231,44 +264,35 @@ void Student::StudentEdit() {
 		// Обработка выбора
 		switch (choice) {
 		case 1:
-			cout << setw(INPUT_PADDING) << "" << "Введите новое имя: ";
-			cin >> newString;
-			name = newString;
+			name = GetStringInput("Введите новое имя: ", false,true);
 			break;
 		case 2:
-			cout << setw(INPUT_PADDING) << "" << "Введите новую фамилию: ";
-			cin >> newString;
-			secondname = newString;
+			secondname = GetStringInput("Введите новую фамилию: ", false, true);
 			break;
 		case 3:
-			cout << setw(INPUT_PADDING) << "" << "Введите новое отчество: ";
-			cin >> newString;
-			surname = newString;
+			surname = GetStringInput("Введите новое отчество: ", false, true);
 			break;
 		case 4:
 			cout << setw(INPUT_PADDING) << "" << "Введите новую группу: ";
-			cin >> newInt;
-			group = newInt;
+			group = GetIntegerInput(MIN_COURSE);
 			break;
 		case 5:
 			cout << setw(INPUT_PADDING) << "" << "Введите новый курс: ";
-			cin >> newInt;
-			course = newInt;
+			course = GetIntegerInput(1,4);
 			break;
 		case 6:
-			cout << setw(INPUT_PADDING) << "" << "Введите новый логин: ";
-			cin >> newString;
+			do {
+				newString = GetStringInput("Введите новый логин: ");
+			} while (IsLoginExist(newString));
 			login = newString;
 			break;
 		case 7:
-			cout << setw(INPUT_PADDING) << "" << "Введите новый пароль: ";
-			cin >> newString;
+			newString = GetPasswordInput("Введите новый пароль: ");;
 			this->hashPassword(newString);
 			break;
 		case 0:
 			break;
 		default:
-			cout << setw(INPUT_PADDING) << "" << "Ошибка: неверный выбор!\n";
 			break;
 		}
 
@@ -294,39 +318,35 @@ void RegistrateStudentInFile() {
 	int currentStudentsNum = studentsArray.size();
 
 	int n;
-	cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей: ";
-	cin >> n;
-	cin.ignore(); // Очистка буфера после cin >> 
+	cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей (0 для выхода): ";
+	n = GetIntegerInput(0);
 
 	for (int i = 0; i < n; i++) {
 		currentStudentsNum ++; //начинаем индексирование с 1
 
 		//Уровень доступа
 		cout << "Уровень доступа записи (0 - студент, 1 - администратор): ";
-		cin >> userLevel;
-		cin.ignore();
+		userLevel = GetIntegerInput(0, 1);
 
-		// Ввод имени
-		cout << "Запись " << currentStudentsNum << ":\n\n";
+		// Вывод индекса
+		cout << "Запись[" << currentStudentsNum << "]:\n\n";
 
-		// Ввод логина
-		cout << left << setw(OPTIONS_PADDING) << "Логин: ";
-		getline(cin, login);
+		do{
+			// Ввод логина
+			login = GetStringInput("Логин: ");
+		}while (IsLoginExist(login));
 
 		// Ввод пароля
-		cout << left << setw(OPTIONS_PADDING) << "Пароль: ";
-		getline(cin, password);
+		password =  GetPasswordInput("Пароль: ");
 
-		cout << left << setw(OPTIONS_PADDING) << "Имя: ";
-		getline(cin, name);
+		//Ввод имени
+		name = GetStringInput("Имя: ", false, true);
 
 		// Ввод фамилии
-		cout << left << setw(OPTIONS_PADDING) << "Фамилия: ";
-		getline(cin, secondname);
+		secondname = GetStringInput("Фамилия: ", false, true);
 
 		// Ввод отчества
-		cout << left << setw(OPTIONS_PADDING) << "Отчество: ";
-		getline(cin, surname);
+		surname = GetStringInput("Отчество: ", false, true);
 
 		if (userLevel == 1) {
 			StudentCourseWork StudentCourse(
@@ -344,14 +364,10 @@ void RegistrateStudentInFile() {
 		}
 
 		// Ввод группы (число)
-		cout << left << setw(OPTIONS_PADDING) << "Группа: ";
-		cin >> group;
-		cin.ignore();  // Очистка буфера после cin >> 
+		group = GetIntegerInput(MIN_COURSE, INT_MAX,"Группа: ");
 
 		// Ввод курса (число)
-		cout << left << setw(OPTIONS_PADDING) << "Курс: ";
-		cin >> course;
-		cin.ignore();  // Очистка буфера после cin >>
+		course = GetIntegerInput(0,4,"Курс: ");
 
 
 		StudentCourseWork StudentCourse(
@@ -408,7 +424,7 @@ void CreateBaseAdmin() {
 
 User::User() {
 	userLevel=1;
-	id=1;
+	id=studentsArray.size()+1;
 
 	login="admin";
 	salt = "adminSalt";
@@ -586,6 +602,7 @@ void SaveDeadLinesInFile() {
 	studentsFileDeadLines.open(DEAD_LINES_FILE, ios::in | ios::out | ios::app);
 }
 
+//Функция загрузки контрольных точек из файла в оперативную память
 void LoadDeadlinesFromFile() {
 	string line;
 	if (getline(studentsFileDeadLines, line) && !line.empty()) { // Считываем строку с датами
@@ -600,9 +617,9 @@ void LoadDeadlinesFromFile() {
 		}
 	}
 	else
-		cout << EMPTY_DEADLINES_FILE_WARN << endl;
+		cout << "ВНИМАНИЕ, ФАЙЛ С КОНТРОЛЬНЫМИ ТОЧКАМИ ОТСУТСВТУЕТ, ДОБАВЛЕНЫ КОНТРОЛЬНЫЕ ТОЧКИ ПО УМОЛЧАНИЮ" << endl;
 }
-
+//Функция вывода всех дат контрольных точек одной строкой
 string GetDeadLines() {
 	string dates;
 	for (int i = 0; i < NUM_OF_DEADLINES; i++) {
@@ -611,6 +628,7 @@ string GetDeadLines() {
 	return dates;
 }
 
+//Функция вывода всех контрльных точек в виде списка
 void ShowDeadLinesList() {
 	string message = "Текущие контрольные точки:\n";
 	message += GetDeadLines();

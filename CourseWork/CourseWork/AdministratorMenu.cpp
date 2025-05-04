@@ -8,7 +8,7 @@ extern void AdminFunctionsMenu() {
 
 	do {
 		HeaderFirstLevel(5, OPTIONS_TO_CHOOSE, HEADER);
-		cin >> n;
+		n = GetIntegerInput(0, 5);
 		LoadStudentsFromFile();
 
 		ClearTerminal();
@@ -30,23 +30,23 @@ extern void AdminFunctionsMenu() {
 		case 5:
 			SetStudentCourseTheme();
 			break;
+		case 0:
+			break;
 		default:
 			break;
 		}
-
-		ClearTerminal();
 	} while (n != 0);
 
 }
 
 void StudentsListOperations() {
-	const string OPTIONS_TO_CHOOSE[4] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Изменить учетную запись/записи", "Удалить учетную запись / записи"  };
+	const string OPTIONS_TO_CHOOSE[4] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Изменить учетную запись/записи", "Удалить учетную запись / записи"};
 	const string HEADER = { "МЕНЮ ОПЕРАЦИЙ С УЧЕТНЫМИ ЗАПИСЯМИ" };
 	int n;
 
 	do {
 		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
-		cin >> n;
+		n = GetIntegerInput(0, 4);
 		LoadStudentsFromFile();
 
 		ClearTerminal();
@@ -65,6 +65,8 @@ void StudentsListOperations() {
 		case 4:
 			DeleteStudentsFromArrayMenu();
 			break;
+		/*case 5:
+			break;*/
 		default:
 			break;
 		}
@@ -81,8 +83,6 @@ void PrintStudentsFromFile() {
 	for (int i = 0; i < studentsArray.size(); i++) {
 		RegistratedStudentTable(studentsArray[i]);
 	}
-
-	cin.get();
 	WaitEnterInput();
 }
 
@@ -100,7 +100,10 @@ void EditStudentsFromArrayMenu() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
+
+		if (indexes.size() == 1 && indexes[0] == -1)
+			break;  //если был выбран выход
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
@@ -108,13 +111,11 @@ void EditStudentsFromArrayMenu() {
 			RefreshMenu(HEADER,index);
 
 			studentsArray[index].StudentEdit();
-
-			StudentFileRewrite();
 		}
-
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
-	}while (indexes.size() != 0);
+	}while (true);
+	StudentFileRewrite();
 }
 
 void RefreshMenu(const string HEADER, int index) {
@@ -124,39 +125,41 @@ void RefreshMenu(const string HEADER, int index) {
 }
 
 void DeleteStudentsFromArrayMenu() {
-	const string HEADER = "УДАЛЕНИЕ СТУДЕНТА";
+	const string HEADER = "УДАЛЕНИЕ УЧЕТНОЙ ЗАПИСИ";
 	HeaderSecondLevel(HEADER);
 
 	vector<int> indexes;
 	int delChoice;
 
 	do {
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
+
+		if (indexes.size() == 1 && indexes[0] == -1)
+			break;  //если был выбран выход
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
+
+			if (studentsArray[index].getLogin() == userAccountLink->getLogin()) {
+				cout << "Ошибка, самоудаление невозможно!\n";
+				WaitEnterInput();
+				break;
+			}
 			
-			
-			cout << "Вы хотите удалить эту запись? (1 - да, 0 - нет)\n";
+			cout << "Вы хотите удалить эту запись\n";
 
 			RegistratedStudentTable(studentsArray[index]);
 
-			cout <<"Подтвердите удаление" << setw(INPUT_PADDING) << ": ";
-			cin >> delChoice;
-
-
-			if (delChoice == 1) {
+			if (GetUserApprove()) {
 				DeleteStudentArray(i);
 				RefreshStudentsId();
-				StudentFileRewrite();
 				cout << "Запись успешно удалена" << endl;
 			}
-
 		}
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
-
-	} while (indexes.size() != 0);
+	} while (true);
+	StudentFileRewrite();
 }
 
 void ShowStudentsDataTable() {
@@ -169,9 +172,10 @@ void ShowStudentsDataTable() {
 		int index = indexes[i];
 		StudentWorkCourseTable(studentsArray[index]);
 	}
-
-	cin.ignore();
-	WaitEnterInput();
+	if (indexes.size() != 0)
+		WaitEnterInput();
+	else
+		ClearTerminal();
 }
 
 
@@ -181,25 +185,24 @@ void SetCourseDeadlines() {
 
 	ShowDeadLinesList();
 
-	int confirm;
+	cout << "Вы хотите изменить контрольные точки\n";
 
-	cout << "Вы хотите изменить контрольные точки? (1 - да; 0 - нет)\n";
-	cin >> confirm;
-
-	if (confirm) {
-		for (int i = 0; i < NUM_OF_DEADLINES; i++) {
-			cout << "Установите дату контрольной точки [" << i + 1 << "]" << endl;
-			courseDeadLinePoints[i].SetDate();
-			cout << endl;
-		}
+	if (GetUserApprove()) {
+		do {
+			for (int i = 0; i < NUM_OF_DEADLINES; i++) {
+				cout << "Установите дату контрольной точки [" << i + 1 << "]" << endl;
+				courseDeadLinePoints[i].SetDate();
+				cout << endl;
+			}
+		} while (!CheckDates());
 
 		string message = "Точки успешно созданы";
 		LogMessage(message);
 		SaveDeadLinesInFile();
-		cin.ignore();
 		WaitEnterInput();
 	}
 	else
+		ClearTerminal();
 		return;
 	
 }
@@ -209,7 +212,7 @@ bool SelectMark(int index) {
 	int deadLineIndex;
 
 	cout << "Выберете контрольную точку на изменение (0 для выхода): ";
-	cin >> deadLineIndex;
+	deadLineIndex = GetIntegerInput(0,NUM_OF_DEADLINES);
 
 	if (deadLineIndex == 0) return false;
 
@@ -217,7 +220,7 @@ bool SelectMark(int index) {
 
 
 	cout << "Введите оценку за контрольную точку: ";
-	cin >> mark;
+	mark = GetIntegerInput(0, 10);
 	studentsArray[index].setMark(deadLineIndex, mark);
 
 	return true;
@@ -232,16 +235,17 @@ void SetStudentsMarks() {
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
 
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
+
+		if (indexes.size() == 1 && indexes[0] == -1)
+			break;  //если был выбран выход
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
 
-			if (studentsArray[index].getId() == 1)
-			{
-				cout << "Невозможно провести рецензирование преподавателя";
+			if (CheckIsManipulatingAdmin(studentsArray[index])) {
 				WaitEnterInput();
-				return;
+				break;
 			}
 
 			do {
@@ -250,7 +254,8 @@ void SetStudentsMarks() {
 				StudentWorkCourseTable(studentsArray[index]);
 			}while (SelectMark(index));
 		}
-	} while (indexes.size() != 0);
+	} while (true);
+	ClearTerminal();
 	StudentFileRewrite();
 	LoadStudentsFromFile();
 }
@@ -261,28 +266,26 @@ void SetStudentCourseTheme() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindStudentByParam();
+		indexes = FindUserByParam();
 		ClearTerminal();
+		if (indexes.size() == 1 && indexes[0] == -1)
+			break;  //если был выбран выход
 		HeaderSecondLevel(HEADER);
 
 		for (int i = 0; i < indexes.size(); i++) {
 			int index = indexes[i];
 
-			if (studentsArray[index].getId() == 1)
+			if (CheckIsManipulatingAdmin(studentsArray[index]))
 			{
-				cout << "Невозможно установить тему преподавателю";
 				WaitEnterInput();
 				return;
 			}
 
 			StudentWorkCourseTable(studentsArray[index]);
-			cin.ignore();
 
-			cout << "Вы хотите установить новую тему этому студенту? (1- да; 0 - нет)\n";
-			int confirm;
-			cin >> confirm;
+			cout << "Вы хотите установить новую тему этому студенту\n";
 
-			if (confirm == 1) {
+			if (GetUserApprove()) {
 				
 				studentsArray[index].setCourseWorkTheme();
 
@@ -292,7 +295,8 @@ void SetStudentCourseTheme() {
 			}
 			ClearTerminal();
 		}
-	} while (indexes.size() != 0);
+	} while (true);
+	ClearTerminal();
 	StudentFileRewrite();
 	LoadStudentsFromFile();
 }

@@ -5,6 +5,7 @@ fstream studentsFileReg;
 fstream studentsFileData;
 fstream studentsFileDeadLines;
 
+StudentCourseWork* userAccountLink;
 
 int main()
 {
@@ -14,15 +15,6 @@ int main()
     FilePreparation();
 
     InitializeMenuLoginEntering();
-}
-
-//Функция провери и создания Админа в случае его отсутвия
-void CheckAdmins() {
-    if (AdminArrayCount() == 0) {
-        CreateBaseAdmin();
-        cout << NO_ADMIN_FOUND << endl;
-    }
-
 }
 
 void FilePreparation(){
@@ -42,10 +34,10 @@ void InitializeMenuLoginEntering() {
     int choice;
 
     do {
-        const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь (в разработке)","Вход как администратор"};
+        const string OPTIONS_TO_CHOOSE[2] = {"Вход как пользователь","Вход как администратор"};
         HeaderFirstLevel(2,OPTIONS_TO_CHOOSE,"СИСТЕМА ВХОДА");
 
-        cin >> choice;
+        choice = GetIntegerInput(0,2);
 
         LoadStudentsFromFile();
 
@@ -53,22 +45,25 @@ void InitializeMenuLoginEntering() {
 
         switch (choice) {
         case 1: 
-            UserAuthorizationMenu(false); //log as user
+            if (UserAuthorizationMenu(false)) {
+                UserFunctionsMenu();
+            }
+            else
+                WaitEnterInput();
             break;
         case 2:
-            if (UserAuthorizationMenu(true)) { //log as admin
+            if (UserAuthorizationMenu(true)) {
                 AdminFunctionsMenu();
             }
+            else
+                WaitEnterInput();
             break;
         case 0:
-            cout << "Выход из программы...\n";
+            return;
             break;
         default:
-            cout << "Неверный выбор! Попробуйте снова.\n";
+            break;
         }
-        WaitEnterInput();
-        ClearTerminal();
-
     } while (choice != 0);
 
     studentsFileReg.close();
@@ -80,36 +75,18 @@ bool UserAuthorizationMenu(bool isAdmin) {
 
     string login, password;
 
-    cout << left << setw(INPUT_PADDING) << "Логин: ";
-    cin.get();
-    getline(cin, login);
+    login = GetStringInput("Логин: ",false);
 
-    cout << left << setw(INPUT_PADDING) << "Пароль: ";
-    getline(cin, password);
-
+    password = GetPasswordInput("Пароль: ");
 
     bool isRegistrated = CheckRegistration(isAdmin,login,password);
 
     if (isRegistrated)
         LoginAutorizationStatus(isAdmin);
     else
-    {
-        cout << REG_AUTH_FAIL<<endl;
         return false;
-    }
 
     WaitEnterInput();
 
     return true;
-}
-
-bool CheckRegistration(bool isAdmin, string& login, string& password) {
-    for (int i = 0; i < studentsArray.size(); i++) {
-        if (studentsArray[i].getLogin() == login 
-            && studentsArray[i].checkPassword(password)
-            && (bool)studentsArray[i].getUserLevel() == isAdmin) {
-            return true;
-        }
-    }
-    return false;
 }

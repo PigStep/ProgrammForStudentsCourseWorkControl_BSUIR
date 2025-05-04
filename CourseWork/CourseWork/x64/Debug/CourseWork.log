@@ -1,0 +1,3 @@
+﻿  AdministratorMenu.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(132,6): warning C4101: delChoice: неиспользованная локальная переменная
+  CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\x64\Debug\CourseWork.exe

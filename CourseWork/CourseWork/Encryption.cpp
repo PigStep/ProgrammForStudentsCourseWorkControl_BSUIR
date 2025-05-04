@@ -7,7 +7,7 @@ string GenerateSalt() {
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
 
-    mt19937 gen(std::random_device{}());
+    mt19937 gen(random_device{}());
     uniform_int_distribution<size_t> dist(0, chars.size() - 1);
 
     string salt;
