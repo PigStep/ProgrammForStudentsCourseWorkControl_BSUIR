@@ -73,11 +73,12 @@ void LoginAutorizationStatus(bool isAdmin) {
         << setfill('*') << setw(BORDERS_WIDTH) << "" << setfill(' ') << endl;
 }
 
-
+// Функция для вывода горизонтальной границы
 void printBorder(char fill = '=') {
     cout << "+" << string(BORDERS_WIDTH, fill) << "+" << endl;
 }
 
+// Функция для вывода строки таблицы
 void printTableRow(const string& label, const string& value, char border = '|') {
     // Рассчитываем фактическую ширину для значения
     const int value_width = BORDERS_WIDTH - HEADER_WIDTH * 4 - 4; // 4 = 2 границы + 2 пробела
@@ -89,7 +90,8 @@ void printTableRow(const string& label, const string& value, char border = '|') 
         << border << endl;
 }
 
-void RegistratedStudentTable(Student student) {
+//Вывести блок полной информации учетной записи
+void AccoutTable(Student student) {
     // Верхняя граница
     printBorder('-');
 
@@ -97,6 +99,9 @@ void RegistratedStudentTable(Student student) {
 
     bool isAdmin = student.isUserAdmin();
     printTableRow("УРОВЕНЬ ДОСТУПА:", ( isAdmin ? "ПРЕПОДАВАТЕЛЬ" : "СТУДЕНТ"));
+
+    bool haveAcces = student.getAcces();
+    printTableRow("АКТИВНА ЛИ ЗАПИСЬ:", (haveAcces ? "ДА" : "НЕТ"));
 
     printBorder('-');
 

@@ -190,14 +190,19 @@ bool CheckRegistration(bool isAdmin, string& login, string& password) {
     for (int i = 0; i < studentsArray.size(); i++) {
         if (studentsArray[i].getLogin() == login
             && studentsArray[i].checkPassword(password)
-            && (bool)studentsArray[i].getUserLevel() == isAdmin) {
+            && (bool)studentsArray[i].getUserLevel() == isAdmin) 
+        {
             userAccountLink = &studentsArray[i];
+            if (!studentsArray[i].getAcces()) {
+                cout << "Эта учетная запись еще не получила подтверждения на доступ к системе. Повторите попытку позже\n";
+                return false;
+            }
+
             return true;
         }
     }
 
     cout << "Ошибка, пользователь с такими данными не найден!" << endl;
-
     return false;
 }
 

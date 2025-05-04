@@ -9,6 +9,7 @@ class StudentCourseWork;
 const int MIN_COURSE = 100000;
 
 //в рецензировани и установке тем сломались индексы
+//табуляции и прочее в пароле
 
 bool IsInteger(const std::string& s);
 bool IsNumber(const std::string& s);

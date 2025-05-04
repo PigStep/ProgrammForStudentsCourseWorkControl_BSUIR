@@ -8,6 +8,10 @@ class Date {
 	int month;
 	int year;
 
+	bool IsLeapYear(int y) const;
+	int DaysInMonth(int m, int y) const;
+	bool IsValidDate(int d, int m, int y) const;
+
 public:
 	Date() {
 		day = 0;
@@ -17,10 +21,6 @@ public:
 	void parse(string);
 	void SetDate();
 	string getDate() const;
-
-	bool IsLeapYear(int y) const;
-	int DaysInMonth(int m, int y) const;
-	bool IsValidDate(int d, int m, int y) const;
 
 	bool operator>(const Date& other) const;
 

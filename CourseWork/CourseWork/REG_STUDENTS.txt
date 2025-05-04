@@ -1,3 +1,3 @@
-1;1;admin;adminSalt;44826;
-2;0;stud1;0WX0Cwkgr4NCWCAw;61132;
-3;0;stud2;UN0Kx2cZzCLNaGfq;50406;
+1;1;1;admin;adminSalt;44826;
+2;0;1;stud1;S4AzqwX0BNu79l7p;49383;
+3;0;1;влад;rcRpLdbpMG3Y2yFa;51894;

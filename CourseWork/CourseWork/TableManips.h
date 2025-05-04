@@ -18,9 +18,7 @@ void LoginAutorizationStatus(bool);
 
 //studentTableFunctions
 
-// Функция для вывода горизонтальной границы
 void printBorder(char);
-// Функция для вывода строки таблицы
 void printTableRow(const string&, const string&, char);
-void RegistratedStudentTable(Student);
+void AccoutTable(Student);
 void StudentWorkCourseTable(StudentCourseWork);

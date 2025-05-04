@@ -40,13 +40,13 @@ extern void AdminFunctionsMenu() {
 }
 
 void StudentsListOperations() {
-	const string OPTIONS_TO_CHOOSE[4] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Изменить учетную запись/записи", "Удалить учетную запись / записи"};
+	const string OPTIONS_TO_CHOOSE[5] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Изменить учетную запись/записи", "Удалить учетную запись / записи", "Предоставить доступ учетной записи"};
 	const string HEADER = { "МЕНЮ ОПЕРАЦИЙ С УЧЕТНЫМИ ЗАПИСЯМИ" };
 	int n;
 
 	do {
-		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
-		n = GetIntegerInput(0, 4);
+		HeaderFirstLevel(5, OPTIONS_TO_CHOOSE, HEADER);
+		n = GetIntegerInput(0, 5);
 		LoadStudentsFromFile();
 
 		ClearTerminal();
@@ -65,8 +65,9 @@ void StudentsListOperations() {
 		case 4:
 			DeleteStudentsFromArrayMenu();
 			break;
-		/*case 5:
-			break;*/
+		case 5:
+			GiveAccesStudents();
+			break;
 		default:
 			break;
 		}
@@ -81,7 +82,7 @@ void PrintStudentsFromFile() {
 	HeaderSecondLevel(HEADER);
 
 	for (int i = 0; i < studentsArray.size(); i++) {
-		RegistratedStudentTable(studentsArray[i]);
+		AccoutTable(studentsArray[i]);
 	}
 	WaitEnterInput();
 }
@@ -100,7 +101,7 @@ void EditStudentsFromArrayMenu() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -121,7 +122,7 @@ void EditStudentsFromArrayMenu() {
 void RefreshMenu(const string HEADER, int index) {
 	ClearTerminal();
 	HeaderSecondLevel(HEADER);
-	RegistratedStudentTable(studentsArray[index]);
+	AccoutTable(studentsArray[index]);
 }
 
 void DeleteStudentsFromArrayMenu() {
@@ -132,7 +133,7 @@ void DeleteStudentsFromArrayMenu() {
 	int delChoice;
 
 	do {
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -148,7 +149,7 @@ void DeleteStudentsFromArrayMenu() {
 			
 			cout << "Вы хотите удалить эту запись\n";
 
-			RegistratedStudentTable(studentsArray[index]);
+			AccoutTable(studentsArray[index]);
 
 			if (GetUserApprove()) {
 				DeleteStudentArray(i);
@@ -235,7 +236,7 @@ void SetStudentsMarks() {
 		ClearTerminal();
 		HeaderSecondLevel(HEADER);
 
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -266,7 +267,7 @@ void SetStudentCourseTheme() {
 	vector<int> indexes;
 
 	do {
-		indexes = FindUserByParam();
+		indexes = FindStudentByParam();
 		ClearTerminal();
 		if (indexes.size() == 1 && indexes[0] == -1)
 			break;  //если был выбран выход
@@ -299,4 +300,40 @@ void SetStudentCourseTheme() {
 	ClearTerminal();
 	StudentFileRewrite();
 	LoadStudentsFromFile();
+}
+
+//Выдать доступ студенту
+void GiveAccesStudents() {
+	const string HEADER = "МЕНЮ ПРОСМОТРА НЕПОДТВЕРЖДЕННЫХ ПОЛЬЗОВАТЕЛЕЙ";
+
+	vector<int> indexesWithoutAcces = GetStudentsWithoutAcces();
+	vector<int> indexesToDelete;
+
+	for (int index : indexesWithoutAcces) {
+		HeaderSecondLevel(HEADER);
+		AccoutTable(studentsArray[index]);
+
+		cout << "Отклонить или принять заявку? (1- принять, 0 - отклонить)\n";
+		int choice = GetIntegerInput(0, 1);
+
+		if (choice) {
+			studentsArray[index].setAcces(1);
+		}
+		else {
+			indexesToDelete.push_back(index);
+		}
+		ClearTerminal();
+	}
+
+	for (int index : indexesToDelete) {
+		DeleteStudentArray(index);
+	}
+
+	RefreshStudentsId();
+	StudentFileRewrite();
+	LoadStudentsFromFile();
+
+	string message = "ВСЕ ЗАПИСИ ПРОСМОТРЕНЫ";
+	LogMessage(message);
+	WaitEnterInput();
 }

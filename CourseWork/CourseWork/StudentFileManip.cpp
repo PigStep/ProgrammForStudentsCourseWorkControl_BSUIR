@@ -67,7 +67,7 @@ int FindStudentInFileMenu(string message) {
 }
 
 //Получить вектор студентов из файла по значению
-vector<int> FindUserByParam() {
+vector<int> FindStudentByParam() {
 	vector<int> studentsIndexes;
 	string searchValue;
 	int intSearchValue;
@@ -187,6 +187,19 @@ vector<int> SortIndexes() {
 
 	return indexes;
 }
+
+vector<int> GetStudentsWithoutAcces() {
+	vector<int> indexes;
+
+	for (int i = 0; i < studentsArray.size(); i++) {
+		if (!studentsArray[i].getAcces())
+			indexes.push_back(i);
+	}
+
+	return indexes;
+}
+
+//Функция загрузки студентов из файла в оперативную память
 void LoadStudentsFromFile() {
 	studentsArray.clear();
 
@@ -200,7 +213,7 @@ void LoadStudentsFromFile() {
 
 		// Обрабатываем строку из регистрационного файла (User данные)
 		vector<string> regTokens = SplitString(regLine, ';');
-		if (regTokens.size() < 5) continue; // Минимум 5 поля для User
+		if (regTokens.size() < 6) continue; // Минимум 5 поля для User
 
 		// Обрабатываем строку из файла данных (Student + CourseWork)
 		vector<string> dataTokens = SplitString(dataLine, ';');
@@ -210,9 +223,10 @@ void LoadStudentsFromFile() {
 		StudentCourseWork student(
 			stoi(regTokens[0]),  // id
 			stoi(regTokens[1]),  // userLevel
-			regTokens[2],        // login
-			regTokens[3],		 // salt
-			regTokens[4],        // hashedpassword
+			stoi(regTokens[2]),  // acces
+			regTokens[3],        // login
+			regTokens[4],		 // salt
+			regTokens[5],        // hashedpassword
 			dataTokens[0],       // name
 			dataTokens[1],       // secondname
 			dataTokens[2],       // surname
@@ -297,44 +311,51 @@ void Student::StudentEdit() {
 		}
 
 		ClearTerminal();
-		RegistratedStudentTable(*this);
+		AccoutTable(*this);
 	} while (choice != 0);
 	
 }
 
 
 
-void RegistrateStudentInFile() {
+void RegistrateStudentInFile(bool haveAcces, string login) {
 
-	int userLevel;
+	int userLevel = 0;
 	string name;
 	string secondname;
 	string surname;
 	int group;
 	int course;
 
-	string login;
 	string password;
 	int currentStudentsNum = studentsArray.size();
 
-	int n;
-	cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей (0 для выхода): ";
-	n = GetIntegerInput(0);
+	int n = 1;
+	if (haveAcces) { //если регистрирует администратор
+
+		cout << left << setw(OPTIONS_PADDING) << "Введите количество добавляемых записей (0 для выхода): ";
+		n = GetIntegerInput(0);
+	}
+
 
 	for (int i = 0; i < n; i++) {
 		currentStudentsNum ++; //начинаем индексирование с 1
-
-		//Уровень доступа
-		cout << "Уровень доступа записи (0 - студент, 1 - администратор): ";
-		userLevel = GetIntegerInput(0, 1);
+		
+		//Уровень доступа (только при добавлени админом
+		if (haveAcces) {
+			cout << "Уровень доступа записи (0 - студент, 1 - администратор): ";
+			userLevel = GetIntegerInput(0, 1);
+		}
 
 		// Вывод индекса
 		cout << "Запись[" << currentStudentsNum << "]:\n\n";
 
-		do{
-			// Ввод логина
-			login = GetStringInput("Логин: ");
-		}while (IsLoginExist(login));
+		if (login.empty()) {
+			do {
+				// Ввод логина
+				login = GetStringInput("Логин: ");
+			} while (IsLoginExist(login));
+		}
 
 		// Ввод пароля
 		password =  GetPasswordInput("Пароль: ");
@@ -373,6 +394,7 @@ void RegistrateStudentInFile() {
 		StudentCourseWork StudentCourse(
 			currentStudentsNum,
 			userLevel,
+			haveAcces, //пользователь подтвержден по уолчанию при регистрации админом
 			login,
 			"",
 			password,
@@ -425,6 +447,7 @@ void CreateBaseAdmin() {
 User::User() {
 	userLevel=1;
 	id=studentsArray.size()+1;
+	acces = 1;
 
 	login="admin";
 	salt = "adminSalt";
@@ -432,7 +455,7 @@ User::User() {
 }
 
 User::User(int id, int userLevel,
-	string login, string salt, string password) {
+	string login, string salt, string password, int acces) {
 	this->id = id;
 
 	if (salt.empty()) {
@@ -444,7 +467,7 @@ User::User(int id, int userLevel,
 	}
 
 
-	
+	this->acces = acces;
 	this->login = login;
 	this->userLevel = userLevel;
 }
@@ -465,6 +488,7 @@ fstream& operator<<(fstream& stream, const User& self){
 
 	stream << self.id << ";"
 		<< self.userLevel << ";"
+		<< self.acces << ";"
 		<< self.login << ";"
 		<< self.salt<<";"
 		<< self.hashedPassword << ";";
@@ -481,10 +505,11 @@ Student::Student() {
 	group = -1;
 	course = -1;
 }
-Student::Student(int id, int userLevel,
+Student::Student(int id, int userLevel, int acces,
 	string login, string salt, string password, 
 	string name, string secondname, string surname,
-	int group, int course) : User(id, userLevel, login, salt, password){
+	int group, int course) : User(id, userLevel, login, salt, password, acces){
+
 	this->name = name;
 	this->secondname = secondname;
 	this->surname = surname;
