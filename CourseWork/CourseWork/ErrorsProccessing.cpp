@@ -118,32 +118,6 @@ string GetStringInput(const string& prompt, bool allowEmpty , bool checkAlphaStr
     return input;
 }
 
-//Замаскировать вводимый пароль
-string getPasswordWithMask() {
-    string password;
-    char ch;
-
-    while (true) {
-        ch = _getch(); // Читаем символ без отображения
-
-        if (ch == '\r' || ch == '\n') { // Enter - завершение ввода
-            cout << endl;
-            break;
-        }
-        else if (ch == '\b') { // Backspace - удаление символа
-            if (!password.empty()) {
-                password.pop_back();
-                cout << "\b \b"; // Удаляем звёздочку из консоли
-            }
-        }
-        else {
-            password.push_back(ch);
-            cout << '*'; // Выводим звёздочку вместо символа
-        }
-    }
-
-    return password;
-}
 //Безопасный ввод пароля
 string GetPasswordInput(const string& prompt) {
     string input;
@@ -208,11 +182,12 @@ bool CheckRegistration(bool isAdmin, string& login, string& password) {
 
 //проверка, хочет ли пользователь провести нежелательноую манипуляцию с администратором
 bool CheckIsManipulatingAdmin(Student student) {
-    if (student.getId() == 1)
+    if (student.getUserLevel() == 1)
     {
         cout << "Ошибка, подобную операцию невозможно провести с администратором!" << endl;
         return true;
     }
+    return false;
 }
 
 //Функция провери и создания Админа в случае его отсутвия

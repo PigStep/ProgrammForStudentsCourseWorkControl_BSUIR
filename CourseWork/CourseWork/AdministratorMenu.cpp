@@ -1,14 +1,18 @@
 #include "TableManips.h"
 #include "StudentFileManip.h"
 
-extern void AdminFunctionsMenu() {
-	const string OPTIONS_TO_CHOOSE[5] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу данных студентов", "Установить контрольные точки для работ", "Провести рецензирование работ", "Установить темы курсовых работ"};
-	const string HEADER = { "МЕНЮ АДМИНИСТРАТОРА" };
-	int n;
 
+extern void AdminFunctionsMenu() {
+	int const OPTIONS_NUM = 6;
+
+	const string OPTIONS_TO_CHOOSE[OPTIONS_NUM] = {"Просмотреть возможные операции с учетными записями", "Предоставить полную таблицу данных студентов", "Установить контрольные точки для работ", "Провести рецензирование работ", "Установить темы курсовых работ",
+	"Индивидуальное задание"};
+	const string HEADER = { "МЕНЮ АДМИНИСТРАТОРА" };
+
+	int n;
 	do {
-		HeaderFirstLevel(5, OPTIONS_TO_CHOOSE, HEADER);
-		n = GetIntegerInput(0, 5);
+		HeaderFirstLevel(OPTIONS_NUM, OPTIONS_TO_CHOOSE, HEADER);
+		n = GetIntegerInput(0, OPTIONS_NUM);
 		LoadStudentsFromFile();
 
 		ClearTerminal();
@@ -29,6 +33,9 @@ extern void AdminFunctionsMenu() {
 			break;
 		case 5:
 			SetStudentCourseTheme();
+			break;
+		case 6:
+			IndividualTask();
 			break;
 		case 0:
 			break;
@@ -152,7 +159,7 @@ void DeleteStudentsFromArrayMenu() {
 			AccoutTable(studentsArray[index]);
 
 			if (GetUserApprove()) {
-				DeleteStudentArray(i);
+				DeleteStudentArray(index);
 				RefreshStudentsId();
 				cout << "Запись успешно удалена" << endl;
 			}
@@ -227,6 +234,7 @@ bool SelectMark(int index) {
 	return true;
 }
 
+//Установаить оценки студентам по контрольным точкам
 void SetStudentsMarks() {
 	const string HEADER = "МЕНЮ ОЦЕНИВАНИЯ РАБОТЫ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
@@ -335,5 +343,28 @@ void GiveAccesStudents() {
 
 	string message = "ВСЕ ЗАПИСИ ПРОСМОТРЕНЫ";
 	LogMessage(message);
+	WaitEnterInput();
+}
+
+//Отобразить на экране информацию о неуспевающих студентах на конкретную дату.
+void IndividualTask() {
+	const string HEADER = "НАЙТИ НЕУСПЕВАЮЩИХ СТУДЕНТОВ";
+	HeaderSecondLevel(HEADER);
+
+	ShowDeadLinesList();
+	cout << "Выберете дату: (0 - если хотите выйти)" << setw(INPUT_PADDING) << "";
+	int input = GetIntegerInput(0, NUM_OF_DEADLINES);
+
+	if (input==0)
+		return;
+
+	input--; //декрементируем для индекса
+
+	cout << "Неуспевающие студенты по выбранной дате:"<<endl;
+	for (int i = 0; i < studentsArray.size(); i++) {
+		if (studentsArray[i].getMark(input) == DEFAULT_MARK) {
+			StudentWorkCourseTable(studentsArray[i]);
+		}
+	}
 	WaitEnterInput();
 }

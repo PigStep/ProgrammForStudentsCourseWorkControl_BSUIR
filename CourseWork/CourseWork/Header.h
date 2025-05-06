@@ -36,8 +36,7 @@ void CheckAdmins();
 bool UserAuthorizationMenu(bool);
 bool CheckRegistration(bool isAdmin, string& login, string& password);
 
-//AdministratorMenu
-
+//Вывести функционал администратора
 extern void AdminFunctionsMenu();
 void RefreshMenu(const string, int);
 
@@ -48,6 +47,7 @@ void EditStudentsFromArrayMenu();
 void DeleteStudentsFromArrayMenu();
 void GiveAccesStudents();
 
+
 void ShowStudentsDataTable();
 
 void SetCourseDeadlines();
@@ -55,6 +55,8 @@ void SetCourseDeadlines();
 void SetStudentsMarks();
 
 void SetStudentCourseTheme();
+
+void IndividualTask();
 
 //Меню пользователя
 extern void UserFunctionsMenu();

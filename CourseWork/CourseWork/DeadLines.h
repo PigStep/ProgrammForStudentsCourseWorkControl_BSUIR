@@ -23,6 +23,7 @@ public:
 	string getDate() const;
 
 	bool operator>(const Date& other) const;
+	bool operator==(const Date& other) const;
 
 	friend fstream& operator<<(fstream&, const Date&);
 

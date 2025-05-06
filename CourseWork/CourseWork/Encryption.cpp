@@ -31,3 +31,34 @@ string SimpleHash(const string& s) {
 string HashPassword(const string& password, const string& salt) {
     return SimpleHash(password + salt);
 }
+
+//Замаскировать вводимый пароль
+string getPasswordWithMask() {
+    string password;
+    char ch;
+
+    while (true) {
+        ch = _getch(); // Читаем символ без отображения
+
+        if (ch == '\r' || ch == '\n') { // Enter - завершение ввода
+            cout << endl;
+            break;
+        }
+        else if (ch == '\b') { // Backspace - удаление символа
+            if (!password.empty()) {
+                password.pop_back();
+                cout << "\b \b"; // Удаляем звёздочку из консоли
+            }
+        }
+        else if (ch == ' ' || ch == '\t') {
+            // Игнорируем пробелы и табуляции
+            continue;
+        }
+        else {
+            password.push_back(ch);
+            cout << '*'; // Выводим звёздочку вместо символа
+        }
+    }
+
+    return password;
+}

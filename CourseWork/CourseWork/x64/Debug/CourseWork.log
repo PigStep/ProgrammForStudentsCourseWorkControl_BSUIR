@@ -1,5 +1,16 @@
-﻿  EnteringMenu.cpp
+﻿  AdministratorMenu.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\AdministratorMenu.cpp(140,6): warning C4101: delChoice: неиспользованная локальная переменная
+  DeadLines.cpp
+  EnteringMenu.cpp
+  Encryption.cpp
   ErrorsProccessing.cpp
+  StudentFileManip.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(2,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(273,6): warning C4101: newInt: неиспользованная локальная переменная
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(331,47): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\StudentFileManip.cpp(449,27): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  TableManips.cpp
+F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\TableManips.cpp(23,54): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  UserMenu.cpp
   Создание кода...
-F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\CourseWork\ErrorsProccessing.cpp(216): warning C4715: CheckIsManipulatingAdmin: значение возвращается не при всех путях выполнения
   CourseWork.vcxproj -> F:\GitRepos\ProgrammForStudentsCourseWorkControl_BSUIR\CourseWork\x64\Debug\CourseWork.exe
