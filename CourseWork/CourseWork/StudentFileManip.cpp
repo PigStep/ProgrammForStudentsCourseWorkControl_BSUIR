@@ -28,8 +28,30 @@ int StudentEditMenuChoice() {
 
 } 
 
+//Удалить студентов из оперативной памяти
 void DeleteStudentArray(int index) {
 	studentsArray.erase(studentsArray.begin() + index);
+}
+
+//удалить несколько студентов из оперативной памяти
+void DeleteStudentsArray(vector<int> indexes) {
+	vector<StudentCourseWork> newArray;
+	bool isForDelete = false;
+
+	for (int i = 0; i < studentsArray.size(); i++) {
+		isForDelete = false;
+		for (int j : indexes) {
+			if (i == j)
+				isForDelete = true;
+		}
+		if (isForDelete)
+			continue;
+
+		newArray.push_back(studentsArray[i]);
+		RefreshStudentsId();
+	}
+
+	studentsArray = newArray;
 }
 
 void RefreshStudentsId() {
@@ -316,8 +338,6 @@ void Student::StudentEdit() {
 	
 }
 
-
-
 void RegistrateStudentInFile(bool haveAcces, string login) {
 
 	int userLevel = 0;
@@ -565,10 +585,7 @@ fstream& operator<<(fstream& stream, const StudentCourseWork& self) {
 void StudentCourseWork::setCourseWorkTheme() {
 	string theme;
 
-	cin.ignore();
-	cout << "Введите новую тему курсовой работы\n";
-	cout << setw(INPUT_PADDING);
-	getline(cin, theme);
+	theme = GetStringInput("Введите новую тему курсовой работы\n");
 
 	this->courseWorkTheme = theme;
 }
@@ -607,7 +624,6 @@ void StudentCourseWork::writeInFiles(fstream& dataStream, fstream& regStream) {
 }
 
 //Функции работы с контрольными точками
-
 void SaveDeadLinesInFile() {
 	// Закрываем и переоткрываем файл в режиме перезаписи
 	studentsFileDeadLines.close();

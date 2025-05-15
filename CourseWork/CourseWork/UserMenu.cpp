@@ -3,14 +3,15 @@
 
 //Вывести меню взаимодействия системы с пользователем
 extern void UserFunctionsMenu() {
-	const string OPTIONS_TO_CHOOSE[4] = {"Просмотреть данные", 
+	const int OPERATIONS = 5;
+	const string OPTIONS_TO_CHOOSE[OPERATIONS] = {"Просмотреть данные", "Изменить/заполнить данные",
 		"Поиск студента", "Сортировка студентов", "Предоставить ссылку на курсовую работу"};
 	const string HEADER = { "МЕНЮ ПОЛЬЗОВАТЕЛЯ" };
 	int n;
 
 	do {
-		HeaderFirstLevel(4, OPTIONS_TO_CHOOSE, HEADER);
-		n = GetIntegerInput();
+		HeaderFirstLevel(OPERATIONS, OPTIONS_TO_CHOOSE, HEADER);
+		n = GetIntegerInput(0, OPERATIONS);
 		LoadStudentsFromFile();
 
 		ClearTerminal();
@@ -21,12 +22,15 @@ extern void UserFunctionsMenu() {
 			PrintAccountData();
 			break;
 		case 2:
-			GetStudentByParam();
+			EditAccountData();
 			break;
 		case 3:
-			ShowStudentsDataTable();
+			GetStudentByParam();
 			break;
 		case 4:
+			ShowStudentsDataTable();
+			break;
+		case 5:
 			SetCourseWorkLink();
 			break;
 		default:
@@ -48,13 +52,24 @@ void PrintAccountData() {
 	WaitEnterInput();
 }
 
+void EditAccountData() {
+	const string HEADER = "ИЗМЕНЕНИЕ ДАННЫХ УЧЕТНОЙ ЗАПИСИ";
+	HeaderSecondLevel(HEADER);
+
+	StudentWorkCourseTable(*userAccountLink);
+
+	userAccountLink->StudentEdit();
+	StudentFileRewrite();
+	WaitEnterInput();
+}
+
 //Предоставить студенту доступ к редактированию ссылки
 void SetCourseWorkLink() {
 	const string HEADER = "РЕДАКТИРОВАНИЕ ССЫЛКИ КУРСОВОЙ РАБОТЫ";
 	HeaderSecondLevel(HEADER);
 
 	cout << "Текущая ссылка на курсовую работу:\n"<< userAccountLink->getCourseWorkLink()<<endl;
-	cout << "Вы хотите изменить ссылку";
+	cout << "Вы хотите изменить ссылку\n";
 
 	if (!GetUserApprove())
 		return;

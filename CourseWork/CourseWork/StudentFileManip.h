@@ -46,6 +46,7 @@ void CreateBaseAdmin();
 
 //Функция удаления студента из вектора
 void DeleteStudentArray(int);
+void DeleteStudentsArray(vector<int> indexes);
 
 //Функция обновления всей ID у студентов
 void RefreshStudentsId();
@@ -85,13 +86,13 @@ public:
 	bool checkPassword(const string& password);
 
 	void hashPassword(const string& password);
+	
+	string getSalt() const { return salt; } //получить соль
 
-	string getSalt() const { return salt; }
+	string getHashedPassword() const { return hashedPassword; } //получить хэшированный пароль
 
-	string getHashedPassword() const { return hashedPassword; }
-
-	int getAcces() const { return acces; }
-	void setAcces(int newAcces) { acces = newAcces; }
+	int getAcces() const { return acces; } //получить доступ
+	void setAcces(int newAcces) { acces = newAcces; } //установить доступ
 };
 class Student : public User {
 protected:
@@ -119,15 +120,15 @@ public:
 
 	// Геттеры для всех полей
 
-	string getName() const { return name; }
+	string getName() const { return name; } //получить имя
 
-	string getSecondName() const { return secondname; }
+	string getSecondName() const { return secondname; } //получить фамилию
 
-	string getSurname() const { return surname; }
+	string getSurname() const { return surname; } //получить отчество
 
-	int getGroup() const { return group; }
+	int getGroup() const { return group; } //получить группу
 
-	int getCourse() const { return course; }
+	int getCourse() const { return course; } //получить курс
 
 	bool isUserAdmin()const {
 		if (userLevel == 1) return true;

@@ -1,7 +1,6 @@
 #include "TableManips.h"
 #include "StudentFileManip.h"
 
-
 extern void AdminFunctionsMenu() {
 	int const OPTIONS_NUM = 6;
 
@@ -20,7 +19,7 @@ extern void AdminFunctionsMenu() {
 		switch (n)
 		{
 		case 1:
-			StudentsListOperations();
+			AccountsListOperations();
 			break;
 		case 2:
 			ShowStudentsDataTable();
@@ -46,7 +45,7 @@ extern void AdminFunctionsMenu() {
 
 }
 
-void StudentsListOperations() {
+void AccountsListOperations() {
 	const string OPTIONS_TO_CHOOSE[5] = { "Просмотреть все учетные записи","Добавить учетную запись/записи", "Изменить учетную запись/записи", "Удалить учетную запись / записи", "Предоставить доступ учетной записи"};
 	const string HEADER = { "МЕНЮ ОПЕРАЦИЙ С УЧЕТНЫМИ ЗАПИСЯМИ" };
 	int n;
@@ -61,16 +60,16 @@ void StudentsListOperations() {
 		switch (n)
 		{
 		case 1:
-			PrintStudentsFromFile();
+			PrintAccountssFromFile();
 			break;
 		case 2:
-			AddStudentMenu();
+			AddAccountMenu();
 			break;
 		case 3:
-			EditStudentsFromArrayMenu();
+			EditAccountsFromArrayMenu();
 			break;
 		case 4:
-			DeleteStudentsFromArrayMenu();
+			DeleteAccountsFromArrayMenu();
 			break;
 		case 5:
 			GiveAccesStudents();
@@ -84,7 +83,7 @@ void StudentsListOperations() {
 
 }
 
-void PrintStudentsFromFile() {
+void PrintAccountssFromFile() {
 	const string HEADER = "ТАБЛИЦА УЧЕТНЫХ ЗАПИСЕЙ";
 	HeaderSecondLevel(HEADER);
 
@@ -94,14 +93,18 @@ void PrintStudentsFromFile() {
 	WaitEnterInput();
 }
 
-void AddStudentMenu() {
+void AddAccountMenu() {
 	const string HEADER = "РЕГИСТРАЦИЯ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
 	RegistrateStudentInFile();
+
+	string message = "ЗАПИСИ УСПЕШНО ДОБАВЛЕНЫ";
+	LogMessage(message);
+	WaitEnterInput();
 }
 
-void EditStudentsFromArrayMenu() {
+void EditAccountsFromArrayMenu() {
 	const string HEADER = "РЕДАКТИРОВАНИЕ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 
@@ -132,7 +135,7 @@ void RefreshMenu(const string HEADER, int index) {
 	AccoutTable(studentsArray[index]);
 }
 
-void DeleteStudentsFromArrayMenu() {
+void DeleteAccountsFromArrayMenu() {
 	const string HEADER = "УДАЛЕНИЕ УЧЕТНОЙ ЗАПИСИ";
 	HeaderSecondLevel(HEADER);
 
@@ -162,6 +165,7 @@ void DeleteStudentsFromArrayMenu() {
 				DeleteStudentArray(index);
 				RefreshStudentsId();
 				cout << "Запись успешно удалена" << endl;
+				WaitEnterInput();
 			}
 		}
 		ClearTerminal();
@@ -273,7 +277,6 @@ void SetStudentCourseTheme() {
 	const string HEADER = "МЕНЮ УСТАНОВКИ ТЕМЫ РАБОТЫ СТУДЕНТА";
 	HeaderSecondLevel(HEADER);
 	vector<int> indexes;
-
 	do {
 		indexes = FindStudentByParam();
 		ClearTerminal();
@@ -303,6 +306,7 @@ void SetStudentCourseTheme() {
 				WaitEnterInput();
 			}
 			ClearTerminal();
+			HeaderSecondLevel(HEADER);
 		}
 	} while (true);
 	ClearTerminal();
@@ -330,12 +334,11 @@ void GiveAccesStudents() {
 		else {
 			indexesToDelete.push_back(index);
 		}
-		ClearTerminal();
+		cout << "Запись успешно " << (choice ? "принята" : "отклонена")<<endl;
+		WaitEnterInput();
 	}
 
-	for (int index : indexesToDelete) {
-		DeleteStudentArray(index);
-	}
+	DeleteStudentsArray(indexesToDelete);
 
 	RefreshStudentsId();
 	StudentFileRewrite();
@@ -355,8 +358,11 @@ void IndividualTask() {
 	cout << "Выберете дату: (0 - если хотите выйти)" << setw(INPUT_PADDING) << "";
 	int input = GetIntegerInput(0, NUM_OF_DEADLINES);
 
-	if (input==0)
+	if (input == 0) {
+		ClearTerminal();
 		return;
+	}
+
 
 	input--; //декрементируем для индекса
 

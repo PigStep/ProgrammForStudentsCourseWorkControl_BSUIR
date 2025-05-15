@@ -88,7 +88,11 @@ bool UserAuthorizationMenu(bool isAdmin) {
             cout << "Возможна регистрация пользователя с логином: " << login << endl;
             if (GetUserApprove()) {
                 RegistrateStudentInFile(false, login);
+
                 string successMessage = "УСПЕШНО, ОЖИДАЙТЕ ПОДТВЕРЖДЕНИЕ АДМИНИСТРАТОРОМ";
+                LogMessage(successMessage);
+
+                WaitEnterInput();
             }
         }
         return false;

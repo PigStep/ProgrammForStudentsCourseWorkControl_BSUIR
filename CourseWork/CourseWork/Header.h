@@ -30,38 +30,37 @@ const int INPUT_PADDING = 10;   // Отступ для полей ввода
 //Fuctions prototypes 
 //EnteringMenu.cpp
 
-void FilePreparation();
-void InitializeMenuLoginEntering();
-void CheckAdmins();
-bool UserAuthorizationMenu(bool);
-bool CheckRegistration(bool isAdmin, string& login, string& password);
+void FilePreparation(); //Загрузить необходимые для старта файлы
+void InitializeMenuLoginEntering(); //Меню выбора роли для входа
+void CheckAdmins(); //Проверить, сколько админов в системе
+bool UserAuthorizationMenu(bool); //Меню ввода пароля/логина
+bool CheckRegistration(bool isAdmin, string& login, string& password); //Проверить, существует ли побдобная запись
 
-//Вывести функционал администратора
-extern void AdminFunctionsMenu();
-void RefreshMenu(const string, int);
+extern void AdminFunctionsMenu(); //Вывести функционал администратора
+void RefreshMenu(const string, int); //Обновить заголовок
 
-void StudentsListOperations();
-void PrintStudentsFromFile();
-void AddStudentMenu();
-void EditStudentsFromArrayMenu();
-void DeleteStudentsFromArrayMenu();
-void GiveAccesStudents();
+void AccountsListOperations(); //Предоставить возможные операции с учетными записями
+void PrintAccountssFromFile(); //Вывести информацию об учетных записях
+void AddAccountMenu(); //Меню добавления учетной записи
+void EditAccountsFromArrayMenu(); //Меню изменения учетной записи
+void DeleteAccountsFromArrayMenu(); //Меню удаления учетной записи
+void GiveAccesStudents(); //Меню предоставления доступа для входа
 
 
-void ShowStudentsDataTable();
+void ShowStudentsDataTable(); //Показать таблицу студентов
 
-void SetCourseDeadlines();
+void SetCourseDeadlines(); //Меню установки дедлайнов
 
-void SetStudentsMarks();
+void SetStudentsMarks(); //Меню рецензирования студента
 
-void SetStudentCourseTheme();
+void SetStudentCourseTheme(); //Меню установки темы курсовой
 
-void IndividualTask();
+void IndividualTask(); //Индивидуальное задание
 
-//Меню пользователя
-extern void UserFunctionsMenu();
-void PrintAccountData();
+extern void UserFunctionsMenu(); //Меню пользователя
+void PrintAccountData(); //Вывести данные текущей учетной записи
+void EditAccountData(); //Изменить данные текущей учетной записи
 
-void SetCourseWorkLink();
+void SetCourseWorkLink(); //Меню установки ссылки на курсовую
 
-void GetStudentByParam();
+void GetStudentByParam(); //Поиск студента по параметрам
